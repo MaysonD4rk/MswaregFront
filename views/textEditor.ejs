@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+
+
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/textEditor.css">
+
+</head>
+
+<body>
+
+    <input id="userId" type="hidden" value="<%=userId%>">
+
+    <div class="container">
+        <h1>ESCREVA SUA IDEIA</h1>
+        <div class="inputs-editor">
+            <label class="label" for="content-title">
+                <input id="content-title" class="content-title" type="text" placeholder="title">
+                <span class="length-left">left: </span>
+            </label>
+            <br>
+            <label class="label" for="content-summary">
+                <textarea class="content-summary" placeholder="summary"></textarea>
+                <span class="length-left">left: </span>
+            </label>
+        </div>
+        <br>
+
+        <div class="content-container">
+            <div id="content" contenteditable="true">ESCREVA AQUI A SUA IDEIA</div>
+
+            <div class="editor-buttons">
+                <button onclick="renderContent()">
+                    <b>R</b>
+                </button>
+
+
+
+
+                <button class="titleInsert" onclick="titleInsert()">
+                    h1
+                </button>
+                <button class="boldInsert" onclick="boldInsert()">
+                    bold
+                </button>
+                <div id="inputFile-div">
+                    <label for="inputFile" class="inputFile-label">
+                        <i class="fa-solid fa-image"></i>
+
+                        <input type="file" id="inputFile">
+                    </label>
+                    <input type="text" id="imgHeight" value="30" placeholder="img size">
+                    <button class="imgInsert" onclick="teste3(parseInt(document.getElementById('imgHeight').value))">
+                        inserir img
+                    </button>
+                </div>
+            </div>
+        </div><br>
+        <button class="finish-button"
+            onclick="loadRequiredFields()">FINALIZAR</button>
+    </div>
+
+
+
+    <!--MODAL-->
+        
+    <div id="modal" style="display: none;">
+        ss
+        <div id="card-modal-info">
+            <span class="closeModal" onclick="closeModal('modal')">X</span>
+            <div>
+                <div class="main-card-info">
+                    <div class="card-modal-images">
+                        <img id="addImageButton" src="/img/addimg.png" alt="" height="200px">
+                        <input type="file" id="imageFile">
+                    </div>
+                    <div class="main-info">
+                        <div class="model-title">
+    
+                        </div>
+                        <div class="model-sub">
+    
+                        </div>
+                    </div>
+                </div><br>
+    
+    
+                <div class="bottom-info">
+                    <div class="card-modal-idea">
+    
+                    </div>
+    
+                    <div class="game-idea-buttons">
+                        <button class="actionButton"><i class="fa-solid fa-hand-holding-dollar"></i></button>
+                        <button class="actionButton"><i class="fa-solid fa-scroll"></i></button>
+                    </div>
+    
+                    <div class="model-category">
+                        <div> #Category </div>
+                        <div> @Maison </div>
+                        <div>05/29/2022 </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="investors-table">
+    
+            <div class="table">
+                <table>
+                    <tr>
+                        <th>
+                        </th>
+                        <th>Nome</th>
+                        <th>investimento</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span></span>
+                        </td>
+                        <td>joao</td>
+                        <td>300R$</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span></span>
+                        </td>
+                        <td>Maison</td>
+                        <td>500R$</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span></span>
+                        </td>
+                        <td>Renan</td>
+                        <td>100R$</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span></span>
+                        </td>
+                        <td>joao</td>
+                        <td>300R$</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span></span>
+                        </td>
+                        <td>Maison</td>
+                        <td>500R$</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span></span>
+                        </td>
+                        <td>Renan</td>
+                        <td>100R$</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span></span>
+                        </td>
+                        <td>joao</td>
+                        <td>300R$</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span></span>
+                        </td>
+                        <td>Maison</td>
+                        <td>500R$</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span></span>
+                        </td>
+                        <td>Renan</td>
+                        <td>100R$</td>
+                    </tr>
+    
+    
+                </table>
+            </div>
+    
+        </div>
+    </div>
+
+    <!--////////////MODAL-->
+
+
+    <!-- MODAL DE FINALIZAÇÃO  -->
+
+    <div id="finish-modal">
+
+        <div class="finish-modal-container">
+            <span style="cursor: pointer;"
+                onclick="document.getElementById('finish-modal').style.display= 'none'"><b>X</b></span>
+            <h1>Finalizar ideia</h1>
+            <!--
+            <input class="category-input" type="text" placeholder="category #" value="#">
+
+            36h semanais
+            <div class="pro-choise">
+                <div class="pro-buttons"><button onclick="proChoise(0,1)"><i
+                            class="fa-solid fa-angle-left"></i></button><span class="pro-1">Dev Aprendiz: </span><button
+                        onclick="proChoise(1,1)"><i class="fa-solid fa-angle-right"></i></button></div>
+                <div class="pro-buttons"><button onclick="proChoise(0,2)"><i
+                            class="fa-solid fa-angle-left"></i></button><span class="pro-2">Dev Júnior: </span><button
+                        onclick="proChoise(1,2)"><i class="fa-solid fa-angle-right"></i></button></div>
+                <div class="pro-buttons"><button onclick="proChoise(0,3)"><i
+                            class="fa-solid fa-angle-left"></i></button><span class="pro-3">Dev Pleno: </span><button
+                        onclick="proChoise(1,3)"><i class="fa-solid fa-angle-right"></i></button></div>
+                <div class="pro-buttons"><button onclick="proChoise(0,4)"><i
+                            class="fa-solid fa-angle-left"></i></button><span class="pro-4">Dev Sênior: </span><button
+                        onclick="proChoise(1,4)"><i class="fa-solid fa-angle-right"></i></button></div>
+                <div class="pro-buttons"><button onclick="proChoise(0,5)"><i
+                            class="fa-solid fa-angle-left"></i></button><span class="pro-5">Web Designer: </span><button
+                        onclick="proChoise(1,5)"><i class="fa-solid fa-angle-right"></i></button></div>
+
+            </div>
+
+            <div><input type="checkbox" id="vr-check" onclick="proChoise(-1,-1)">VIRTUAL REALITY</div>
+
+            <br><br>
+            <span class="inicialAmount">investimento necessário <br> para inicar produção: 0$ por semana</span>
+        -->
+            <button onclick="document.getElementById('areusure').style.display = 'flex'"
+                class="finish-button">FINISH</button>
+            <div id="areusure" style="display: none;">
+                <b>are u sure?</b> <button onclick="send()"
+                    style="background-color: transparent; border: none;">Yes</button>
+            </div>
+            <button class="finish-info-button"
+                onmouseover="document.getElementsByClassName('span-pro')[0].style.display = 'inline'"
+                onmouseleave="document.getElementsByClassName('span-pro')[0].style.display = 'none'">
+                <span class="span-pro">você pode mudar os profissionais do<br> projeto semanalmente</span>
+                <i class="fa-solid fa-info"></i>
+            </button>
+            obs: há muito espaço pq essa parte não está finalizada. Precisamos evoluir um pouco mais o público do sistema para adicionarmos o que será adicionado. Será algo grande, eu prometo!
+        </div>
+
+    </div>
+
+
+    <!-- MODAL DE FINALIZAÇÃO  -->
+
+
+
+
+
+</body>
+
+
+<script src="/js/textEditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
+</script>
+
+
+<script src="/js/modal.js"></script>
+<script src="https://kit.fontawesome.com/4fd5a3a7ad.js" crossorigin="anonymous"></script>
+
+</html>

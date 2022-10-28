@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/profilePage.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/sendAmsg.css">
+    <link rel="stylesheet" href="/css/menuSettingsButton.css">
+
+    <title>Document</title>
+</head>
+<body>
+
+    <%- include('./partials/floatingMenu.ejs') %>
+
+    <input id="username" type="hidden" value="<%= userProfile.users.username %>">
+
+        <div class="main-div">
+            <div class="firstFlex">
+                <div class="main-image">
+                    <div> EDIT </div>
+                </div>
+                <div><h3>@<%= userProfile.users.username %></h3></div>
+                <div><%= userProfile.userInfo.organization %> ¨ <%= userProfile.userInfo.organizationRole %> <% if(userData.username == userProfile.users.username){ %><i class="fa-solid fa-pen-to-square" onclick="openEditModal()"></i><%}%></div>
+                
+                <% if(userData.username != userProfile.users.username){ %>
+                    <button class="follow-button">Follow</button>
+                <%}else{%>
+
+                    <div> follower <%= followData.followers %> following <%= followData.following %></div>
+                <%}%>
+
+
+                <div class="badges">
+                    
+                    <div class="badge-box">
+                        <span class="badge"></span>
+                        <span class="badge"></span>
+                        <span class="badge"></span>
+                        
+                        
+                    </div>
+                </div>
+
+                <div class="aboutMe">
+                    <div id="editModal">
+                        <textarea class="aboutMeTextArea" id="aboutMeTextArea"><%= userProfile.userInfo.AboutMe %></textarea><br>
+                        <button onclick="editAboutMe('<%=userData.id%>')" class="green-button">confirm edit</button>
+                    </div>
+                     <i class="aboutMeMsg">"<%= userProfile.userInfo.AboutMe %>"</i> 
+                </div>
+            </div>
+            
+            <div class="profile-posts">
+                <!--
+                <div class="posts">
+                    <div class="post-card">
+                        <div class="card-header">
+                            <h2>
+                                TITULO
+                            </h2>
+                            <p>
+                                bagulho foi doido
+                            </p>
+                    
+                        </div>
+                        <div class="card-img">
+                    
+                        </div>
+                        <div class="card-info">
+                            
+                            <div>
+                                <p>
+                                    300
+                                </p>
+                                <progress value="500" max="800"></progress>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    
+                
+                    <div class="ask-item">
+                        <div class="ask-item-img">img</div>
+                        <div class="ask-item-info">
+                    
+                            <div>
+                                <h3>from: @maison
+                                </h3>
+                            </div>
+                            <div>
+                                <h3>to: @renan
+                                </h3>
+                            </div>
+                            <h3>msg: </h3>
+                            <div class="ask-text">
+                    
+                                iae renan kkk, é só um teste
+                    
+                    
+                            </div>
+                    
+                        </div>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="card-header">
+                            <h2>
+                                TITULO
+                            </h2>
+                            <p>
+                                bagulho foi doido
+                            </p>
+                    
+                        </div>
+                        <div class="card-img">
+                    
+                        </div>
+                        <div class="card-info">
+                            
+                            <div>
+                                <p>
+                                    300
+                                </p>
+                                <progress value="500" max="800"></progress>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+
+                    <div class="ask-item">
+                        <div class="ask-item-img">img</div>
+                        <div class="ask-item-info">
+                    
+                            <div>
+                                <h3>from: @maison
+                                </h3>
+                            </div>
+                            <div>
+                                <h3>to: @renan
+                                </h3>
+                            </div>
+                            <h3>msg: </h3>
+                            <div class="ask-text">
+                    
+                                iae renan kkk, é só um teste
+                    
+                    
+                            </div>
+                    
+                        </div>
+                    </div>
+                    <div class="ask-item">
+                        <div class="ask-item-img">img</div>
+                        <div class="ask-item-info">
+                    
+                            <div>
+                                <h3>from: @maison
+                                </h3>
+                            </div>
+                            <div>
+                                <h3>to: @renan
+                                </h3>
+                            </div>
+                            <h3>msg: </h3>
+                            <div class="ask-text">
+                    
+                                iae renan kkk, é só um teste
+                    
+                    
+                            </div>
+                    
+                        </div>
+                    </div>
+                    <div class="ask-item">
+                        <div class="ask-item-img">img</div>
+                        <div class="ask-item-info">
+                    
+                            <div>
+                                <h3>from: @maison
+                                </h3>
+                            </div>
+                            <div>
+                                <h3>to: @renan
+                                </h3>
+                            </div>
+                            <h3>msg: </h3>
+                            <div class="ask-text">
+                    
+                                iae renan kkk, é só um teste
+                    
+                    
+                            </div>
+                    
+                        </div>
+                    </div>
+                    
+                </div>
+            -->
+            </div>
+        </div>
+
+        <%- include('./partials/modal.ejs') %>
+
+
+</body>
+<script src="https://kit.fontawesome.com/4fd5a3a7ad.js" crossorigin="anonymous"></script>
+<script src="/js/menuSettingsButton.js">
+
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
+
+
+</script>
+
+<script>
+    createMenuSettingsButton(20, 280)
+
+</script>
+
+<script src="/js/profilePage.js"></script>
+<script>
+    document.getElementsByClassName('main-image')[0].style.backgroundImage = 'url("<%= userData.profilePhotoUrl %>")'
+
+</script>
+</html>

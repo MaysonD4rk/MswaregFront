@@ -1,0 +1,171 @@
+body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    outline: none;
+    background-color: rgb(193, 193, 193);
+    
+}
+
+.crop-container{
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#cropImg{
+    background-color: rgb(255, 255, 255);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    
+}
+
+/* 
+.circle-crop{
+    width: 195px;
+    height: 195px;
+    border: 3px solid black;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+} */
+img::selection {
+    color: none;
+    background: none;
+}
+
+
+
+#topCircle{
+    position: absolute;
+}
+#rightCircle{
+    position: absolute;
+}
+#bottomCircle{
+    position: absolute;
+}
+#leftCircle{
+    position: absolute;
+}
+
+.circle{
+    display: none;
+}
+
+
+#topSquare {
+    position: absolute;
+    top: 50px;
+    left: 54px;
+}
+
+#leftSquare {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+}
+
+#bottomSquare {
+    position: absolute;
+    top: 423px;
+    left: 46px;
+}
+
+#rightSquare {
+    position: absolute;
+    top: 66px;
+    left: 345px;
+}
+
+
+
+#actionButton{
+    position: fixed;
+    bottom: 0;
+    background-color: rgb(217, 217, 217);
+    display: flex;
+    width: 100%;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+#zooms{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    width: 100%;
+}
+#zooms button{
+    flex-grow: 1;
+    border: none;
+}
+
+#zooms button:nth-child(1) {
+    background-color: rgb(6, 166, 6);
+}
+
+#zooms button:nth-child(2) {
+    background-color: red;
+}
+#photoFile{
+    display: none;
+}
+
+#buttonPhotoFile{
+    width: 100%;
+    border: none;
+    background-color: rgb(255, 195, 135);
+    border: 2px solid rgb(214, 248, 61);
+    height: 100%;
+}
+
+#cropButton{
+    flex: 1;
+    width: 100%;
+    background-color: rgb(0, 34, 255);
+    border: none;
+    display: none;
+}
+
+#actionButton div:nth-child(1){
+    flex: 1;
+    width: 100%;
+    background-color: blue;
+}
+
+.format{
+    display: none;
+}
+
+#confirmCrop{
+    display: none;
+    flex-direction: row;
+    width: 100%;
+    flex: 1;
+
+}
+
+#confirmCrop button{
+    flex: 1;
+    width: 100%;
+    border: none;
+}
+
+#confirmCrop button:nth-child(1) {
+    background-color: rgb(255, 0, 0);
+}
+#confirmCrop button:nth-child(2) {
+    background-color: rgb(0, 255, 51);
+}

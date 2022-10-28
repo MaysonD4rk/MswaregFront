@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/cropImg.css">
+</head>
+<body>
+
+    <input id="userId" type="hidden" value="<%=userId%>">
+    <% if((typeof username) != 'undefined' ){%>
+    <input id="usname" type="hidden" value="<%=username%>">
+    <%}%>
+    <% if(typeof pubIdeaId != 'undefined'){%>
+    <input id="pubIdeaId" type="hidden" value="<%=pubIdeaId%>">
+    <%}%>
+    <div class="crop-container">
+        <div id="cropImg">
+            <!-- <div class="circle-crop">
+                
+            </div> -->
+           <img id="photoPreview" draggable="false" src="" alt="">
+        </div>
+        
+        <div id="actionButton">
+            <div>
+                <button id="buttonPhotoFile">Select Image</button>
+                <input type="file" id="photoFile">
+            </div>
+            <div id="zooms">
+                <button onclick="zoom('+')"> + </button>
+                <button onclick="zoom('-')"> - </button>
+            </div>
+            <div id="confirmCrop">
+                <button onclick="confirmCropFunction('no')">NO</button>
+                <button onclick="confirmCropFunction('yes')">YES</button>
+            </div>
+            <button id="cropButton" onclick="croppingImg()">CROP</button>
+        </div>
+           
+    </div>
+
+
+    <img draggable="false" class="format circle" id="topCircle" src="/img/topCircle.png" width="150" alt="">
+    <img draggable="false" class="format circle" id="rightCircle" src="/img/rightCircle.png" height="150" alt="">
+    <img draggable="false" class="format circle" id="bottomCircle" src="/img/bottomCircle.png" width="150" alt="">
+    <img draggable="false" class="format circle" id="leftCircle" src="/img/leftCircle.png" height="150" alt="">
+
+    <img draggable="false" class="format square" id="topSquare" src="/img/bt.png" width="308" alt="">
+    <img draggable="false" class="format square" id="rightSquare" src="/img/br.png" height="415" alt="">
+    <img draggable="false" class="format square" id="bottomSquare" src="/img/bb.png" width="324" alt="">
+    <img draggable="false" class="format square" id="leftSquare" src="/img/bl.png" height="400" alt="">
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
+</script>
+
+<script src="/js/cropImg.js">
+    
+    
+</script>
+
+<script>
+    currentFormat = `<%=currentPage%>`
+</script>
+
+</html>

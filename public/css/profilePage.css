@@ -1,0 +1,112 @@
+.main-div{
+    
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.profile-posts{
+    
+    flex: 2;
+    min-width: 393px;
+    height: 100%;
+}
+
+.firstFlex{
+    background-color: rgb(233, 233, 233);
+    min-width: 393px;
+    height: 100%;
+    flex: 0.1;
+    display: flex;
+    padding-top: 10px;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid grey;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+.main-image{
+    /*background-color: rgb(0, 243, 235);*/
+    
+    background-position: center;
+    background-size: 200px;
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-image div{
+    display: none;
+}
+
+.edit:hover{
+    /*background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAbFBMVEX///8AAADHx8fDw8MvLy9bW1uvr6/r6+s3NzfLy8sbGxuHh4efn59HR0c/Pz8rKysjIyMKCgrV1dX19fVUVFS5ubmAgIBgYGDg4ODv7+8dHR2UlJRsbGzR0dGlpaXj4+OOjo4SEhJ2dnacnJxukJ8hAAADP0lEQVR4nO3caXeiMBiGYeNCbNVKcK2jTK3//z+OdeZoNggEsjHP9bFwKLe+tTVCRyMAAAAAAAAAAAAAAAAAgC6KN9El9AnZmhPRe+gTsoWQ2CAkNgiJDUJig5DYICQ2CIkNQmKDkNggJDYIiU1qIfI63NNaCrlW7RjJyp38wLcXyVPVe0i2tFVmXZ7c3kOmXY7FZpNhhNytjgMJISwbSAgh5VBC2HggISTfDCSELIYSYvFLNs4QshtKyH4oIduhhMzDh3xSW1vuoNPwIfZmnUKWiwon6XxZ1Y6/4gip5P+tLkLqIcQaQuohxBpC6iHEZLP72n/tPtUNaYXQM3scjh2U9aukQnbX5wGZvOqTUkgmHPImbkwopGDiMcX1q4RCVtIxxdNNJ6QgMmGxJJ2QvRJy5jenE7IlMmGNIZ0QdX3gxG9OJ+RDCcn5zemEzIjso2pz3CE3JURYGQ0aQufL5oek0u9DQgp+c8gQuibk0PxTmW/pmAdhq6MQeeVOtw5HH5dHrAvNJq2NeDnFiQpbHYU0QP+dF2s8Xsecf46lByBYCH09vo3Hi77+3PqQ35CECqH8nDQfr8n250eerdRP0wOFUHHem4/XfcAu2qsbwoRQ+TKoNq9eekFC1I4246UXIkTX0W68NAKE6Du6jpf/kMqObuPlP0T9c9wwXmWjz//9h1Q/IdrxKu/7b3+bDxtbiDRe5d+92cL44xNdCL+GWL72XZvmy1kI/9G/sOZsCnmOVynuaZgvZyH8cprwntQc8hivMpe/Wj9fUYYQtlcyHoE18xVnSKXq+UospHq+UgshJNfPV3oh9/nSvSFJMUQ7X0mG6OYr0RB1vpINkecr3RA/i9heQnx8rIAQhCAEIQhBiKOQXdYXH9ei1IQ4ghAThFhCiAlCLCHEBCGWEGLCh0zH7q1chahXt/rT/l7dGueAIe3vnq6hXkvpT/v72WscA4bY/B+Oat3vrLaVm0+ujcz8HR25mU+uFfl+D196fc36Qd+DdFw7XsGmcbkG6GDW/5qqRtHf0k9TpzcHHaPR5lu5oN2ts+ZWy37Qhb+X4em+wXVdHWyK8cS9cdH1glsAAAAAAAAAAAAAAAAA+O/8AekkR1af4q8IAAAAAElFTkSuQmCC') !important;
+    */
+    opacity: 0.2;
+    cursor: pointer;
+}
+
+
+.edit {
+    /*background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAbFBMVEX///8AAADHx8fDw8MvLy9bW1uvr6/r6+s3NzfLy8sbGxuHh4efn59HR0c/Pz8rKysjIyMKCgrV1dX19fVUVFS5ubmAgIBgYGDg4ODv7+8dHR2UlJRsbGzR0dGlpaXj4+OOjo4SEhJ2dnacnJxukJ8hAAADP0lEQVR4nO3caXeiMBiGYeNCbNVKcK2jTK3//z+OdeZoNggEsjHP9bFwKLe+tTVCRyMAAAAAAAAAAAAAAAAAgC6KN9El9AnZmhPRe+gTsoWQ2CAkNgiJDUJig5DYICQ2CIkNQmKDkNggJDYIiU1qIfI63NNaCrlW7RjJyp38wLcXyVPVe0i2tFVmXZ7c3kOmXY7FZpNhhNytjgMJISwbSAgh5VBC2HggISTfDCSELIYSYvFLNs4QshtKyH4oIduhhMzDh3xSW1vuoNPwIfZmnUKWiwon6XxZ1Y6/4gip5P+tLkLqIcQaQuohxBpC6iHEZLP72n/tPtUNaYXQM3scjh2U9aukQnbX5wGZvOqTUkgmHPImbkwopGDiMcX1q4RCVtIxxdNNJ6QgMmGxJJ2QvRJy5jenE7IlMmGNIZ0QdX3gxG9OJ+RDCcn5zemEzIjso2pz3CE3JURYGQ0aQufL5oek0u9DQgp+c8gQuibk0PxTmW/pmAdhq6MQeeVOtw5HH5dHrAvNJq2NeDnFiQpbHYU0QP+dF2s8Xsecf46lByBYCH09vo3Hi77+3PqQ35CECqH8nDQfr8n250eerdRP0wOFUHHem4/XfcAu2qsbwoRQ+TKoNq9eekFC1I4246UXIkTX0W68NAKE6Du6jpf/kMqObuPlP0T9c9wwXmWjz//9h1Q/IdrxKu/7b3+bDxtbiDRe5d+92cL44xNdCL+GWL72XZvmy1kI/9G/sOZsCnmOVynuaZgvZyH8cprwntQc8hivMpe/Wj9fUYYQtlcyHoE18xVnSKXq+UospHq+UgshJNfPV3oh9/nSvSFJMUQ7X0mG6OYr0RB1vpINkecr3RA/i9heQnx8rIAQhCAEIQhBiKOQXdYXH9ei1IQ4ghAThFhCiAlCLCHEBCGWEGLCh0zH7q1chahXt/rT/l7dGueAIe3vnq6hXkvpT/v72WscA4bY/B+Oat3vrLaVm0+ujcz8HR25mU+uFfl+D196fc36Qd+DdFw7XsGmcbkG6GDW/5qqRtHf0k9TpzcHHaPR5lu5oN2ts+ZWy37Qhb+X4em+wXVdHWyK8cS9cdH1glsAAAAAAAAAAAAAAAAA+O/8AekkR1af4q8IAAAAAElFTkSuQmCC') !important;
+*/  background-color: rgb(167, 167, 167);
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    opacity: 0;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.badge{
+    background-color: yellow;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    display: block;
+    margin-left: 5px;
+}
+
+.badges{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.badge-box{
+    max-height: 80px;
+    max-width: 393px;
+    display: flex;
+    flex-direction: row;
+}
+
+.aboutMe{
+    margin-bottom: 10px;
+}
+
+.follow-button{
+    height: 50px;
+    width: 100px;
+    background-color: aquamarine;
+    margin: 20px;
+    font-size: 23px;
+    border-radius: 10px;
+}
+
+.aboutMeTextArea{
+    background-color: rgb(233, 233, 233);
+    font-size: 19px;
+    font-style: italic;
+}
+
+#editModal{
+    display: none;
+}

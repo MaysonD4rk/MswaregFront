@@ -1,0 +1,411 @@
+/* -----------POSTS PART ------------- */
+
+
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchBar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.searchBar input {
+    width: 75%;
+    height: 35px;
+    border: none;
+    border-bottom: 1px solid black;
+
+    border-radius: 3px;
+    font-size: 20px;
+    transition: 0.5s;
+}
+
+.searchBar button {
+    width: 30px;
+    font-size: 25px;
+    background-color: transparent;
+    color: rgba(0, 0, 0,1);
+    border: none;
+    transition: 0.5s;
+
+}
+
+
+.searchBar input {
+    font-family: Arial, Helvetica, FontAwesome, sans-serif;
+    padding-left: 10px;
+
+}
+
+
+.posts {
+    margin: 10px;
+    
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.post-card {
+    height: 400px;
+    margin-top: 50px;
+    margin-right: 40px;
+    margin-left: 40px;
+    width: 300px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 20px rgb(133, 133, 133);
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s;
+    word-break: break-word;
+}
+
+
+.post-card:hover .card-header {
+    display: flex;
+    background-color: rgb(236, 236, 236);
+    flex-grow: 0.1;
+    border-bottom: 2px solid black;
+    border-radius: 10px;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
+    mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
+}
+
+.post-card:hover {
+    transform: translateY(-20px);
+    cursor: pointer;
+}
+
+ .post-card:hover .card-info {
+    opacity: 1;
+}
+
+
+.sub-card {
+    word-break: break-word;
+}
+
+
+
+.card-header {
+    display: flex;
+    flex-grow: 0.1;
+    border-radius: 10px;
+    flex-direction: column;
+    background-size: 400px 300px;
+}
+
+.card-info {
+    display: flex;
+    background-color: rgb(171, 187, 99);
+    border-radius: 10px;
+    flex-grow: 0.2;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.card-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 2;
+    
+    
+}
+.post-card:hover .card-img>img{
+    transition: 0.5s;
+    max-width: 200px ;
+    height: auto;
+    
+}
+
+.card-img img {
+    max-width:300px;
+    max-height: 250px;
+    border-radius: 10px;
+}
+
+.liked .fa-heart {
+    color: red;
+}
+
+.favorited .fa-star {
+    color: yellow;
+}
+
+
+
+.like {
+    font-size: 38px;
+    border-radius: 30px;
+    color: white;
+    position: relative;
+    top: -10px;
+}
+
+
+
+
+
+/** CARD MODAL **/
+
+#investors-table{
+    position: absolute;
+    display: none;
+    z-index: 10000;
+    background-color: white;
+    height: 300px;
+    width: 250px;
+    border-radius: 10px;
+    text-align: center;
+    overflow-y: auto;
+    flex-direction: column;
+}
+
+.table{
+    flex: 4;
+    overflow-y: auto;
+}
+
+.table table{
+    width: 100%;
+}
+.total-value-donated{
+    flex: 1;
+    border-top: 1px solid black;
+}
+.confirm-confirm{
+    flex: 2;
+}
+
+.confirm-confirm input{
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 0;
+}
+
+.confirm-confirm button {
+    background-color: rgba(0, 255, 42, 1);
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+}
+
+#investors-table table tr>td {
+    width: 40px;
+    height: 35px;
+}
+
+#investors-table table tr>td>span {
+    display: inline-block;
+    width: 40px;
+    border: 1px solid black;
+    border-radius: 50%;
+    height: 35px;
+}
+
+.confirm{
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0;
+}
+
+
+#modal{
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+#card-modal-info {
+    height: 630px;
+    width: 75%;
+    box-shadow: 5px 5px 10px 1px black;
+    z-index: 30;
+    background-color: rgb(236, 236, 236);
+    border-radius: 10px;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.model-img-card {
+    border-radius: 10px 0 0 0;
+}
+
+.main-card-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-info {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.bottom-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+}
+
+.model-title {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    word-break: break-word;
+}
+
+.model-category {
+    display: flex;
+    flex-grow: 0.2;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: black;
+    color: white;
+}
+
+.model-sub {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    word-break: break-word;
+    text-align: center;
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-style: italic;
+    font-size: 16px;
+}
+
+.card-modal-images {
+    display: flex;
+    overflow-x: auto;
+    transition: 0.5s;
+    width: 400px;
+    height: 210px;
+    min-width: 300px;
+}
+
+.game-idea-buttons {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    flex-grow: 0.5;
+}
+
+.game-idea-buttons button {
+    flex-grow: 1;
+    font-size: 30px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.game-idea-buttons button:nth-child(1) {
+    background-color: green;
+    flex-grow: 1;
+}
+
+.game-idea-buttons button:nth-child(2) {
+    background-color: yellow;
+    flex-grow: 1;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
+.card-modal-idea {
+    word-break: break-word;
+    font-size: 20px;
+    text-align: center;
+    padding: 30px;
+    flex-grow: 6;
+}
+
+@media screen and (max-width: 600px) {
+    #card-modal-info {
+    height: 630px;
+    width: 93%;
+    box-shadow: 5px 5px 10px 1px black;
+    z-index: 30;
+    background-color: rgb(236, 236, 236);
+    border-radius: 10px;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+    .main-card-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+    .card-modal-images {
+        display: flex;
+        overflow-x: auto;
+        transition: 0.5s;
+        width: 360px;
+    }
+}
+
+.closeModal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.post-card{
+    
+    background-size: 300px 400px;
+}

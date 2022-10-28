@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbarCss.css">
+    <link rel="stylesheet" href="/css/home.css">
+<script src="/js/nextPreview.js"></script>
+    <link rel="stylesheet" href="/css/menuSettingsButton.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Home</title>
+</head>
+<body onload="likedFavoritedPubs()">
+    <input type="hidden" id="userId" value="<%=id%>">
+
+    <%- include('./partials/header.ejs') %>
+
+
+    <!--   ---MENU---    -->
+
+        <%- include('./partials/floatingMenu.ejs') %>
+        
+
+    <!-- ////////////  ---MENU---    -->
+
+
+    <!-- FILTER BUTTON -->
+    <span onclick="openFilterModal()" class="filter-icon"><i class="fa-solid fa-filter"></i></span>
+
+    <div class="filter">
+        <span onclick="closeFilterModal()">X</span>
+        <div class="filter-box">
+            priorizar: <br>
+            
+                <div class="filter-itens">
+
+                    <div class="filter-group">
+                        <label class="filter-item" onclick="checkFilterItem('non-filter')">
+                            non-filter<input name="non-filter" type="checkbox"><br>
+                        </label>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-item" onclick="checkFilterItem('liked-by-you')">
+                            liked-by-you<input name="liked-by-you" type="checkbox"><br>
+                        </label>
+                        <label class="filter-item" onclick="checkFilterItem('non-liked-by-you')">
+                            non-liked-by-you<input name="non-liked-by-you" type="checkbox"><br>
+                        </label>
+                    </div>
+
+                    <div class="filter-group" >
+                        <label class="filter-item" onclick="checkFilterItem('most-liked')">
+                            most-liked<input name="most-liked" type="checkbox"><br>
+                        </label>
+                        <label class="filter-item" onclick="checkFilterItem('less-liked')">
+                            less-liked<input name="less-liked" type="checkbox"><br>
+                        </label>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-item" onclick="checkFilterItem('most-recent')">
+                            most-recent<input name="most-recent" type="checkbox"><br>
+                        </label>
+                        <label class="filter-item" onclick="checkFilterItem('older')">
+                            older<input name="older" type="checkbox"><br>
+                        </label>
+                    </div>
+
+
+                    <div class="filter-group">
+                        <label class="filter-item" onclick="checkFilterItem('ASC')">
+                            ASC<input name="ASC" type="checkbox"><br>
+                        </label>
+                        <label class="filter-item" onclick="checkFilterItem('DESC')">
+                            DESC<input name="DESC" type="checkbox"><br>
+                        </label>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-item" onclick="checkFilterItem('Bit-Invested')">
+                            Bit-Invested<input name="Bit-Invested" type="checkbox"><br>
+                        </label>
+                        <label class="filter-item" onclick="checkFilterItem('Most-Invested')">
+                            Most-Invested<input name="Most-Invested" type="checkbox"><br>
+                        </label>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-item" onclick="checkFilterItem('most-investment-required')">
+                            most-investment-required<input name="most-investment-required" type="checkbox"><br>
+                        </label>
+                        <label class="filter-item" onclick="checkFilterItem('lower-investment-required')">
+                            lower-investment-required<input name="lower-investment-required" type="checkbox"><br>
+                        </label>
+                    </div>
+
+                    <button class="green-button" onclick="applyFilter()">APLICAR</button>
+
+                </div>
+
+        </div>
+
+    </div>
+    <!-- FILTER BUTTON -->
+
+        <div class="searchBar">
+            
+                <input id="search" type="text" placeholder=" &#xF002;">
+                <button onclick="searchIdea()" id="buttonSeach"><i class="fa-solid fa-magnifying-glass"></i></button>
+                
+        </div>
+
+
+    <!--POSTS PART-->
+    <div id="container">
+        <div class="posts">
+            <!--CARDS-->
+            <% if(posts != undefined){ posts.forEach(item=>{ %>
+                <div id="<%= item.id %>" style="background-image:url('<%= item.imageUrl %>') ;" class="post-card" >
+                    <div class="card-header"  onclick="openModal('<%= item.id %>')">
+                       <h2><%= item.title %></h2>
+                       <p><%=item.ideaSummary%></p>
+
+                    </div>
+                    <div class="card-img">
+                        
+                    </div>
+                    <div class="card-info">
+                        <i onclick="likePub('<%= item.id %>')" class="fa-solid fa-heart like"></i>
+                        <div>
+                            <p><%= item.initialAmountRequired %></p>
+                            <progress value="500" max="<%= item.initialAmountRequired %>"></progress>
+                        </div>
+                            <i onclick="favoritePub('<%= item.id %>')" class="fa-solid fa-star like"></i>
+                    </div>
+                </div>
+           <% })}else{ %>
+                <div>
+                    HMMMM... sem ideias por enquanto.
+                </div>
+           <%} %>
+
+        
+
+            <!--////CARDS-->
+
+            
+           
+            
+        </div>
+        <%- include('./partials/buttonNextPrevious.ejs') %>
+    </div><br><br><br><br><br><br><br>
+
+
+        <%- include('./partials/modal.ejs') %>
+
+        <%- include('./partials/footer.ejs') %>
+
+</body>
+
+<script src="https://kit.fontawesome.com/4fd5a3a7ad.js" crossorigin="anonymous"></script>
+<script src="/js/menuSettingsButton.js">
+    
+</script>
+<script src="/js/filter.js"></script>
+<script src="/js/getNavDown.js"></script>
+<script src="/js/nextPreview.js"></script>
+<script src="/js/modal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
+
+    
+</script>
+<script>
+        const userId = parseInt(document.getElementById('userId').value);
+
+
+    async function likedFavoritedPubs(){
+        
+
+        for (let i = 0; i < document.getElementsByClassName('post-card').length; i++) {
+            let pubId = document.getElementsByClassName('post-card')[i].id;
+            pubId = parseInt(pubId);
+
+            try {
+                let likedPub = await axios.get(`http://localhost:3000/checkLikeFavorite/${pubId}/${userId}`);
+                console.log(likedPub)
+                if(likedPub.data.result.row[0].liked){
+                    document.getElementById(pubId).classList.add('liked');
+                }
+
+                if (likedPub.data.result.row[0].favoritedIdea) {
+                    document.getElementById(pubId).classList.add('favorited');
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
+
+        }
+
+
+    }
+
+
+
+    async function likePub(pubId){
+        pubId = parseInt(pubId)
+        
+        
+        try {
+            console.log(`tentando`)
+            var status = await axios.put('http://localhost:3000/likePub', {pubId, userId})
+            if (status.data.msg == 'liked') {
+                 document.getElementById(pubId).classList.add('liked');
+            }else{
+                 document.getElementById(pubId).classList.remove('liked');
+
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+     async function favoritePub(pubId) {
+            pubId = parseInt(pubId)
+            
+
+            try {
+                console.log(`tentando`)
+                let status = await axios.put('http://localhost:3000/favoritePub', { userId, pubId })
+                console.log(status)
+                if (status.data.msg == 'favorited') {
+                    document.getElementById(pubId).classList.add('favorited');
+                }else{
+                    document.getElementById(pubId).classList.remove('favorited');
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    
+</script>
+<script >
+    document.getElementById('home').className = "active"
+
+
+
+
+    for (let i = 0; i < document.getElementsByClassName('card-header').length; i++) {
+            const subLength = document.getElementsByClassName('card-header')[i].firstChild.nextSibling.nextElementSibling
+
+            if (subLength.innerHTML.length>75) {
+                subLength.innerHTML = subLength.innerHTML.slice(0, 75)+"<b>...</b>";
+            }
+
+            
+        }
+
+        //formula!!
+       //document.getElementsByClassName('post-card')[0].style.backgroundImage = "url('https://i.pinimg.com/originals/85/85/d6/8585d6750cc7ecfcae2a4b603fc3319a.jpg')";
+
+
+
+</script>
+
+
+<script src="/js/search.js">
+//passar todos os scripts pra esse script a parte dps 
+</script>
+<script>
+
+    const postsArrayInitialState = document.getElementsByClassName('posts')[0].innerHTML;
+
+
+    document.getElementById('search').addEventListener('keydown', ()=>{searchIdea()})
+
+
+
+    function searchIdea(){
+
+            
+
+        if (document.getElementById('search').value.length < 1) {
+            document.getElementsByClassName('posts')[0].innerHTML = postsArrayInitialState
+        }
+
+        axios.get('http://localhost:3000/searchPost/0/' + document.getElementById('search').value)
+            .then(posts => {
+
+                const arrayPosts = posts.data.result;
+
+                //criação de um post
+
+                document.getElementsByClassName('posts')[0].innerHTML = ''
+
+                console.log(arrayPosts)
+
+                if (!arrayPosts) {
+                    document.getElementsByClassName('posts')[0].innerHTML = 'HMMMM... sem ideias por enquanto.'
+                }
+
+                arrayPosts.forEach(element => {
+                    console.log(element)
+                    let postCard = document.createElement('div');
+                    postCard.classList.add('post-card')
+                    postCard.id = element.id
+                    postCard.style.backgroundImage = "url(" + element.imageUrl + ")";
+
+
+
+                    let cardHeader = document.createElement('div');
+                    cardHeader.classList.add('card-header');
+                    cardHeader.onclick = () => {
+                        openModal(element.id)
+                    }
+                    let h2CardHeader = document.createElement('h2');
+                    h2CardHeader.innerHTML = element.title
+                    let pCardHeader = document.createElement('p');
+                    pCardHeader.innerHTML = element.ideaSummary
+                    let cardImg = document.createElement('div');
+                    cardImg.classList.add('card-img');
+                    let cardInfo = document.createElement('div');
+                    cardInfo.classList.add('card-info');
+                    let interaction1 = document.createElement('i');
+                    interaction1.className = 'fa-solid fa-heart like'
+                    interaction1.onclick = () => {
+                        likePub(element.id)
+                    }
+
+                    let div1 = document.createElement('div');
+                    let pAmount = document.createElement('p');
+                    pAmount.innerHTML = element.initialAmountRequired
+                    let progressBar = document.createElement('progress');
+                    progressBar.max = element.initialAmountRequired
+                    progressBar.value = "500"
+
+
+                    let interaction2 = document.createElement('i');
+                    interaction2.className = 'fa-solid fa-star like';
+                    interaction2.onclick = () => {
+                        favoritePub(element.id)
+                    }
+
+
+                    postCard.appendChild(cardHeader)
+                    cardHeader.appendChild(h2CardHeader)
+                    cardHeader.appendChild(pCardHeader)
+                    postCard.appendChild(cardImg)
+                    postCard.appendChild(cardInfo)
+                    cardInfo.appendChild(interaction1)
+                    cardInfo.appendChild(div1)
+                    div1.appendChild(pAmount)
+                    div1.appendChild(progressBar)
+                    cardInfo.appendChild(interaction2)
+                    document.getElementsByClassName('posts')[0].appendChild(postCard)
+
+
+                })
+
+
+
+
+
+
+            })
+            .catch(error => {
+                console.log('nada encontrado')
+            })
+
+    }
+
+
+
+</script>
+
+</html>

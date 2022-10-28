@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="newPassword" placeholder="New Password">
+    <input type="text" id="confirmPassword" placeholder="confirm new pass">
+    <button onclick="confirmPassChange('<%=token%>', '<%=email%>')">CONFIRM</button>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
+</script>
+
+<script>
+    function confirmPassChange(token, email){
+
+        var pass = document.getElementById('newPassword').value;
+        var confirmPass = document.getElementById('confirmPassword').value;
+
+        if (pass == confirmPass) {
+            
+            axios.post('http://localhost:3000/changePass',{
+                token: token,
+                email: email,
+                password: pass
+            }).then(res=>{
+                window.location.href = 'http://localhost:8080/login'
+            }).catch(err=>{
+                console.log(err)
+            })
+
+        }else{
+            alert('as senhas não são compatíveis')
+        }
+
+        console.log(token)
+    }
+</script>
+
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/sign.css">
+
+</head>
+
+<body>
+
+
+    <div id="content">
+        <h1>MSGAMES</h1>
+        
+            <input type="text" name="email" placeholder="email">
+            <button onclick="sendEmail()">Your email</button>
+    </div>
+
+
+
+    <%- include('./partials/footer.ejs') %>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    function sendEmail(){
+        var email = document.getElementsByName('email')[0].value;
+
+        console.log(email)
+        axios.post('http://localhost:3000/passrecovery', {
+            email
+        }).then(res=>{
+            console.log(res);
+        })
+    }
+
+</script>
+
+</html>

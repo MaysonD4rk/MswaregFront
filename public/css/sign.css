@@ -1,0 +1,38 @@
+/* ///////// LOGIN/REGISTER PAGE ////////////*/
+
+
+#content {
+    background-color: rgb(219, 219, 219);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 94.5%;
+    flex-direction: column;
+}
+
+#content form {
+    display: flex;
+    flex-direction: column;
+}
+
+#content input {
+    outline: none;
+    height: 50px;
+    width: 300px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+#content button {
+    height: 50px;
+    width: 300px;
+    outline: none;
+    border: 5px dotted brown;
+    border-radius: 15px;
+    font-size: 20px;
+    background-color: rgb(46, 46, 46);
+    color: white;
+    font-weight: bold;
+}

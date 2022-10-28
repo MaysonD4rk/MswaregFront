@@ -1,0 +1,117 @@
+input{
+    width: 75%;
+    height: 35px;
+    border: none;
+    border-bottom: 1px solid black;
+    
+    border-radius: 3px;
+    font-size: 20px;
+    transition: 0.5s;
+}
+
+/* #search:focus{
+    box-shadow: 1px 1px 5px black;
+    transform: translateX(-10px);
+} */
+.searchBar{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+}
+
+.container input{
+    font-family: Arial, Helvetica, FontAwesome , sans-serif;
+    padding-left: 10px;
+    
+}
+
+.container .searchBar button{
+    width: 30px;
+    font-size: 25px;
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0);
+    border: none;
+    transition: 0.5s;
+    
+}
+
+.asks{
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 100%;
+    
+}
+
+.ask-item{
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    max-width: fit-content;
+    height: 200px;
+    padding: 10px;
+    transition: 0.5s;
+    margin-top: 30px;
+    margin-left: 5px;
+}
+.ask-item:hover {
+    border: 1px solid grey;
+    box-shadow: 1px 1px 5px 3px rgba(0, 0, 0, 0.5);
+    transform: translateY(-5px);
+    background-color: rgb(245, 245, 245);
+}
+
+.ask-item:hover input {
+    background-color: rgb(245, 245, 245);
+}
+textarea{
+    transition: 0.5s;
+    resize: none;
+}
+.ask-item:hover textarea {
+    background-color: rgb(245, 245, 245);
+}
+
+.ask-item-img{
+    margin-right: 40px;
+    border: 1px solid black;
+    min-height: 100px;
+    min-width: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: 100px;
+}
+.ask-item-info{
+    width: 100%;
+    max-height: 190px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+
+    border-bottom: 1px solid grey;
+    
+
+}
+
+.ask-text{
+    word-break: break-all;
+}
+
+#searchModalUsers{
+    background-color: rgb(255, 255, 255);
+    
+    display: none;
+}
+
+#searchModalUsers ul li:hover{
+    background-color: rgb(221, 221, 221);
+}

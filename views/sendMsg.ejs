@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbarCss.css">
+    <link rel="stylesheet" href="/css/menuSettingsButton.css">
+    <script src="/js/nextPreview.js"></script>
+    <link rel="stylesheet" href="/css/sendAmsg.css">
+    <title>send a msg</title>
+</head>
+<body>
+
+    
+    
+    <!--NAVBAR PART-->
+        <%- include('./partials/header.ejs') %>
+    <!-- //////// NAVBAR PART-->
+
+
+
+    <!--   ---MENU---    -->
+    
+    <%- include('./partials/floatingMenu.ejs') %>
+    
+    <!-- ////////////  ---MENU---    -->
+
+
+    
+    
+    <div class="container">
+        <div class="statusModal">
+            <div></div>
+        </div>
+
+        <div class="searchBar">
+            <input id="search" type="text" placeholder=" &#xF002;">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="asks">
+            <div class="ask-item">
+                
+                <div class="ask-item-img" style="background-image: url(<%=userData.profilePhotoUrl%>) ;"></div>
+                <div class="ask-item-info">
+            
+                    <div>
+                        <h3>from: @<%=userData.username%>
+                        </h3>
+                    </div>
+                    <div>
+                        <h3>to @: <input type="text" id="textTo">
+                        </h3>
+                        <div id="searchModalUsers">
+                           <ul id="searchUserList">
+                                
+                           </ul>
+                        </div>
+                    </div>
+                    <h3>msg: </h3>
+                    <div class="ask-text">
+                        <textarea id="msg" cols="30" rows="4"></textarea>
+                        
+                    </div>
+                    <button onclick="writeMsg('<%=id%>')">ENVIAR</button>
+                </div>
+            </div>
+
+            <% if(msgs != undefined){msgs.forEach(msg => { %>
+                <div class="ask-item">
+                    <div style="background-image: url('<%= msg.profilePhoto %>');" class="ask-item-img">img</div>
+                    <div class="ask-item-info">
+                
+                        <div>
+                            <h3>from: @<%= msg.username %></h3>
+                        </div>
+                        <div>
+                            <h3>to: @<%= msg.recipientName %></h3>
+                        </div>
+                        <h3>msg: </h3>
+                        <div class="ask-text">
+                
+                        <%= msg.msg %>
+                
+                            
+                        </div>
+                
+                    </div>
+                </div>
+                
+            <%})}else{%>
+                <div>Sem cartas por enquanto</div>
+                
+                <%}%>
+            
+        </div>
+        <%- include('./partials/buttonNextPrevious.ejs') %>
+        </div><br><br><br><br><br><br><br>
+    </div>
+
+        <br><br><br><br>
+        <%- include('./partials/footer.ejs') %>
+
+</body>
+
+<script src="https://kit.fontawesome.com/4fd5a3a7ad.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
+</script>
+<script>
+
+
+    async function writeMsg(senter){
+        let recipient = document.getElementById('textTo').value;
+        senter = parseInt(senter);
+        console.log(senter)
+        let msg = document.getElementById('msg').value
+
+        try {
+            let tryWrite = await axios.post('http://localhost:3000/writeMsg',{userId: senter, recipientName: recipient, msg})
+            document.getElementsByClassName('statusModal')[0].style.display = 'flex';
+            document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.className = 'success';
+            document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.innerHTML = tryWrite.data.msg;
+            console.log('deu certo')
+            
+            setTimeout(() => {
+                document.getElementsByClassName('statusModal')[0].style.display = 'none';
+
+            }, 500);
+        } catch (error) {
+            document.getElementsByClassName('statusModal')[0].style.display = 'flex';
+            document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.className = 'failed';
+            document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.innerHTML = 'usuário não encontrado, tome cuidado!';
+            setTimeout(() => {
+            document.getElementsByClassName('statusModal')[0].style.display = 'none';
+            console.log('deu erro')
+            }, 500);
+        }
+        
+    }
+
+
+</script>
+
+<script>
+
+    const asksArrayInitialState = document.getElementsByClassName('asks')[0].innerHTML;
+    
+
+
+    document.getElementById('search').addEventListener('focus',()=>{
+        document.getElementsByTagName('button')[0].style.color = "rgba(0, 0, 0, 1)"
+    })
+    document.getElementById('search').addEventListener('blur', () => {
+            document.getElementsByTagName('button')[0].style.color = "rgba(0, 0, 0, 0)"
+        })
+
+    document.getElementById('sendMsg').className = "active"
+
+    
+     document.getElementById('search').addEventListener('keydown',(event)=>{
+        console.log(event.keyCode)
+        if (!(event.keyCode >= 9 && event.keyCode <= 45)) {
+            searchMsg();
+        }else{
+            console.log('n entrou na primeira condição')
+        }
+        
+     })
+
+
+
+
+     
+     
+     
+     let textTo = document.getElementById('textTo')
+     let userList = document.getElementById('searchUserList')
+     
+     let modalUserList = document.getElementById('searchModalUsers');
+     let arrayUserList = []
+
+     textTo.addEventListener('keydown', (event)=>{
+        
+         // 
+
+         if (textTo.value.length > 0) {
+            modalUserList.style.display = 'block'
+         }else{
+            modalUserList.style.display = 'none'
+         }
+        
+            axios.get('http://localhost:3000/searchUser/' + document.getElementById('textTo').value)
+            .then((res)=>{
+   
+               res.data.result.row.forEach(element=>{
+                    arrayUserList.push(element.username)
+                    userList.innerHTML = ''
+               })
+
+
+               arrayUserList.splice(0, ( arrayUserList.length - res.data.result.row.length) )
+   
+               arrayUserList.forEach(element=>{
+                   let usernameLi = document.createElement('li');
+                   
+                   usernameLi.innerHTML = element
+                   usernameLi.onclick = ()=>{
+                    textTo.value = element
+                    userList.innerHTML = ''
+                   }
+
+                   userList.appendChild(usernameLi)
+               })
+
+               
+            })
+            .catch(err=>{
+               userList.innerHTML = ''
+            })
+            
+            
+     })
+
+
+
+     function searchMsg(){
+        
+         document.getElementById('search').value
+         document.getElementsByClassName('asks')[0].innerHTML = ''
+
+         if (document.getElementById('search').value.length < 1) {
+            document.getElementsByClassName('asks')[0].innerHTML = asksArrayInitialState;
+         }
+
+
+         axios.get('http://localhost:3000/searchMsgList/0/' + document.getElementById('search').value)
+             .then(msgs => {
+                
+                 msgs.data.result.row.forEach(element => {
+                    
+
+                     let askItem = document.createElement('div');
+                     askItem.classList.add('ask-item')
+                     let h3 = document.createElement('h3')
+                     let askItemImg = document.createElement('div')
+                     askItemImg.classList.add('ask-item-img')
+                     askItemImg.style.backgroundImage = `url(${element.profilePhoto})`
+
+
+                     let askItemInfo = document.createElement('div');
+                     askItemInfo.classList.add('ask-item-info')
+
+                     let div1 = document.createElement('div');
+                     let div1h3 = document.createElement('h3')
+                     div1h3.innerHTML = "from: @" + element.username
+                     let div2 = document.createElement('div');
+                     let div2h3 = document.createElement('h3')
+                     div2h3.innerHTML = "to: @" + element.recipientName
+                     let askText = document.createElement('div')
+                     askText.innerHTML = element.msg
+                     askText.classList.add('ask-text')
+
+                     askItem.appendChild(askItemImg)
+                     askItem.appendChild(askItemInfo)
+                     askItemInfo.appendChild(div1)
+                     div1.appendChild(div1h3)
+                     askItemInfo.appendChild(div2)
+                     div2.appendChild(div2h3)
+                     askItemInfo.appendChild(askText)
+                     document.getElementsByClassName('asks')[0].appendChild(askItem)
+                     console.log('chegou aqui')
+
+
+                 });
+
+             })
+             .catch(error => {
+                 console.log('nada encontrado')
+             })
+
+     }
+
+</script>
+
+
+<script src="/js/menuSettingsButton.js">
+
+</script>
+<script src="/js/getNavDown.js">
+    
+</script>
+
+</html>

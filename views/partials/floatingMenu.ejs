@@ -1,0 +1,35 @@
+<!--   ---MENU---    -->
+
+<div class="settings-menu" onclick="menuSettingsButton()">
+    <i class="fa-solid fa-bars"></i>
+    <div class="menu-itens">
+        <div class="menu-item">
+            <a href="/profile/<%= userData.username %>" class="icon-hover">
+                    <i class="fa-solid fa-user"></i>
+                    <p class="textIcon"><b>@<%= userData.username %></b></p>
+            </a>
+
+        </div>
+        <div class="menu-item">
+            <a href="/accountSettings" class="icon-hover">
+                <i class="fa-solid fa-gear"></i>
+                <p class="textIcon"><b>Settings</b></p>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="/writeIdea" class="icon-hover">
+                <i class="fa-solid fa-feather"></i>
+                <p class="textIcon"><b>Write a new idea</b></p>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a href="#" class="icon-hover">
+                <i class="fa-solid fa-wallet"></i>
+                <p class="textIcon"><b>W$<%= userData.credits %> </b></p>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<!-- ////////////  ---MENU---    -->
