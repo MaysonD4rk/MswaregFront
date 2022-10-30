@@ -11,7 +11,7 @@ function closeModal(id){
     donateTable = false;
 }
 
-async function openModal(id){
+async function openIdeaModal(id){
     id = parseInt(id);
     currentProject = id;
 
@@ -152,3 +152,6 @@ function statusModal(status, msg){
 
 
 
+function openModal(id){
+document.getElementById(id).style.display= "flex"
+}

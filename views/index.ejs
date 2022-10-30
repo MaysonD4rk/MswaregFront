@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="/css/home.css">
 <script src="/js/nextPreview.js"></script>
     <link rel="stylesheet" href="/css/menuSettingsButton.css">
+
+    <!-- style report - feedback screen -->
+    <link rel="stylesheet" href="/css/reportFeeback.css">
+    <!--/// style report - feedback screen -->
+    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Home</title>
 </head>
@@ -26,6 +31,76 @@
         
 
     <!-- ////////////  ---MENU---    -->
+
+
+
+    <!-- FEEDABCK - REPORT SCREEN  -->
+
+
+        <div id="report-feedback-modal" >
+
+            <div id="report-feedback-container">
+                <div class="actions-header">
+                    <div>
+                        <i onclick="getPreviewPage()" class="fa-solid fa-arrow-left"></i>
+                        <i onclick="closeModal('report-feedback-modal')" class="fa-solid fa-x"></i>
+                    </div>
+                </div>
+                <div id="select-action">
+                    <ul>
+                        <li onclick="selectAction('feedback')">Feedback <i class="fa-regular fa-comment" style="font-size: 20px;"></i></li>
+                        <li onclick="selectAction('report')">Report <i onclick="console.log('report')" style="color: rgb(168, 25, 25); font-size: 20px;" class="fa-solid fa-flag"></i></li>
+                    </ul>
+                </div>
+
+                <div id="pages">
+                    <div id="report-page">
+                        <h1>report</h1>
+
+                        <div id="report-option">
+                             <ul>
+                                <li onclick="selectReportCategorie('spam')">Spam</li>
+                                <li onclick="selectReportCategorie('ofensivo')">Ofensivo</li>
+                                <li onclick="selectReportCategorie('SI')">Sexualmente inapropriado</li>
+                                <li onclick="selectReportCategorie('suspeito')">Suspeito</li>
+                                <li onclick="selectReportCategorie('PI')">Proibido ou infrigido</li>
+                                <li onclick="selectReportCategorie('FG')">Fraude ou golpe</li>
+                                <li onclick="selectReportCategorie('outros')">Others</li>
+
+                            </ul>
+                        </div>
+                            <div id="report-form">
+                                <div class="form-feedback-report">
+                                    <textarea name="" id="report-textArea" class="feedback-report-textArea" cols="30" rows="10"></textarea>
+                                    <h4>Ideia Reportada:</h4>
+                                    <p>"NOME DO JOGO"</p>
+                                    <button class="green-button">ENVIAR!</button>
+                                </div>
+                            </div>
+
+                    </div>
+
+                    <div id="feedback-page">
+                        <h1>Feedback</h1>
+                        <textarea name="" class="feedback-report-textArea" id="feedback-textArea" cols="30" rows="10"></textarea>
+                        <div class="form-feedback-report">
+                            <h4>Jogo qual enviará o feedback:</h4>
+                            <p>"NOME DO JOGO"</p>
+                            <button class="green-button">ENVIAR!</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            
+
+        </div>
+
+
+    <!-- ////////// FEEDABCK - REPORT SCREEN   -->
+
 
 
     <!-- FILTER BUTTON -->
@@ -122,11 +197,13 @@
             <!--CARDS-->
             <% if(posts != undefined){ posts.forEach(item=>{ %>
                 <div id="<%= item.id %>" style="background-image:url('<%= item.imageUrl %>') ;" class="post-card" >
-                    <div class="card-header"  onclick="openModal('<%= item.id %>')">
+                    <div class="card-header"  onclick="openIdeaModal('<%= item.id %>')">
+                        
                        <h2><%= item.title %></h2>
                        <p><%=item.ideaSummary%></p>
-
+                       
                     </div>
+                    <i onclick="openModal('report-feedback-modal')" style="color: rgb(168, 25, 25); font-size: 20px;" class="fa-solid fa-flag"></i>
                     <div class="card-img">
                         
                     </div>
@@ -318,7 +395,7 @@
                     let cardHeader = document.createElement('div');
                     cardHeader.classList.add('card-header');
                     cardHeader.onclick = () => {
-                        openModal(element.id)
+                        openIdeaModal(element.id)
                     }
                     let h2CardHeader = document.createElement('h2');
                     h2CardHeader.innerHTML = element.title
@@ -375,6 +452,69 @@
             })
 
     }
+
+
+
+</script>
+
+
+<script>
+    // REPORT FEEDBACK SCRIPTS
+
+    let currentPage;
+    let previewPage;
+
+    function selectAction(action){
+        currentPage = action+'1';
+        previewPage = 'selectAction'
+
+        console.log(currentPage)
+        document.getElementById('select-action').style.display = 'none';
+
+        if(action == 'feedback') {
+            document.getElementById('pages').style.display = 'flex';
+            document.getElementById('report-page').style.display = 'none'
+            document.getElementById('feedback-page').style.display = 'flex'
+        }else{
+            document.getElementById('pages').style.display = 'flex';
+            document.getElementById('report-page').style.display = 'flex'
+            document.getElementById('report-option').style.display = 'flex'
+            document.getElementById('feedback-page').style.display = 'none'
+        }
+    }
+
+    function selectReportCategorie(categorie){
+        
+        previewPage = 'report1'
+        
+
+        document.getElementById('report-option').style.display = 'none'
+        document.getElementById('report-form').style.display = 'flex'
+    }
+
+    function getPreviewPage(){
+        
+        switch (previewPage) {
+            case 'selectAction':
+                document.getElementById('pages').style.display = 'none';
+                document.getElementById('select-action').style.display = 'flex';
+                break;
+                case 'report1': 
+                document.getElementById('pages').style.display = 'flex';
+                document.getElementById('report-page').style.display = 'flex'
+                document.getElementById('report-option').style.display = 'flex'
+                document.getElementById('feedback-page').style.display = 'none'
+                document.getElementById('report-form').style.display = 'none';
+                previewPage = 'selectAction'
+                
+            break;
+            default:
+                break;
+        }
+
+    }
+
+
 
 
 
