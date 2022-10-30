@@ -42,7 +42,7 @@
             <div id="report-feedback-container">
                 <div class="actions-header">
                     <div>
-                        <i onclick="getPreviewPage()" class="fa-solid fa-arrow-left"></i>
+                        <i onclick="getPreviewPage()" class="fa-solid fa-arrow-left" style="display: none;"></i>
                         <i onclick="closeModal('report-feedback-modal')" class="fa-solid fa-x"></i>
                     </div>
                 </div>
@@ -73,8 +73,8 @@
                                 <div class="form-feedback-report">
                                     <textarea name="" id="report-textArea" class="feedback-report-textArea" cols="30" rows="10"></textarea>
                                     <h4>Ideia Reportada:</h4>
-                                    <p>"NOME DO JOGO"</p>
-                                    <button class="green-button">ENVIAR!</button>
+                                    <p class="insertIdeaName">"NOME DO JOGO"</p>
+                                    <button class="green-button sendReport">ENVIAR!</button>
                                 </div>
                             </div>
 
@@ -85,8 +85,8 @@
                         <textarea name="" class="feedback-report-textArea" id="feedback-textArea" cols="30" rows="10"></textarea>
                         <div class="form-feedback-report">
                             <h4>Jogo qual enviará o feedback:</h4>
-                            <p>"NOME DO JOGO"</p>
-                            <button class="green-button">ENVIAR!</button>
+                            <p class="insertIdeaName">"NOME DO JOGO"</p>
+                            <button class="green-button sendFeedback">ENVIAR!</button>
                         </div>
 
                     </div>
@@ -203,7 +203,7 @@
                        <p><%=item.ideaSummary%></p>
                        
                     </div>
-                    <i onclick="openModal('report-feedback-modal')" style="color: rgb(168, 25, 25); font-size: 20px;" class="fa-solid fa-flag"></i>
+                    <i onclick="openModal('report-feedback-modal', '<%=item.id%>')" style="color: rgb(168, 25, 25); font-size: 20px;" class="fa-solid fa-flag"></i>
                     <div class="card-img">
                         
                     </div>
@@ -468,6 +468,7 @@
         currentPage = action+'1';
         previewPage = 'selectAction'
 
+
         console.log(currentPage)
         document.getElementById('select-action').style.display = 'none';
 
@@ -475,11 +476,14 @@
             document.getElementById('pages').style.display = 'flex';
             document.getElementById('report-page').style.display = 'none'
             document.getElementById('feedback-page').style.display = 'flex'
+            document.getElementsByClassName('fa-arrow-left')[0].style.display = 'initial'
         }else{
             document.getElementById('pages').style.display = 'flex';
             document.getElementById('report-page').style.display = 'flex'
             document.getElementById('report-option').style.display = 'flex'
             document.getElementById('feedback-page').style.display = 'none'
+            document.getElementsByClassName('fa-arrow-left')[0].style.display = 'initial'
+
         }
     }
 
@@ -490,16 +494,22 @@
 
         document.getElementById('report-option').style.display = 'none'
         document.getElementById('report-form').style.display = 'flex'
+        document.getElementsByClassName('fa-arrow-left')[0].style.display = 'initial'
+                
     }
 
     function getPreviewPage(){
         
+        console.log(previewPage)
+
         switch (previewPage) {
             case 'selectAction':
                 document.getElementById('pages').style.display = 'none';
                 document.getElementById('select-action').style.display = 'flex';
+                document.getElementsByClassName('fa-arrow-left')[0].style.display = 'none'
                 break;
                 case 'report1': 
+                document.getElementsByClassName('fa-arrow-left')[0].style.display = 'initial'
                 document.getElementById('pages').style.display = 'flex';
                 document.getElementById('report-page').style.display = 'flex'
                 document.getElementById('report-option').style.display = 'flex'

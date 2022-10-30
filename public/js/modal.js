@@ -152,6 +152,19 @@ function statusModal(status, msg){
 
 
 
-function openModal(id){
-document.getElementById(id).style.display= "flex"
+async function openModal(elementId, itemId){
+    document.getElementById(elementId).style.display= "flex";
+
+    let result = await axios.get(`http://localhost:3000/findPub/${itemId}`);
+    let title = result.data.pubData.title;
+    document.getElementsByClassName('insertIdeaName')[0].innerHTML = `"${title}"`;
+    document.getElementsByClassName('insertIdeaName')[1].innerHTML = `"${title}"`;
+    document.getElementsByClassName('sendFeedback')[0].onclick = ()=>{
+        console.log('enviou o feedBack')
+    };
+    document.getElementsByClassName('sendReport')[0].onclick = () => {
+        console.log('enviou o report')
+
+    };
+    
 }
