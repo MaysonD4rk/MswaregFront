@@ -278,6 +278,23 @@ app.get('/addPubImg/:pubIdea', (req, res) => {
 
 })
 
+app.get('/seusFeedbacks',(req, res)=>{
+    sess = req.session
+
+    axios({
+        method: "get",
+        url: "http://localhost:3000/user/" + sess.userId
+    }).then(async (data) => {
+        console.log(data);
+
+        res.render('feedbacksReports', {
+            userData: data.data[0]        
+        })
+    })
+
+    
+})
+
 
 
 

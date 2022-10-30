@@ -1,7 +1,7 @@
 
 var donateTable = false;
 var currentProject = 0;
-
+const userId = parseInt(document.getElementById('userId').value);
 let reader = new FileReader();
 
 
@@ -154,16 +154,34 @@ function statusModal(status, msg){
 
 async function openModal(elementId, itemId){
     document.getElementById(elementId).style.display= "flex";
+    itemId = parseInt(itemId)
+    console.log(itemId)
 
     let result = await axios.get(`http://localhost:3000/findPub/${itemId}`);
     let title = result.data.pubData.title;
     document.getElementsByClassName('insertIdeaName')[0].innerHTML = `"${title}"`;
     document.getElementsByClassName('insertIdeaName')[1].innerHTML = `"${title}"`;
-    document.getElementsByClassName('sendFeedback')[0].onclick = ()=>{
-        console.log('enviou o feedBack')
+    document.getElementsByClassName('sendFeedback')[0].onclick = async ()=>{
+
+        let sendFeedbackResult = await axios.post('http://localhost:3000/sendFeedback', {
+            userId,
+            ideaId: itemId,
+            feedbackMsg: document.getElementById('feedback-textArea').value,
+        })
+
+        console.log(sendFeedbackResult)
+
     };
-    document.getElementsByClassName('sendReport')[0].onclick = () => {
-        console.log('enviou o report')
+    document.getElementsByClassName('sendReport')[0].onclick = async () => {
+       
+        let sendReportResult = await axios.post('http://localhost:3000/sendReport', {
+            userId,
+            reportMsg: document.getElementById('report-textArea').value,
+            ideaReport: itemId,
+            reportCategorie: reportCategorie.value
+        })
+        console.log(sendReportResult)
+
 
     };
     

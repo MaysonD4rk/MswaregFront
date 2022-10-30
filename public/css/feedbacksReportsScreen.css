@@ -1,0 +1,88 @@
+#feedbackReportScreen{
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    background-color: #EEE;
+    justify-content: center;
+    align-items: center;
+}
+
+#containerFR{
+    background-color: white;
+    display: flex;
+    height: 700px;
+    flex: 1;
+
+}
+
+#feedbacks{
+    height: 100%;
+    width: 100%;
+}
+
+#reports{
+    width: 100%;
+    height: 100%;
+    
+}
+
+.tab-container{
+    
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+
+#myTabContent{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    border-left: 1px solid rgb(184, 184, 184);
+    
+}
+
+#myTab{
+    display: flex;
+    flex-direction: row;
+    
+    width: 215px;
+}
+
+.listFeedbacks-reports>div{
+    
+    margin-bottom: 10px;
+    padding: 15px;
+    width: 100%;
+    border-bottom: 1px solid rgb(206, 206, 206);
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.listFeedbacks-reports>div:hover {
+    background-color: #EEE;
+}
+
+#reportsList{ display: none;}
+#feedbacksList{display: initial;}
+
+#reports-tab{
+    display: none;
+}
+
+#reports-tab-container{
+    
+    display: flex;
+    flex: 1;
+}
+
+@media only screen and (max-width: 400px) {
+    #myTab {
+            display: flex;
+            flex-direction: row;
+    
+            width: 100%;
+        }
+}
