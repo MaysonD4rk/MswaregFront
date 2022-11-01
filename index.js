@@ -280,6 +280,9 @@ app.get('/addPubImg/:pubIdea', (req, res) => {
 
 app.get('/seusFeedbacks',(req, res)=>{
     sess = req.session
+    if (sess.userId == undefined) {
+        res.redirect('/login')
+    }
 
     axios({
         method: "get",
@@ -287,12 +290,44 @@ app.get('/seusFeedbacks',(req, res)=>{
     }).then(async (data) => {
         console.log(data);
 
-        res.render('feedbacksReports', {
-            userData: data.data[0]        
-        })
+        const feedbackList = await axios.get('http://localhost:3000/listFeedbacks/'+sess.userId+'/0')
+        
+        console.log(data.data[0].role)
+
+        if (data.data[0].role != 1) {
+            res.render('feedbacksReports', {
+                userData: data.data[0],
+                mod: false,
+                feedbackList: feedbackList.data.result
+            })
+        }else{
+            const reportsList = await axios.get('http://localhost:3000/listReports/0');
+            console.log(reportsList.data.result)
+            res.render('feedbacksReports', {
+                userData: data.data[0],
+                feedbackList: feedbackList.data.result,
+                mod: true,
+                reportsList: reportsList.data.result
+            })
+        }
     })
 
     
+})
+
+app.get('/getIdeaById/:ideaId', async (req,res)=>{
+    const ideaId = req.params.ideaId
+    try {
+        let idea = await axios.get(`http://localhost:3000/findPub/${ideaId}`);
+        console.log(idea.data.pubData)
+    
+        res.render('idea', {
+            post: idea.data.pubData
+        })
+    } catch (error) {
+        console.log(error)
+    }
+
 })
 
 

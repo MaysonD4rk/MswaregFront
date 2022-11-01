@@ -4,8 +4,7 @@
     var boldInsertStatus= false;
     var fReader = new FileReader();
     var cardModalImg = document.getElementsByClassName('card-modal-images')[0]
-    let userIdInput = document.getElementById('userId').value;
-    const userId = userIdInput;
+    
 
     const professionalInfo = [{
             DevAprendiz: 0,

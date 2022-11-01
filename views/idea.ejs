@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/home.css">
+
+    <title>Ideia</title>
+</head>
+<body>
+    
+    <h1>IDEIA</h1>
+
+    <div id="modal" style="display: none;">
+        ss
+        <div id="card-modal-info">
+            <span class="closeModal" onclick="closeModal()">X</span>
+            <div>
+                <div class="main-card-info">
+                    <div class="card-modal-images">
+                        <% if( post.images.length>0){ post.images.forEach(item=>{%>
+                            <img src="<%=item.url%>" />
+                        <%})}%>
+                    </div>
+                    <div class="main-info">
+                        <div class="model-title">
+                            <%= post.title %>
+                        </div>
+                        <div class="model-sub">
+                            <%=post.ideaSummary%>
+                        </div>
+                    </div>
+                </div><br>
+    
+    
+                <div class="bottom-info">
+                    <div class="card-modal-idea">
+                        <%- post.mainIdea %>
+                    </div>
+    
+                    <div class="game-idea-buttons">
+                        <button class="actionButton"><i class="fa-solid fa-hand-holding-dollar"></i></button>
+                        <button class="actionButton"><i class="fa-solid fa-scroll"></i></button>
+                    </div>
+    
+                    <div class="model-category">
+                        <div> #Category </div>
+                        <div> @Maison </div>
+                        <div>05/29/2022 </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+    <div style="background-image:url('<%= post.mainImg %>');" class="post-card">
+        <div class="card-header" onclick="openModal()">
+    
+            <h2>
+                <%= post.title %>
+            </h2>
+            <p>
+                <%=post.ideaSummary%>
+            </p>
+    
+        </div>
+        <i  style="color: rgb(168, 25, 25); font-size: 20px;"
+            class="fa-solid fa-flag"></i>
+        <div class="card-img">
+    
+        </div>
+        <div class="card-info">
+            <i class="fa-solid fa-heart like"></i>
+            <div>
+                <p>
+                    1000
+                </p>
+                <progress value="500" max="500"></progress>
+            </div>
+            <i class="fa-solid fa-star like"></i>
+        </div>
+    </div>
+
+
+
+</body>
+<script>
+
+    function openModal(){
+        document.getElementById('modal').style.display= 'flex'
+    }
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none'
+    }
+
+</script>
+</html>

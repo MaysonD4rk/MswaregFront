@@ -16,36 +16,54 @@
 
     <%- include('./partials/floatingMenu.ejs') %>
 
+    <input type="hidden" id="userId" value="<%=userData.id%>">
+
     
     <div id="feedbackReportScreen">
         <!-- container feedback-Report or FR -->
         <div id="containerFR">
+            
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="feedbacks-tab" data-toggle="tab" href="#feedbacks" role="tab" aria-controls="feedbacks"
                         aria-selected="true" onclick="listFeedbackReports('feedbacks')">Feedbacks</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="reports-tab" data-toggle="tab" href="#reports" role="tab" aria-controls="reports"
-                        aria-selected="false" onclick="listFeedbackReports('reports')">Reports</a>
-                </li>
+                <% if(mod){%>
+                    <li class="nav-item">
+                        <a class="nav-link" id="reports-tab" data-toggle="tab" href="#reports" role="tab" aria-controls="reports"
+                            aria-selected="false" onclick="listFeedbackReports('reports')">Reports</a>
+                    </li>
+                <%}%>
                 <div class="listFeedbacks-reports" id="feedbacksList">
-                    <div onclick="openSelection('feedback')">
-                        Usuário: Maison <br>
-                        Jogo: sword Art online
-                    </div>
-                    <div onclick="openSelection('feedback')">
-                        Usuário: Maison <br>
-                        Jogo: sword Art online
-                    </div>
-                    <div onclick="openSelection('feedback')">
-                        Usuário: Maison <br>
-                        Jogo: sword Art online
-                    </div>
-                </div>
+                    <% feedbackList.forEach(item=>{%>
 
+                        <div onclick="openSelection('feedback', '<%=item.id%>')">
+                            usuário: <%= item.username %> <br>
+                            Jogo: <%= item.title %>
+                        </div>
+
+                    <%})%>
+                    
+                    <!-- <i onclick="limitList()" class="fa-solid fa-rotate-right loadIcon"></i> -->
+                </div>
+                
                 <div class="listFeedbacks-reports" id="reportsList">
                     <!-- APENAS PARA MODERADORES! -->
+
+
+
+                    <% reportsList.forEach(item=>{%>
+
+                        <div onclick="openSelection('report', '<%=item.ideaId%>', '<%=item.reports%>','<%=item.categorieReport%>')">
+                            De: <%= item.reports %> users <br>
+                            Jogo: <%= item.title %> <%= item.ideaId %>
+                            categoria: <%= item.categorieReport %>
+                        </div>
+
+                    <%})%>
+
+
+
                     <!-- <div onclick="openSelection('report')">
                         Usuário: Maison <br>
                         Jogo: sword Art online
@@ -55,17 +73,11 @@
 
             </ul>
             <div class="tab-content" id="myTabContent">
+                
                 <div class="tab-pane fade show active" id="feedbacks" role="tabpanel" aria-labelledby="feedbacks-tab">
                     <div class="tab-container" id="feedbacks-tab-container">
                         <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
-                            <h1>FEEDBACK</h1>
                         
-                        <h4>From: Maison</h4>
-                        <h4>Idea: sword art online</h4>
-
-                        <p>
-                            "TEXTO TEXTO TEXTOTEXTOTEXTO TEXTOTEXTO TEXTO TEXTO TEXTO TEXTOTEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTOTEXTO"
-                        </p>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="reports" role="tabpanel" aria-labelledby="reports-tab">
@@ -74,20 +86,13 @@
                             <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
                             <h1>REPORT</h1>
                             
-                            <h4>From: Maison</h4>
-                            <h4>Idea: sword art online</h4>
-                            <h4>Categorie: others</h4>
                             
-                            <p>
-                                "TEXTO TEXTO TEXTOTEXTOTEXTO TEXTOTEXTO TEXTO TEXTO TEXTO TEXTOTEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO
-                                TEXTO TEXTO TEXTOTEXTO"
-                            </p>
                         </div>
                     </div>
                 </div>
                 
+                
             </div>
-
         </div>
 
     </div>
@@ -98,6 +103,7 @@
 <script>
     createMenuSettingsButton(20, 350)
 </script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -113,6 +119,11 @@
 
 
 <script>
+    const userId = document.getElementById('userId').value
+    let limitFeedback = 1;
+    let limitReport = 1;
+    let loadFeedbackIconShowed = false;
+    let loadReportIconShowed = false;
 
     function listFeedbackReports(tab){
         if (tab == "feedbacks") {
@@ -132,25 +143,58 @@
     }
 
     //from where?
-    function openSelection(fromW){
+    async function openSelection(fromW, itemId, reports=0,categorie=""){
+
+        itemId = parseInt(itemId)
+        console.log(itemId)
 
         if (screen.availWidth <= 400) {
             if (fromW == 'feedback') {
+                try {
+                    document.getElementsByClassName('loadIcon')[0].remove()
+                } catch (error) {
+
+                }
+
                 document.getElementById('feedbacks-tab-container').style.display = "flex"
+                
+                renderFeedback(itemId)
+
                 document.getElementById('reports-tab-container').style.display = "none"
                 document.getElementById('myTab').style.display = 'none'
             }else{
+                try {
+                    document.getElementsByClassName('loadIcon')[0].remove()
+                } catch (error) {
+
+                }
+
                 document.getElementById('reports-tab-container').style.display = "flex"
+                renderReports(itemId, reports, categorie)
                 document.getElementById('feedbacks-tab-container').style.display = "none"
                 document.getElementById('myTab').style.display = 'none'
             }
         } else {
             if (fromW == 'feedback') {
+                try {
+                    document.getElementsByClassName('loadIcon')[0].remove()
+                } catch (error) {
+                    
+                }
+
                 document.getElementById('feedbacks-tab-container').style.display = "flex"
+                renderFeedback(itemId)
                 document.getElementById('reports-tab-container').style.display = "none"
 
             } else {
+                try {
+                    document.getElementsByClassName('loadIcon')[0].remove()
+                } catch (error) {
+
+                }
+
                 document.getElementById('reports-tab-container').style.display = "flex"
+                renderReports(itemId, reports, categorie)
                 document.getElementById('feedbacks-tab-container').style.display = "none"
 
             }
@@ -167,9 +211,206 @@
             document.getElementById('feedbacks-tab-container').style.display = "none"   
         }
     }
-    console.log(screen.availWidth)
-
     
+
+    async function renderFeedback(itemId){
+        const feedback = await axios.get('http://localhost:3000/getFeedback/' + itemId)
+
+
+
+
+                const textHtml = `
+                
+                <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
+                            <h1>FEEDBACK</h1>
+                        
+                        <h4>From: ${feedback.data.feedback[0].username}</h4>
+                        <h4>Idea: ${feedback.data.feedback[0].title}</h4>
+
+                        <p>
+                            "${feedback.data.feedback[0].feedbackMsg}"
+                        </p>
+                
+                `
+                document.getElementById('feedbacks-tab-container').innerHTML = textHtml
+    }
+
+    async function renderReports(ideaId, reports, categorie) {
+
+        const reportsList = await axios.get('http://localhost:3000/getReports/' + ideaId)
+
+        console.log(reportsList.data.reports)
+        
+
+        let textHtml = `
+                
+                <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
+
+                <button onclick="reportDecision('disable',${ideaId})" style="background-color: red;">DESLIGAR</button>
+                <button onclick="reportDecision('release',${ideaId})" style="background-color: green;">LIBERAR</button>
+
+                            <h1>REPORTS</h1>
+                        
+                        <h4>From: ${reports} users</h4>
+                        <a href="http://localhost:8080/getIdeaById/${ideaId}">CLIQUE PARA VER IDEIA </a>
+                        <h3>Categorie: ${categorie}
+                        <p>
+                            ""
+                        </p>
+                
+                `
+
+        reportsList.data.reports.forEach(item => {
+            let newHtmlText = `<p>"${item.reportMsg}"</p>`
+
+            textHtml+=newHtmlText
+        })
+        document.getElementById('reports-tab-container').innerHTML = textHtml
+
+        
+
+    }
+            
+
+    async function limitList(tab){
+        if (tab == 'feedback') {
+            ++limitFeedback
+            loadFeedbackIconShowed = false
+        let offsetFeedback = ((limitFeedback * 10) - 10)
+    
+            document.getElementsByClassName('loadIcon')[0].remove()
+    
+            let loadList = await axios.get('http://localhost:3000/listFeedbacks/'+userId+"/"+offsetFeedback)
+            console.log(loadList.data.result)
+            if (loadList.data.result.length < 1) {
+                loadFeedbackIconShowed = true
+                document.getElementsByClassName('loadIcon')[0].remove()
+            }
+    
+            loadList.data.result.forEach(item=>{
+                let div = document.createElement('div');
+                let id = item.id
+                div.onclick = ()=>{openSelection('feedback', id)}
+                div.innerHTML = `
+                usuário: ${item.username} <br>
+                Jogo: ${item.title}
+                `;
+                document.getElementById('feedbacksList').appendChild(div);
+    
+    
+            })
+    
+    
+            console.log(document.getElementById('feedbacksList').scrollTop)
+            console.log(document.getElementById('feedbacksList').scrollHeight)
+    
+            
+    
+    
+            console.log(limitFeedback)
+            console.log(offsetFeedback)
+            
+        }else{
+
+            ++limitReport
+            loadReportIconShowed = false
+            let offsetReports = ((limitReport * 10) - 10)
+
+            document.getElementsByClassName('loadIcon')[0].remove()
+
+            let loadList = await axios.get('http://localhost:3000/listReports/'+ offsetReports)
+            if (loadList.data.result.length < 1) {
+                loadReportIconShowed = true
+                document.getElementsByClassName('loadIcon')[0].remove()
+            }
+            
+            console.log(loadList.data.result)
+            loadList.data.result.forEach(item => {
+                let div = document.createElement('div');
+                let id = item.ideaId
+                div.onclick = () => { openSelection('report', id, item.reports, item.categorieReport) }
+                div.innerHTML = `
+                from: ${item.reports} users <br>
+                Jogo: ${item.title} id: ${item.ideaId}
+                categoria: ${item.categorieReport}
+                `;
+                document.getElementById('reportsList').appendChild(div);
+
+
+            })
+
+
+
+
+
+            console.log(document.getElementById('reportsList').scrollTop)
+            console.log(document.getElementById('reportsList').scrollHeight)
+
+
+        }
+    } 
+
+
+
+
+
+
+    async function reportDecision(decision, ideaId){
+        console.log(decision)
+        if (decision == 'disable') {
+            console.log('entrou aqui 1')
+            try {
+                let result = await axios.put('http://localhost:3000/disableIdea',{ideaId})
+                console.log(result)
+                location.reload()
+            } catch (error) {
+                console.log(error)
+            }
+        }else{
+            try {
+                let result = await axios.put('http://localhost:3000/releaseIdea', { ideaId })
+                console.log(result)
+                location.reload()
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
+
+
+
+
+    setInterval(() => {
+        //console.log(document.getElementById('feedbacksList').scrollHeight)
+        if ((document.getElementById('feedbacksList').scrollHeight - document.getElementById('feedbacksList').scrollTop) == 650) {
+            if (!loadFeedbackIconShowed) {
+                
+                let loadIcon = document.createElement('i');
+                loadIcon.classList = 'fa-solid fa-rotate-right loadIcon'
+                console.log(loadIcon)
+                loadIcon.onclick = ()=>{ limitList('feedback') }
+                document.getElementById('feedbacksList').appendChild(loadIcon)
+                loadFeedbackIconShowed = true
+            }
+        }
+
+        if ((document.getElementById('reportsList').scrollHeight - document.getElementById('reportsList').scrollTop) == 650) {
+            if (!loadReportIconShowed) {
+
+                let loadIcon = document.createElement('i');
+                loadIcon.classList = 'fa-solid fa-rotate-right loadIcon'
+                console.log(loadIcon)
+                loadIcon.onclick = () => { limitList('report') }
+                document.getElementById('reportsList').appendChild(loadIcon)
+                loadReportIconShowed = true
+            }
+        }
+
+
+        //console.log('entrou aqui')
+    }, 1000);
+
 
 </script>
 

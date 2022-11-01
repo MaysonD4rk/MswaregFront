@@ -13,8 +13,9 @@
     background-color: white;
     display: flex;
     height: 700px;
+    max-height: 700px;
     flex: 1;
-
+    overflow-y: auto;
 }
 
 #feedbacks{
@@ -51,6 +52,13 @@
     width: 215px;
 }
 
+.listFeedbacks-reports{
+    max-height: 650px;
+    overflow-y: auto;
+    text-align: center;
+    min-width: 200px;
+}
+
 .listFeedbacks-reports>div{
     
     margin-bottom: 10px;
@@ -68,9 +76,7 @@
 #reportsList{ display: none;}
 #feedbacksList{display: initial;}
 
-#reports-tab{
-    display: none;
-}
+
 
 #reports-tab-container{
     

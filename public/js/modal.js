@@ -154,6 +154,7 @@ function statusModal(status, msg){
 
 async function openModal(elementId, itemId){
     document.getElementById(elementId).style.display= "flex";
+    document.getElementById(elementId).style.top = window.scrollY+"px"
     itemId = parseInt(itemId)
     console.log(itemId)
 
