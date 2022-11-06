@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/menuSettingsButton.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/wallet.css">
+    <title>Financeiro</title>
+</head>
+<body>
+
+    <div class="modal-payment-method">
+        <div class="payment-method-container">
+            <h1>Metodos de pagamento: </h1>
+
+            <ul>
+                <li>
+                    <button>Pix</button>
+                </li>
+                <li>
+                    <a href="#">Boleto</a>
+                </li>
+                <li>
+                    <a href="#">Cartão de crédito</a>
+                </li>
+            </ul>
+            <div id="qrcodeArea">
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Recarregar dinheiro</h1>
+        <div class="WalletTable">
+            <ul><br><br><br><br><br><br><br>
+                <li>
+                    1000 W$ <button class="green-button">COMPRAR</button>
+                    <p>5 W$ para caridade</p>
+                    <p>2.5 W$ para a empresa</p>
+
+                </li>
+                <li>
+                    2000 W$ <button class="green-button">COMPRAR</button>
+                    <p>10 W$ para caridade</p>
+                    <p>2.5 W$ para a empresa</p>
+                </li>
+                <li>
+                    3000 W$ <button class="green-button">COMPRAR</button>
+                    <p>15 W$ para caridade</p>
+                    <p>2.5 W$ para a empresa</p>
+                </li>
+                <li>
+                    4000 W$ <button class="green-button">COMPRAR</button>
+                    <p>20 W$ para caridade</p>
+                    <p>2.5 W$ para a empresa</p>
+                </li>
+                <li>
+                    5000 W$ <button class="green-button">COMPRAR</button>
+                    <p>25 W$ para caridade</p>
+                    <p>2.5 W$ para a empresa</p>
+                </li>
+                <li>
+                    <input id="recharge" type="text" placeholder="Choose your value">
+                    <button class="green-button">COMPRAR</button>
+                </li>
+            </ul>
+        </div>
+        <h1>Retirar dinheiro</h1>
+        <div class="WalletTable">
+            <div class="takeOffWallet">
+                você tem: 2000W$ na carteira
+                <input id="withdraw" type="text" placeholder="Quanto deseja retirar?">
+                <button class="green-button">Retirar</button>
+            </div>
+        </div>
+    </div>
+<%- include('./partials/floatingMenu.ejs') %>
+</body>
+<script src="https://kit.fontawesome.com/4fd5a3a7ad.js" crossorigin="anonymous"></script>
+
+<script src="/js/menuSettingsButton.js">
+</script>
+<script>
+    createMenuSettingsButton(20,390)
+</script>
+</html>

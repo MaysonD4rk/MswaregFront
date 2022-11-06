@@ -1,0 +1,61 @@
+.WalletTable{
+    background-color: rgb(227, 227, 227);
+    height: 350px;
+    width: 350px;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    overflow-y: auto;
+    text-align: center;
+}
+
+
+.WalletTable ul li{
+    margin-top: 20px;
+}
+.WalletTable ul li p {
+    font-size: 16px;
+}
+
+input{
+    font-size: 28px;
+    width: 78%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.takeOffWallet{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.modal-payment-method{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(197, 197, 197);
+}
+.payment-method-container{
+    display: flex;
+    height: 600px;
+    width: 360px;
+    flex-direction: column;
+    text-align: center;
+    background-color: rgb(230, 230, 230);
+    
+}
+.payment-method-container ul{
+    font-size: 32px;
+    margin-top: 20px;
+}
+
+li>button{
+    font-size: 30px;
+}

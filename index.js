@@ -401,7 +401,21 @@ app.get('/search', async (req, res) => {
     })
 })
 
+app.get('/wallet', (req,res)=>{
+    sess = req.session;
+    if (sess.userId == undefined) {
+        res.redirect('/login')
+    }
+    axios({
+        method: "get",
+        url: "http://localhost:3000/user/" + sess.userId
+    }).then(async (data) => {
 
+    res.render('wallet',{
+        userData: data.data[0]
+    })
+    })
+})
 
 
 app.listen(8080,(err)=>{
