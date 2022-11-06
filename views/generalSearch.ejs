@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbarCss.css">
+    <link rel="stylesheet" href="/css/menuSettingsButton.css">
+    <link rel="stylesheet" href="/css/search.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/sendAmsg.css">
+    
+</head>
+<body>
+    <input type="hidden" id="userId" value="<%=id%>">
+    <%- include('./partials/header.ejs') %>
+    <%- include('./partials/floatingMenu.ejs') %>
+
+    <% if(typeof(usersList) == 'undefined' && typeof(msgList) == 'undefined' && typeof(postList) == 'undefined'){%>
+    <div class="searchBar">
+    
+        <input id="search" type="text" placeholder=" &#xF002;">
+        <button id="buttonSeach"><i class="fa-solid fa-magnifying-glass"></i></button>
+    
+    </div>
+    <%}%>
+
+    
+    <% if(typeof(msgList) !='undefined' ){%>
+        <div class="asks">
+        <%msgList.forEach(item=>{%>
+            <div class="ask-item">
+                <div style="background-image: url('<%=item.profilePhoto%>');" class="ask-item-img">img</div>
+                <div class="ask-item-info">
+            
+                    <div>
+                        <h3>from: @<%=item.username%>
+                        </h3>
+                    </div>
+                    <div>
+                        <h3>to: @<%=item.recipientName%>
+                        </h3>
+                    </div>
+                    <h3>msg: </h3>
+                    <div class="ask-text">
+            
+                        <%=item.msg%>
+            
+            
+                    </div>
+            
+                </div>
+            </div>
+            
+            <%})%>
+        </div>
+        <%}%>
+        
+
+    <!--POST A SER REDENRIZADO-->
+
+    <% if(typeof(postList) != 'undefined'){%>
+        <div class="posts">
+        <%postList.forEach(item=>{ 
+            
+            %>
+        <div id="<%=item.id%>" style="background-image: url(<%=item.imageUrl%>);" class="post-card">
+            <div class="card-header" onclick="openIdeaModal('<%=item.id%>')">
+        
+                <h2>
+                    <%=item.title%>
+                </h2>
+                <p>
+                    <%=item.ideaSummary%>
+                </p>
+        
+            </div>
+            <i style="color: rgb(168, 25, 25); font-size: 20px;" class="fa-solid fa-flag"></i>
+            <div class="card-img">
+        
+            </div>
+            <div class="card-info">
+                <i class="fa-solid fa-heart like" onclick="likePub('<%=item.id%>')"></i>
+                <div>
+                    <p>
+                        1000
+                    </p>
+                    <progress value="500" max="<%=item.initialAmountRequired%>"></progress>
+                </div>
+                <i class="fa-solid fa-star like" onclick="favoritePub('<%=item.id%>')"></i>
+            </div>
+        </div>
+        <%})%>
+    </div>
+    <%}%>
+    <!--///////POST A SER REDENRIZADO-->
+    <!-- CONTAINER DE USERS REDENRIZADOS-->
+    <div class="container">
+        <div class="responseCards">
+            
+        </div>
+
+        <% if(typeof(usersList) != 'undefined'){
+            usersList.forEach(item=>{%>
+                <div id="userResults">
+                    <div class="user-result-card">
+                        <div class="imgDiv">
+                            <%if(item.profilePhoto != null){%>
+                                <img src="<%=item.profilePhoto%>" alt="">
+                            <%}else{%>
+                                <img src="data:image/png;base64,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" alt="">
+                                <%}%>
+                            </div>
+                        <div class="user-result-card-info">
+                            <a href="http://localhost:8080/profile/<%=item.username%>">@<%= item.username %></a>
+                            <button>Follow</button>
+                        </div>
+                    </div>
+        
+                </div>
+
+            <%})}%>
+
+    </div>
+    <!-- //////CONTAINER-->
+        <%- include('./partials/modal.ejs') %>
+
+    <br><br><br><br><br><br><br>
+    
+    <%- include('./partials/footer.ejs') %>
+    
+</body>
+<script src="https://kit.fontawesome.com/4fd5a3a7ad.js" crossorigin="anonymous"></script>
+<script src="/js/menuSettingsButton.js"></script>
+<script src="/js/getNavDown.js"></script>
+<script src="/js/modal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/idea.js"></script>
+
+<script>
+    let divIdeaCreated = false
+    let divMsgsCreated = false;
+    let divUsersCreated = false;
+    let currentSearchValue = ''
+    document.getElementById('search').addEventListener('keydown',async (e)=>{
+
+        currentSearchValue = document.getElementById('search').value;
+        
+        if (document.getElementById('search').value.length>0) {
+            
+            try {
+                const results = await axios.get('http://localhost:3000/generalSeach/'+currentSearchValue);
+                renderCards(results)
+                
+            } catch (error) {
+                console.log(error)
+                console.log('ta cheganod nesse erro aqui')
+            }
+        }else{
+            document.getElementsByClassName('responseCards')[0].innerHTML = ''
+            divIdeaCreated =false
+            divMsgsCreated =false
+            divUsersCreated =false
+        }
+    })
+
+
+    function renderCards(results){
+        
+        let ideasResult = results.data.results.ideaResult[0].results
+        let msgsResult = results.data.results.msgsResult[0].results
+        let usersResult = results.data.results.usersResult[0].results
+
+        if (ideasResult>0) {
+            
+            if (divIdeaCreated) {
+                if (!!document.getElementById('ideasText')) {
+                    document.getElementById('ideasText').innerHTML = `${results.data.results.ideaResult[0].results} results`
+                }else{
+                    divIdeaCreated=false
+                }
+             }else{
+                divIdeaCreated = true;
+                let card = document.createElement('div');
+                card.classList = 'card';
+                card.onclick = () => {
+                    location.href = 'http://localhost:8080/search?ideaQuery=' + currentSearchValue;
+                }
+                card.id = "ideaCard"
+                 let cardItens = document.createElement('div');
+                cardItens.classList = 'card-itens'
+                cardItens.innerHTML = `
+                             <h3>Ideas</h3>
+                             <p id="ideasText">${results.data.results.ideaResult[0].results} resultados</p>
+                         `
+                let cardItensIcon = document.createElement('div');
+                cardItensIcon.classList = 'card-itens';
+                cardItensIcon.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`
+
+                card.appendChild(cardItens)
+                card.appendChild(cardItensIcon)
+                document.getElementsByClassName('responseCards')[0].appendChild(card);
+             }
+        }else{
+            if (!!document.getElementById('ideaCard')){
+                document.getElementById('ideaCard').remove()
+            }
+        }
+
+
+        if (msgsResult > 0) {
+            
+            if (divMsgsCreated) {
+                if (!!document.getElementById('msgsText')) {
+                    document.getElementById('msgsText').innerHTML = `${results.data.results.msgsResult[0].results} results`
+                } else {
+                    divMsgsCreated = false
+                }
+            } else {
+                divMsgsCreated = true;
+                let card = document.createElement('div');
+                card.classList = 'card';
+                card.onclick= ()=>{
+                    location.href = 'http://localhost:8080/search?msgQuery='+currentSearchValue;
+                }
+                card.id = "msgsCard"
+                let cardItens = document.createElement('div');
+                cardItens.classList = 'card-itens'
+                cardItens.innerHTML = `
+                             <h3>Mensagens</h3>
+                             <p id="msgsText">${results.data.results.msgsResult[0].results} resultados</p>
+                         `
+                let cardItensIcon = document.createElement('div');
+                cardItensIcon.classList = 'card-itens';
+                cardItensIcon.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`
+
+                card.appendChild(cardItens)
+                card.appendChild(cardItensIcon)
+                document.getElementsByClassName('responseCards')[0].appendChild(card);
+            }
+        } else {
+            if (!!document.getElementById('msgsCard')) {
+                document.getElementById('msgsCard').remove()
+            }
+        }
+
+        if (usersResult > 0) {
+            
+            if (divUsersCreated) {
+                if (!!document.getElementById('usersText')) {
+                    document.getElementById('usersText').innerHTML = `${results.data.results.usersResult[0].results} results`
+                } else {
+                    divUsersCreated = false
+                }
+            } else {
+                divUsersCreated = true;
+                let card = document.createElement('div');
+                card.classList = 'card';
+                card.onclick = () => {
+                    location.href = 'http://localhost:8080/search?userQuery=' + currentSearchValue;
+                }
+                card.id = "usersCard"
+                let cardItens = document.createElement('div');
+                cardItens.classList = 'card-itens'
+                cardItens.innerHTML = `
+                             <h3>Users</h3>
+                             <p id="usersText">${results.data.results.usersResult[0].results} resultados</p>
+                         `
+                let cardItensIcon = document.createElement('div');
+                cardItensIcon.classList = 'card-itens';
+                cardItensIcon.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`
+
+                card.appendChild(cardItens)
+                card.appendChild(cardItensIcon)
+                document.getElementsByClassName('responseCards')[0].appendChild(card);
+            }
+        } else {
+            if (!!document.getElementById('usersCard')) {
+                document.getElementById('usersCard').remove()
+            }
+        }
+
+        // if (results.data.results.ideaResult[0].results > 0) {
+        //     if (divUsersCreated) {
+        //         document.getElementById('ideasText').innerHTML = `${results.data.results.ideaResult[0].results} results`
+        //     } else {
+        //         divIdeaCreated = true;
+        //         let card = document.createElement('div');
+        //         card.classList = 'card';
+        //         card.id = "ideaCard"
+        //         let cardItens = document.createElement('div');
+        //         cardItens.classList = 'card-itens'
+        //         cardItens.innerHTML = `
+        //                     <h3>Ideas</h3>
+        //                     <p id="ideasText">${results.data.results.ideaResult[0].results} resultados</p>
+        //                 `
+        //         let cardItensIcon = document.createElement('div');
+                // cardItensIcon.classList = 'card-itens';
+                // cardItensIcon.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`
+
+                // card.appendChild(cardItens)
+                // card.appendChild(cardItensIcon)
+                // document.getElementsByClassName('responseCards')[0].appendChild(card);
+        //     }
+        // } else {
+        //     document.getElementById('ideaCard').remove()
+        //     divIdeaCreated = false
+        // }
+    }
+
+</script>
+
+</html>

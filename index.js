@@ -165,34 +165,40 @@ app.get('/profile/:username', async (req,res)=>{
     if (sess.userId == undefined) {
         res.redirect('/login')
     }
-    let userProfileData = await axios.get('http://localhost:3000/getByUsername/'+userProfile);
-    console.log(userProfileData.data.result.usernameRow.usersTable[0])
-    console.log(userProfileData.data.result.usernameRow.userInfo[0])
-    if (userProfileData.data.result.status) {
-        console.log(userProfileData.data.result.usernameRow)
-        axios({
-            method: "get",
-            url: "http://localhost:3000/user/" + sess.userId
-        }).then(async (data) => {
+
+    try {
+        let userProfileData = await axios.get('http://localhost:3000/getByUsername/'+userProfile);
+        console.log(userProfileData.data.result.usernameRow.usersTable[0])
+        console.log(userProfileData.data.result.usernameRow.userInfo[0][0])
+        if (userProfileData.data.result.status) {
+            
             axios({
-                method: 'get',
-                url: "http://localhost:3000/getFollows/" + userProfileData.data.result.usernameRow.usersTable[0].id
-            }).then(async(followData)=>{
-                console.log(followData.data.followers)
-                res.render('profilePage.ejs', {
-                    id: sess.userId,
-                    userData: data.data[0],
-                    followData: followData.data,
-                    userProfile: { users: userProfileData.data.result.usernameRow.usersTable[0], userInfo: userProfileData.data.result.usernameRow.userInfo[0] }
+                method: "get",
+                url: "http://localhost:3000/user/" + sess.userId
+            }).then(async (data) => {
+                axios({
+                    method: 'get',
+                    url: "http://localhost:3000/getFollows/" + userProfileData.data.result.usernameRow.usersTable[0].id
+                }).then(async(followData)=>{
+                    console.log(followData.data.followers)
+                    res.render('profilePage.ejs', {
+                        id: sess.userId,
+                        userData: data.data[0],
+                        followData: followData.data,
+                        userProfile: { users: userProfileData.data.result.usernameRow.usersTable[0], userInfo: userProfileData.data.result.usernameRow.userInfo[0][0] }
+                    })
                 })
+                
+            }).catch(err => {
+                console.log(err)
             })
             
-        }).catch(err => {
-            console.log(err)
-        })
+        }else{
+            console.log('n tem nada amigão')
+        }
         
-    }else{
-        console.log('n tem nada amigão')
+    } catch (error) {
+        res.redirect('/home')
     }
 
 
@@ -328,6 +334,71 @@ app.get('/getIdeaById/:ideaId', async (req,res)=>{
         console.log(error)
     }
 
+})
+
+
+app.get('/search', async (req, res) => {
+    sess = req.session
+    if (sess.userId == undefined) {
+        res.redirect('/login')
+    }
+
+
+    axios({
+        method: "get",
+        url: "http://localhost:3000/user/" + sess.userId
+    }).then(async (data) => {
+        
+        if(Object.keys(req.query).length < 1){
+            res.render('generalSearch', {
+                id: sess.userId,
+                userData: data.data[0]
+            })
+        }else{
+    
+            if(Object.keys(req.query)[0] == 'userQuery'){
+                console.log(req.query.userQuery)
+                let response = await axios.get('http://localhost:3000/getSearchListUser/'+req.query.userQuery)
+                console.log(response.data.results)
+
+                res.render('generalSearch', {
+                    id: sess.userId,
+                    userData: data.data[0],
+                    usersList: response.data.results
+                })
+
+            }else if (Object.keys(req.query)[0] == 'msgQuery'){
+                let response = await axios.get('http://localhost:3000/searchForMsg/0/' + req.query.msgQuery)
+                console.log(response.data.result)
+                //
+                res.render('generalSearch', {
+                    id: sess.userId,
+                    userData: data.data[0],
+                    msgList: response.data.result
+                })
+    
+            } else if (Object.keys(req.query)[0] == 'ideaQuery') {
+                console.log(req.query.ideaQuery)
+                
+                let response = await axios.get('http://localhost:3000/searchPost/0/'+req.query.ideaQuery)
+                console.log(response.data.result)
+
+                res.render('generalSearch', {
+                    id: sess.userId,
+                    userData: data.data[0],
+                    postList: response.data.result
+                })
+            }else{
+                res.render('generalSearch', {
+                    id: sess.userId,
+                    userData: data.data[0]
+                })
+            }
+        }
+
+    }).catch(err => {
+        res.send(err)
+    })
 })
 
 

@@ -38,6 +38,7 @@
                     <% feedbackList.forEach(item=>{%>
 
                         <div onclick="openSelection('feedback', '<%=item.id%>')">
+                            
                             usuário: <%= item.username %> <br>
                             Jogo: <%= item.title %>
                         </div>
@@ -222,6 +223,7 @@
                 const textHtml = `
                 
                 <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
+                
                             <h1>FEEDBACK</h1>
                         
                         <h4>From: ${feedback.data.feedback[0].username}</h4>
@@ -230,6 +232,7 @@
                         <p>
                             "${feedback.data.feedback[0].feedbackMsg}"
                         </p>
+                        <i onclick="deleteFeedback(${itemId})" class="fa-solid fa-trash"></i>
                 
                 `
                 document.getElementById('feedbacks-tab-container').innerHTML = textHtml
@@ -245,6 +248,7 @@
         let textHtml = `
                 
                 <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
+                
 
                 <button onclick="reportDecision('disable',${ideaId})" style="background-color: red;">DESLIGAR</button>
                 <button onclick="reportDecision('release',${ideaId})" style="background-color: green;">LIBERAR</button>
@@ -375,6 +379,20 @@
                 console.log(error)
             }
         }
+    }
+
+
+
+    async function deleteFeedback(itemId){
+       console.log('entrou aqui')
+        try {
+            let response = await axios.delete('http://localhost:3000/deleteFeedkback/'+itemId)
+            location.reload()
+        } catch (error) {
+            console.log(error)
+            
+        }
+
     }
 
 

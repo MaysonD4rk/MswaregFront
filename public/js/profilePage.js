@@ -1,7 +1,8 @@
 var currentState = 0;
 let usernameInput = document.getElementById('username').value
 const currentUsername = usernameInput
-
+const userId = document.getElementById('userId').value
+const currentUser = document.getElementById('currentUser').value
 async function editAboutMe(id){
 
     var editAboutMe = await axios.put('http://localhost:3000/updateUserInfo', {

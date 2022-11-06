@@ -19,10 +19,7 @@ input{
     justify-content: center;
 }
 
-.container{
-    display: flex;
-    align-items: center;
-}
+
 
 .container input{
     font-family: Arial, Helvetica, FontAwesome , sans-serif;

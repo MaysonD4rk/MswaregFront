@@ -19,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Home</title>
 </head>
-<body onload="likedFavoritedPubs()">
+<body>
     <input type="hidden" id="userId" value="<%=id%>">
     
     <%- include('./partials/header.ejs') %>
@@ -49,8 +49,8 @@
                 </div>
                 <div id="select-action">
                     <ul>
-                        <li onclick="selectAction('feedback')">Feedback <i class="fa-regular fa-comment" style="font-size: 20px;"></i></li>
-                        <li onclick="selectAction('report')">Report <i onclick="console.log('report')" style="color: rgb(168, 25, 25); font-size: 20px;" class="fa-solid fa-flag"></i></li>
+                        <li id="feedbackAction" onclick="selectAction('feedback')">Feedback <i class="fa-regular fa-comment" style="font-size: 20px;"></i></li>
+                        <li id="reportAction" onclick="selectAction('report')">Report <i onclick="console.log('report')" style="color: rgb(168, 25, 25); font-size: 20px;" class="fa-solid fa-flag"></i></li>
                     </ul>
                 </div>
 
@@ -193,10 +193,11 @@
 
 
     <!--POSTS PART-->
-    <div id="container">
+    <div class="container">
         <div class="posts">
             <!--CARDS-->
             <% if(posts != undefined){ posts.forEach(item=>{ %>
+               
                 <div id="<%= item.id %>" style="background-image:url('<%= item.imageUrl %>') ;" class="post-card" >
                     <div class="card-header"  onclick="openIdeaModal('<%= item.id %>')">
                         
@@ -204,9 +205,10 @@
                        <p><%=item.ideaSummary%></p>
                        
                     </div>
-                    <i onclick="openModal('report-feedback-modal', '<%=item.id%>')" style="color: rgb(168, 25, 25); font-size: 20px;" class="fa-solid fa-flag"></i>
+                    
+                    <i onclick="openModal('report-feedback-modal', '<%=item.id%>', '<%= item.allowFeedback %>')" style="color: rgb(168, 25, 25); font-size: 20px;" class="fa-solid fa-flag"></i>
                     <div class="card-img">
-                        
+                      
                     </div>
                     <div class="card-info">
                         <i onclick="likePub('<%= item.id %>')" class="fa-solid fa-heart like"></i>
@@ -253,77 +255,7 @@
 
     
 </script>
-<script>
-        
-
-
-    async function likedFavoritedPubs(){
-        
-
-        for (let i = 0; i < document.getElementsByClassName('post-card').length; i++) {
-            let pubId = document.getElementsByClassName('post-card')[i].id;
-            pubId = parseInt(pubId);
-
-            try {
-                let likedPub = await axios.get(`http://localhost:3000/checkLikeFavorite/${pubId}/${userId}`);
-                console.log(likedPub)
-                if(likedPub.data.result.row[0].liked){
-                    document.getElementById(pubId).classList.add('liked');
-                }
-
-                if (likedPub.data.result.row[0].favoritedIdea) {
-                    document.getElementById(pubId).classList.add('favorited');
-                }
-            } catch (error) {
-                console.log(error)
-            }
-
-
-        }
-
-
-    }
-
-
-
-    async function likePub(pubId){
-        pubId = parseInt(pubId)
-        
-        
-        try {
-            console.log(`tentando`)
-            var status = await axios.put('http://localhost:3000/likePub', {pubId, userId})
-            if (status.data.msg == 'liked') {
-                 document.getElementById(pubId).classList.add('liked');
-            }else{
-                 document.getElementById(pubId).classList.remove('liked');
-
-            }
-            
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-     async function favoritePub(pubId) {
-            pubId = parseInt(pubId)
-            
-
-            try {
-                console.log(`tentando`)
-                let status = await axios.put('http://localhost:3000/favoritePub', { userId, pubId })
-                console.log(status)
-                if (status.data.msg == 'favorited') {
-                    document.getElementById(pubId).classList.add('favorited');
-                }else{
-                    document.getElementById(pubId).classList.remove('favorited');
-                }
-
-            } catch (error) {
-                console.log(error)
-            }
-        }
-    
+<script src="/js/idea.js">    
 </script>
 <script >
     document.getElementById('home').className = "active"

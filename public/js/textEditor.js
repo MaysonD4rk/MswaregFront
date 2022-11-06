@@ -361,19 +361,26 @@
 
     async function send(){
 
+
+
         if(ideaInfo.content.length >= 500){
 
-            var pub = await axios.post('http://localhost:3000/pub',{
-                title: inputTitle.value, 
-                ideaSummary: inputSummary.value,
-                mainIdea: ideaInfo.content, 
-                userId, 
-                categoryId: 1, 
-                initialAmountRequired: parseFloat(professionalInfo[1].finalAmount),
-                images: mainImages
-            })
-
-            window.location.href = `http://localhost:8080/addPubImg/${pub.data[0]}`;
+            try {
+                var pub = await axios.post('http://localhost:3000/pub',{
+                    title: inputTitle.value, 
+                    ideaSummary: inputSummary.value,
+                    mainIdea: ideaInfo.content, 
+                    userId, 
+                    categoryId: 1, 
+                    initialAmountRequired: parseFloat(professionalInfo[1].finalAmount),
+                    images: mainImages,
+                    allowFeedbacks: document.getElementById('allowFeedback').checked
+                })
+                window.location.href = `http://localhost:8080/addPubImg/${pub.data[0]}`;
+            } catch (error) {
+                console.log(error)
+            }
+            console.log(document.getElementById('allowFeedback').checked)
         }else{
             alert('precisa de mais conteúdo')
         }

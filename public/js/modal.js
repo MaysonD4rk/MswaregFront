@@ -152,7 +152,16 @@ function statusModal(status, msg){
 
 
 
-async function openModal(elementId, itemId){
+async function openModal(elementId, itemId, allowFeedback=true){
+
+    allowFeedback = !!(parseInt(allowFeedback))
+    
+    if (!allowFeedback) {
+        document.getElementById('feedbackAction').style.display = 'none'
+    }else{
+        document.getElementById('feedbackAction').style.display = 'initial'
+    }
+    
     document.getElementById(elementId).style.display= "flex";
     document.getElementById(elementId).style.top = window.scrollY+"px"
     itemId = parseInt(itemId)
@@ -164,13 +173,16 @@ async function openModal(elementId, itemId){
     document.getElementsByClassName('insertIdeaName')[1].innerHTML = `"${title}"`;
     document.getElementsByClassName('sendFeedback')[0].onclick = async ()=>{
 
-        let sendFeedbackResult = await axios.post('http://localhost:3000/sendFeedback', {
-            userId,
-            ideaId: itemId,
-            feedbackMsg: document.getElementById('feedback-textArea').value,
-        })
-
-        console.log(sendFeedbackResult)
+        try {
+            let sendFeedbackResult = await axios.post('http://localhost:3000/sendFeedback', {
+                userId,
+                ideaId: itemId,
+                feedbackMsg: document.getElementById('feedback-textArea').value,
+            })
+            statusModal('success', sendFeedbackResult.data.msg) 
+        } catch (error) {
+            statusModal('failed', error ) 
+        }
 
     };
     document.getElementsByClassName('sendReport')[0].onclick = async () => {
