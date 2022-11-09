@@ -16,6 +16,12 @@ app.use(session({
 
 var sess;
 
+
+app.get('/',(req,res)=>{
+    res.redirect('/home');
+})
+
+
 app.get('/home', async (req, res)=>{
     sess = req.session
     var offset = req.query['offset'] == undefined || req.query['offset']<0 ? req.query['offset'] = 0 : req.query['offset'];
