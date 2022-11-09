@@ -175,8 +175,8 @@ app.get('/profile/:username', async (req,res)=>{
 
     try {
         let userProfileData = await axios.get('http://54.233.190.172:8000/getByUsername/'+userProfile);
-        console.log(userProfileData.data.result.usernameRow.usersTable[0])
-        console.log(userProfileData.data.result.usernameRow.userInfo[0][0])
+        console.log(userProfileData)
+        
         if (userProfileData.data.result.status) {
             
             axios({
