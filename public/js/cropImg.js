@@ -477,7 +477,7 @@ async function confirmCropFunction(action){
         if (currentFormat == 'profile') {
         
             try {
-                var resposta = await axios.put('http://localhost:3000/updatePhotoProfile',{
+                var resposta = await axios.put('http://15.228.160.53:8000/updatePhotoProfile',{
                     userId,
                     profileUrl: canvas.toDataURL()
                 })
@@ -492,7 +492,7 @@ async function confirmCropFunction(action){
             
         }else{
             try {
-                var resposta = await axios.put('http://localhost:3000/updateIdeaPhoto', {
+                var resposta = await axios.put('http://15.228.160.53:8000/updateIdeaPhoto', {
                     userId,
                     pubIdeaId,
                     imgUrl: canvas.toDataURL()

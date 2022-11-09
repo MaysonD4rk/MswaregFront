@@ -7,7 +7,7 @@
         pubId = parseInt(pubId);
 
         try {
-            let likedPub = await axios.get(`http://localhost:3000/checkLikeFavorite/${pubId}/${userId}`);
+            let likedPub = await axios.get(`http://15.228.160.53:8000/checkLikeFavorite/${pubId}/${userId}`);
             console.log(likedPub)
             if (!!likedPub.data.result.row[0].liked) {
                 document.getElementById(pubId).classList.add('liked');
@@ -34,7 +34,7 @@ async function likePub(pubId) {
 
     try {
         console.log(`tentando`)
-        var status = await axios.put('http://localhost:3000/likePub', { pubId, userId })
+        var status = await axios.put('http://15.228.160.53:8000/likePub', { pubId, userId })
         if (status.data.msg == 'liked') {
             document.getElementById(pubId).classList.add('liked');
         } else {
@@ -53,7 +53,7 @@ async function favoritePub(pubId) {
 
     try {
         console.log(`tentando`)
-        let status = await axios.put('http://localhost:3000/favoritePub', { userId, pubId })
+        let status = await axios.put('http://15.228.160.53:8000/favoritePub', { userId, pubId })
         console.log(status)
         if (status.data.msg == 'favorited') {
             document.getElementById(pubId).classList.add('favorited');

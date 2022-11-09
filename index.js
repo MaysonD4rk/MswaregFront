@@ -30,13 +30,13 @@ app.get('/home', async (req, res)=>{
 
     axios({
             method: "get",
-            url: "http://localhost:3000/user/"+sess.userId
+            url: "http://15.228.160.53:8000/user/"+sess.userId
         }).then(async (data)=>{
             
             
             var posts = await axios({
                 method: "get",
-                url: `http://localhost:3000/home/${sess.userId}/${offset*8}/${filter}`
+                url: `http://15.228.160.53:8000/home/${sess.userId}/${offset*8}/${filter}`
             })
 
             console.log(posts.data)
@@ -75,7 +75,7 @@ app.post('/login', (req, res)=>{
 
     axios({
         method: "post",
-        url: "http://localhost:3000/login",
+        url: "http://15.228.160.53:8000/login",
         data: {
             email,
             password,
@@ -102,7 +102,7 @@ app.post('/register', (req, res)=>{
 
     axios({
         method: "post",
-        url: "http://localhost:3000/user",
+        url: "http://15.228.160.53:8000/user",
         data: {
             username,
             email,
@@ -139,12 +139,12 @@ app.get('/sendMsg', async (req, res) => {
     if (sess.userId == undefined) {
         res.redirect('/login')
     }
-    var msgs = await axios.get(`http://localhost:3000/listMsgs/${offset*15}`);
+    var msgs = await axios.get(`http://15.228.160.53:8000/listMsgs/${offset*15}`);
 
     console.log(msgs.data.row)
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://15.228.160.53:8000/user/" + sess.userId
     }).then(async (data) => {
 
         console.log(data.data[0])
@@ -167,18 +167,18 @@ app.get('/profile/:username', async (req,res)=>{
     }
 
     try {
-        let userProfileData = await axios.get('http://localhost:3000/getByUsername/'+userProfile);
+        let userProfileData = await axios.get('http://15.228.160.53:8000/getByUsername/'+userProfile);
         console.log(userProfileData.data.result.usernameRow.usersTable[0])
         console.log(userProfileData.data.result.usernameRow.userInfo[0][0])
         if (userProfileData.data.result.status) {
             
             axios({
                 method: "get",
-                url: "http://localhost:3000/user/" + sess.userId
+                url: "http://15.228.160.53:8000/user/" + sess.userId
             }).then(async (data) => {
                 axios({
                     method: 'get',
-                    url: "http://localhost:3000/getFollows/" + userProfileData.data.result.usernameRow.usersTable[0].id
+                    url: "http://15.228.160.53:8000/getFollows/" + userProfileData.data.result.usernameRow.usersTable[0].id
                 }).then(async(followData)=>{
                     console.log(followData.data.followers)
                     res.render('profilePage.ejs', {
@@ -214,7 +214,7 @@ app.get('/accountSettings', (req, res) => {
 
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://15.228.160.53:8000/user/" + sess.userId
     }).then(async (data) => {
         console.log(data.data[0]);
 
@@ -248,7 +248,7 @@ app.get('/changePhoto', (req, res)=>{
 
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://15.228.160.53:8000/user/" + sess.userId
     }).then(async (data) => {
         console.log(data);
 
@@ -271,7 +271,7 @@ app.get('/addPubImg/:pubIdea', (req, res) => {
 
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://15.228.160.53:8000/user/" + sess.userId
     }).then(async (data) => {
         console.log(data);
 
@@ -292,11 +292,11 @@ app.get('/seusFeedbacks',(req, res)=>{
 
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://15.228.160.53:8000/user/" + sess.userId
     }).then(async (data) => {
         console.log(data);
 
-        const feedbackList = await axios.get('http://localhost:3000/listFeedbacks/'+sess.userId+'/0')
+        const feedbackList = await axios.get('http://15.228.160.53:8000/listFeedbacks/'+sess.userId+'/0')
         
         console.log(data.data[0].role)
 
@@ -307,7 +307,7 @@ app.get('/seusFeedbacks',(req, res)=>{
                 feedbackList: feedbackList.data.result
             })
         }else{
-            const reportsList = await axios.get('http://localhost:3000/listReports/0');
+            const reportsList = await axios.get('http://15.228.160.53:8000/listReports/0');
             console.log(reportsList.data.result)
             res.render('feedbacksReports', {
                 userData: data.data[0],
@@ -324,7 +324,7 @@ app.get('/seusFeedbacks',(req, res)=>{
 app.get('/getIdeaById/:ideaId', async (req,res)=>{
     const ideaId = req.params.ideaId
     try {
-        let idea = await axios.get(`http://localhost:3000/findPub/${ideaId}`);
+        let idea = await axios.get(`http://15.228.160.53:8000/findPub/${ideaId}`);
         console.log(idea.data.pubData)
     
         res.render('idea', {
@@ -346,7 +346,7 @@ app.get('/search', async (req, res) => {
 
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://15.228.160.53:8000/user/" + sess.userId
     }).then(async (data) => {
         
         if(Object.keys(req.query).length < 1){
@@ -358,7 +358,7 @@ app.get('/search', async (req, res) => {
     
             if(Object.keys(req.query)[0] == 'userQuery'){
                 console.log(req.query.userQuery)
-                let response = await axios.get('http://localhost:3000/getSearchListUser/'+req.query.userQuery)
+                let response = await axios.get('http://15.228.160.53:8000/getSearchListUser/'+req.query.userQuery)
                 console.log(response.data.results)
 
                 res.render('generalSearch', {
@@ -368,7 +368,7 @@ app.get('/search', async (req, res) => {
                 })
 
             }else if (Object.keys(req.query)[0] == 'msgQuery'){
-                let response = await axios.get('http://localhost:3000/searchForMsg/0/' + req.query.msgQuery)
+                let response = await axios.get('http://15.228.160.53:8000/searchForMsg/0/' + req.query.msgQuery)
                 console.log(response.data.result)
                 //
                 res.render('generalSearch', {
@@ -380,7 +380,7 @@ app.get('/search', async (req, res) => {
             } else if (Object.keys(req.query)[0] == 'ideaQuery') {
                 console.log(req.query.ideaQuery)
                 
-                let response = await axios.get('http://localhost:3000/searchPost/0/'+req.query.ideaQuery)
+                let response = await axios.get('http://15.228.160.53:8000/searchPost/0/'+req.query.ideaQuery)
                 console.log(response.data.result)
 
                 res.render('generalSearch', {
@@ -408,7 +408,7 @@ app.get('/wallet', (req,res)=>{
     }
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://15.228.160.53:8000/user/" + sess.userId
     }).then(async (data) => {
 
     res.render('wallet',{

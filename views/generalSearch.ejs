@@ -152,7 +152,7 @@
         if (document.getElementById('search').value.length>0) {
             
             try {
-                const results = await axios.get('http://localhost:3000/generalSeach/'+currentSearchValue);
+                const results = await axios.get('http://15.228.160.53:8000/generalSeach/'+currentSearchValue);
                 renderCards(results)
                 
             } catch (error) {

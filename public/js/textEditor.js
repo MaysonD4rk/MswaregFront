@@ -366,7 +366,7 @@
         if(ideaInfo.content.length >= 500){
 
             try {
-                var pub = await axios.post('http://localhost:3000/pub',{
+                var pub = await axios.post('http://15.228.160.53:8000/pub',{
                     title: inputTitle.value, 
                     ideaSummary: inputSummary.value,
                     mainIdea: ideaInfo.content, 

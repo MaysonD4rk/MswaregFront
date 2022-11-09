@@ -15,7 +15,7 @@ async function openIdeaModal(id){
     id = parseInt(id);
     currentProject = id;
 
-    let result = await axios.get(`http://localhost:3000/findPub/${id}`);
+    let result = await axios.get(`http://15.228.160.53:8000/findPub/${id}`);
 
     //var texto = reader.readAsArrayBuffer(result.data.pubData.mainIdea.data)
     
@@ -40,7 +40,7 @@ async function openIdeaModal(id){
             donateTable = false;
         }else{
             
-            var data = await axios.get(`http://localhost:3000/listDonates/${id}`);
+            var data = await axios.get(`http://15.228.160.53:8000/listDonates/${id}`);
             console.log(data);
             
             var lista = `
@@ -110,7 +110,7 @@ async function confirmPurchase(userId){
     var credits = parseFloat(document.getElementById('amountToPay-input').value)
 
     try {
-        var result = await axios.post('http://localhost:3000/donateCredits', {
+        var result = await axios.post('http://15.228.160.53:8000/donateCredits', {
             userId,
             credits,
             projectId: currentProject
@@ -167,14 +167,14 @@ async function openModal(elementId, itemId, allowFeedback=true){
     itemId = parseInt(itemId)
     console.log(itemId)
 
-    let result = await axios.get(`http://localhost:3000/findPub/${itemId}`);
+    let result = await axios.get(`http://15.228.160.53:8000/findPub/${itemId}`);
     let title = result.data.pubData.title;
     document.getElementsByClassName('insertIdeaName')[0].innerHTML = `"${title}"`;
     document.getElementsByClassName('insertIdeaName')[1].innerHTML = `"${title}"`;
     document.getElementsByClassName('sendFeedback')[0].onclick = async ()=>{
 
         try {
-            let sendFeedbackResult = await axios.post('http://localhost:3000/sendFeedback', {
+            let sendFeedbackResult = await axios.post('http://15.228.160.53:8000/sendFeedback', {
                 userId,
                 ideaId: itemId,
                 feedbackMsg: document.getElementById('feedback-textArea').value,
@@ -187,7 +187,7 @@ async function openModal(elementId, itemId, allowFeedback=true){
     };
     document.getElementsByClassName('sendReport')[0].onclick = async () => {
        
-        let sendReportResult = await axios.post('http://localhost:3000/sendReport', {
+        let sendReportResult = await axios.post('http://15.228.160.53:8000/sendReport', {
             userId,
             reportMsg: document.getElementById('report-textArea').value,
             ideaReport: itemId,
