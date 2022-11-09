@@ -191,8 +191,8 @@ app.get('/profile/:username', async (req,res)=>{
                     res.render('profilePage.ejs', {
                         id: sess.userId,
                         userData: data.data[0],
-                        followData: followData.data
-                        //userProfile: { users: userProfileData.data.result.usernameRow.usersTable[0], userInfo: userProfileData.data.result.usernameRow.userInfo[0][0] }
+                        followData: followData.data,
+                        userProfile: { users: userProfileData.data.result.usernameRow.usersTable[0], userInfo: userProfileData.data.result.usernameRow.userinfo[0][0] }
                     })
                 })
                 
