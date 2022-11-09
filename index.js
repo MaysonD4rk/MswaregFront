@@ -205,6 +205,7 @@ app.get('/profile/:username', async (req,res)=>{
         }
         
     } catch (error) {
+        console.log(error)
         res.redirect('/home')
     }
 
