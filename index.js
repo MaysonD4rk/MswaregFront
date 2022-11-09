@@ -23,6 +23,7 @@ app.get('/',(req,res)=>{
 
 
 app.get('/home', async (req, res)=>{
+    console.log('entrou em home')
     sess = req.session
     var offset = req.query['offset'] == undefined || req.query['offset']<0 ? req.query['offset'] = 0 : req.query['offset'];
     var filter = !!req.query['filter'] ? req.query['filter'] : false;
