@@ -376,7 +376,7 @@
                     images: mainImages,
                     allowFeedbacks: document.getElementById('allowFeedback').checked
                 })
-                window.location.href = `http://localhost:8080/addPubImg/${pub.data[0]}`;
+                window.location.href = `http://18.230.25.68:8080/addPubImg/${pub.data[0]}`;
             } catch (error) {
                 console.log(error)
             }
