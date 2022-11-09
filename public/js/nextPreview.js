@@ -17,13 +17,13 @@
             offsetArray = querys[1].split('=')
             
             offNum = offsetArray[1] == undefined || parseInt(offsetArray[1])<0 ? 0 : parseInt(offsetArray[1]);
-            nextLocation = `http://54.207.184.106/${sep[0]}?${querys[0]}&offset=${offNum}`
+            nextLocation = `http://54.207.184.106:8080/${sep[0]}?${querys[0]}&offset=${offNum}`
 
         }else{
             offsetArray = sep[1].split('=')
             offNum = offsetArray[1] == undefined || offsetArray[1]<0 ? 0 : parseInt(offsetArray[1]);
 
-            nextLocation = `http://54.207.184.106/${sep[0]}?offset=${offNum}`
+            nextLocation = `http://54.207.184.106:8080/${sep[0]}?offset=${offNum}`
 
         }
 
@@ -40,14 +40,14 @@ function nextPreview(order){
         offNum += 1
 
         if (querys.length>1) {
-            nextLocation = `http://54.207.184.106/${sep[0]}?${querys[0]}&offset=${offNum}`;
+            nextLocation = `http://54.207.184.106:8080/${sep[0]}?${querys[0]}&offset=${offNum}`;
         }else{
-            nextLocation = `http://54.207.184.106/${sep[0]}?offset=${offNum}`;
+            nextLocation = `http://54.207.184.106:8080/${sep[0]}?offset=${offNum}`;
         }
 
         
         if (sep.length<2) {
-            window.location.href = `http://54.207.184.106/${sep[0]}?offset=1`;
+            window.location.href = `http://54.207.184.106:8080/${sep[0]}?offset=1`;
         }else{
             window.location.href = nextLocation;
         }
@@ -61,12 +61,12 @@ function nextPreview(order){
         }
 
         if (querys.length > 1) {
-            nextLocation = `http://54.207.184.106/${sep[0]}?${querys[0]}&offset=${offNum}`;
+            nextLocation = `http://54.207.184.106:8080/${sep[0]}?${querys[0]}&offset=${offNum}`;
         } else {
-            nextLocation = `http://54.207.184.106/${sep[0]}?offset=${offNum}`;
+            nextLocation = `http://54.207.184.106:8080/${sep[0]}?offset=${offNum}`;
         }
         if (sep.length < 2) {
-            window.location.href = `http://54.207.184.106/${sep[0]}?offset=1`;
+            window.location.href = `http://54.207.184.106:8080/${sep[0]}?offset=1`;
         } else {
             window.location.href = nextLocation;
         }
