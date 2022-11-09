@@ -425,6 +425,6 @@ app.get('/wallet', (req,res)=>{
 })
 
 
-app.listen(80,(err)=>{
+app.listen(8080,(err)=>{
     err ? console.log(err) : console.log('sv rodando');
 } )
