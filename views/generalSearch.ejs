@@ -115,7 +115,7 @@
                                 <%}%>
                             </div>
                         <div class="user-result-card-info">
-                            <a href="http://18.230.25.68:8080/profile/<%=item.username%>">@<%= item.username %></a>
+                            <a href="http://54.207.184.106/profile/<%=item.username%>">@<%= item.username %></a>
                             <button>Follow</button>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
         if (document.getElementById('search').value.length>0) {
             
             try {
-                const results = await axios.get('http://15.228.160.53:8000/generalSeach/'+currentSearchValue);
+                const results = await axios.get('http://54.233.190.172:8000/generalSeach/'+currentSearchValue);
                 renderCards(results)
                 
             } catch (error) {
@@ -187,7 +187,7 @@
                 let card = document.createElement('div');
                 card.classList = 'card';
                 card.onclick = () => {
-                    location.href = 'http://18.230.25.68:8080/search?ideaQuery=' + currentSearchValue;
+                    location.href = 'http://54.207.184.106/search?ideaQuery=' + currentSearchValue;
                 }
                 card.id = "ideaCard"
                  let cardItens = document.createElement('div');
@@ -224,7 +224,7 @@
                 let card = document.createElement('div');
                 card.classList = 'card';
                 card.onclick= ()=>{
-                    location.href = 'http://18.230.25.68:8080/search?msgQuery='+currentSearchValue;
+                    location.href = 'http://54.207.184.106/search?msgQuery='+currentSearchValue;
                 }
                 card.id = "msgsCard"
                 let cardItens = document.createElement('div');
@@ -260,7 +260,7 @@
                 let card = document.createElement('div');
                 card.classList = 'card';
                 card.onclick = () => {
-                    location.href = 'http://18.230.25.68:8080/search?userQuery=' + currentSearchValue;
+                    location.href = 'http://54.207.184.106/search?userQuery=' + currentSearchValue;
                 }
                 card.id = "usersCard"
                 let cardItens = document.createElement('div');

@@ -24,12 +24,12 @@
 
         if (pass == confirmPass) {
             
-            axios.post('http://15.228.160.53:8000/changePass',{
+            axios.post('http://54.233.190.172:8000/changePass',{
                 token: token,
                 email: email,
                 password: pass
             }).then(res=>{
-                window.location.href = 'http://18.230.25.68:8080/login'
+                window.location.href = 'http://54.207.184.106/login'
             }).catch(err=>{
                 console.log(err)
             })

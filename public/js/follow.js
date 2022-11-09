@@ -1,7 +1,7 @@
 (async function verifyFollow(){
     console.log(userId.value, currentUser.value)
     try {
-        let follow = await axios.get('http://15.228.160.53:8000/verifyFollow/' + userId.value + '/' + currentUser.value);
+        let follow = await axios.get('http://54.233.190.172:8000/verifyFollow/' + userId.value + '/' + currentUser.value);
         console.log(follow.data.follow)
         if (follow.data.follow){
             document.getElementById('follow').classList = 'followed-button';
@@ -18,7 +18,7 @@
 
 async function follow(){
     try {
-        let follow = await axios.post('http://15.228.160.53:8000/followUser',{
+        let follow = await axios.post('http://54.233.190.172:8000/followUser',{
             userId,
             followingId: currentUser
         })

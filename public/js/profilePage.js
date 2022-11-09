@@ -5,7 +5,7 @@ const userId = document.getElementById('userId').value
 const currentUser = document.getElementById('currentUser').value
 async function editAboutMe(id){
 
-    var editAboutMe = await axios.put('http://15.228.160.53:8000/updateUserInfo', {
+    var editAboutMe = await axios.put('http://54.233.190.172:8000/updateUserInfo', {
         id: parseInt(id),
         aboutMe: document.getElementById('aboutMeTextArea').value
     })
