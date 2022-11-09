@@ -175,7 +175,7 @@ app.get('/profile/:username', async (req,res)=>{
 
     try {
         let userProfileData = await axios.get('http://54.233.190.172:8000/getByUsername/'+userProfile);
-        console.log(userProfileData)
+        console.log(userProfileData.data.result.usernameRow)
         
         if (userProfileData.data.result.status) {
             
@@ -191,8 +191,8 @@ app.get('/profile/:username', async (req,res)=>{
                     res.render('profilePage.ejs', {
                         id: sess.userId,
                         userData: data.data[0],
-                        followData: followData.data,
-                        userProfile: { users: userProfileData.data.result.usernameRow.usersTable[0], userInfo: userProfileData.data.result.usernameRow.userInfo[0][0] }
+                        followData: followData.data
+                        //userProfile: { users: userProfileData.data.result.usernameRow.usersTable[0], userInfo: userProfileData.data.result.usernameRow.userInfo[0][0] }
                     })
                 })
                 
