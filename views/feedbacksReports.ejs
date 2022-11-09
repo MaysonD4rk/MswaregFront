@@ -53,7 +53,7 @@
 
 
 
-                    <% reportsList.forEach(item=>{%>
+                    <% if(typeof(reportsList) != 'undefined){reportsList.forEach(item=>{%>
 
                         <div onclick="openSelection('report', '<%=item.ideaId%>', '<%=item.reports%>','<%=item.categorieReport%>')">
                             De: <%= item.reports %> users <br>
@@ -61,7 +61,7 @@
                             categoria: <%= item.categorieReport %>
                         </div>
 
-                    <%})%>
+                    <%})}%>
 
 
 

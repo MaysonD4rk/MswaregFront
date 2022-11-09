@@ -307,7 +307,7 @@ app.get('/seusFeedbacks',(req, res)=>{
         
         console.log(data.data[0].role)
 
-        if (data.data[0].role != true) {
+        if (data.data[0].role != 1) {
             res.render('feedbacksReports', {
                 userData: data.data[0],
                 mod: false,
