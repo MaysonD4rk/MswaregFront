@@ -6,7 +6,7 @@ const currentUser = document.getElementById('currentUser').value
 const currentPage = 'profilePage'
 async function editAboutMe(id){
 
-    var editAboutMe = await axios.put('http://localhost:3000/updateUserInfo', {
+    var editAboutMe = await axios.put('http://54.233.190.172:8000/updateUserInfo', {
         id: parseInt(id),
         aboutMe: document.getElementById('aboutMeTextArea').value
     })

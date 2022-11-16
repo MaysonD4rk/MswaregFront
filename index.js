@@ -37,13 +37,13 @@ app.get('/home', async (req, res)=>{
 
     axios({
             method: "get",
-            url: "http://localhost:3000/user/"+sess.userId
+            url: "http://54.233.190.172:8000/user/"+sess.userId
         }).then(async (data)=>{
             
             
             var posts = await axios({
                 method: "get",
-                url: `http://localhost:3000/home/${sess.userId}/${offset*8}/${filter}`
+                url: `http://54.233.190.172:8000/home/${sess.userId}/${offset*8}/${filter}`
             })
 
             console.log(posts.data)
@@ -92,7 +92,7 @@ app.post('/login', (req, res)=>{
 
     axios({
         method: "post",
-        url: "http://localhost:3000/login",
+        url: "http://54.233.190.172:8000/login",
         data: {
             email,
             password,
@@ -119,7 +119,7 @@ app.post('/register', (req, res)=>{
 
     axios({
         method: "post",
-        url: "http://localhost:3000/user",
+        url: "http://54.233.190.172:8000/user",
         data: {
             username,
             email,
@@ -144,7 +144,7 @@ app.get('/writeIdea', async (req,res)=>{
     }
     
     try {
-        let count = await axios.get('http://localhost:3000/countPosts/'+sess.userId);
+        let count = await axios.get('http://54.233.190.172:8000/countPosts/'+sess.userId);
         if(count.data.result >= 4){
             res.redirect('/home?maxIdeasWriten')
         }else{
@@ -166,12 +166,12 @@ app.get('/sendMsg', async (req, res) => {
     if (sess.userId == undefined) {
         res.redirect('/login')
     }
-    let msgs = await axios.get(`http://localhost:3000/listMsgs/${offset*15}`);
+    let msgs = await axios.get(`http://54.233.190.172:8000/listMsgs/${offset*15}`);
 
     console.log(msgs.data.row)
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://54.233.190.172:8000/user/" + sess.userId
     }).then(async (data) => {
 
         console.log(data.data[0])
@@ -200,21 +200,21 @@ app.get('/profile/:username', async (req,res)=>{
     }
 
     try {
-        let userProfileData = await axios.get('http://localhost:3000/getByUsername/'+userProfile);
+        let userProfileData = await axios.get('http://54.233.190.172:8000/getByUsername/'+userProfile);
         console.log(userProfileData.data.result.usernameRow)
         
         if (userProfileData.data.result.status) {
             
             axios({
                 method: "get",
-                url: "http://localhost:3000/user/" + sess.userId
+                url: "http://54.233.190.172:8000/user/" + sess.userId
             }).then(async (data) => {
                 axios({
                     method: 'get',
-                    url: "http://localhost:3000/getFollows/" + userProfileData.data.result.usernameRow.usersTable[0].id
+                    url: "http://54.233.190.172:8000/getFollows/" + userProfileData.data.result.usernameRow.usersTable[0].id
                 }).then(async(followData)=>{
                     
-                    const contentList = await axios.get(`http://localhost:3000/profilePageContentList/${sess.userId}/`+offset)
+                    const contentList = await axios.get(`http://54.233.190.172:8000/profilePageContentList/${sess.userId}/`+offset)
                     console.log(contentList.data.result)
                     res.render('profilePage.ejs', {
                         id: sess.userId,
@@ -252,7 +252,7 @@ app.get('/accountSettings', (req, res) => {
 
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://54.233.190.172:8000/user/" + sess.userId
     }).then(async (data) => {
         console.log(data.data[0]);
 
@@ -286,7 +286,7 @@ app.get('/changePhoto', (req, res)=>{
 
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://54.233.190.172:8000/user/" + sess.userId
     }).then(async (data) => {
         console.log(data);
 
@@ -309,7 +309,7 @@ app.get('/addPubImg/:pubIdea', (req, res) => {
 
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://54.233.190.172:8000/user/" + sess.userId
     }).then(async (data) => {
         console.log(data);
 
@@ -330,11 +330,11 @@ app.get('/seusFeedbacks',(req, res)=>{
 
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://54.233.190.172:8000/user/" + sess.userId
     }).then(async (data) => {
         console.log(data);
 
-        const feedbackList = await axios.get('http://localhost:3000/listFeedbacks/'+sess.userId+'/0')
+        const feedbackList = await axios.get('http://54.233.190.172:8000/listFeedbacks/'+sess.userId+'/0')
         
         console.log(data.data[0].role)
 
@@ -345,7 +345,7 @@ app.get('/seusFeedbacks',(req, res)=>{
                 feedbackList: feedbackList.data.result
             })
         }else{
-            const reportsList = await axios.get('http://localhost:3000/listReports/0');
+            const reportsList = await axios.get('http://54.233.190.172:8000/listReports/0');
             console.log(reportsList.data.result)
             res.render('feedbacksReports', {
                 userData: data.data[0],
@@ -362,7 +362,7 @@ app.get('/seusFeedbacks',(req, res)=>{
 app.get('/getIdeaById/:ideaId', async (req,res)=>{
     const ideaId = req.params.ideaId
     try {
-        let idea = await axios.get(`http://localhost:3000/findPub/${ideaId}`);
+        let idea = await axios.get(`http://54.233.190.172:8000/findPub/${ideaId}`);
         console.log(idea.data.pubData)
     
         res.render('idea', {
@@ -390,7 +390,7 @@ app.get('/search', async (req, res) => {
     console.log(offset)
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://54.233.190.172:8000/user/" + sess.userId
     }).then(async (data) => {
         
         if(Object.keys(req.query).length < 1){
@@ -403,7 +403,7 @@ app.get('/search', async (req, res) => {
     
             if(Object.keys(req.query)[0] == 'userQuery'){
                 console.log(req.query.userQuery)
-                let response = await axios.get('http://localhost:3000/getSearchListUser/0/'+req.query.userQuery)
+                let response = await axios.get('http://54.233.190.172:8000/getSearchListUser/0/'+req.query.userQuery)
                 console.log(Object.keys(req.query)[0])
 
                 res.render('generalSearch', {
@@ -416,7 +416,7 @@ app.get('/search', async (req, res) => {
                 })
 
             }else if (Object.keys(req.query)[0] == 'msgQuery'){
-                let response = await axios.get('http://localhost:3000/searchForMsg/0/' + req.query.msgQuery)
+                let response = await axios.get('http://54.233.190.172:8000/searchForMsg/0/' + req.query.msgQuery)
                 console.log(response.data.result)
                 //
                 res.render('generalSearch', {
@@ -430,7 +430,7 @@ app.get('/search', async (req, res) => {
     
             } else if (Object.keys(req.query)[0] == 'msgByUsernameQuery'){
                 try {
-                    let response = await axios.get('http://localhost:3000/searchMsgList/' + (offset*15) + '/' + req.query.msgByUsernameQuery)
+                    let response = await axios.get('http://54.233.190.172:8000/searchMsgList/' + (offset*15) + '/' + req.query.msgByUsernameQuery)
                     if (response.data.result.row != undefined) {
                         if (req.query.maxData != undefined) {
                             res.render('generalSearch', {
@@ -465,7 +465,7 @@ app.get('/search', async (req, res) => {
                 
                 try {
                     
-                    let response = await axios.get('http://localhost:3000/searchPost/'+(offset*8)+'/'+req.query.ideaQuery)
+                    let response = await axios.get('http://54.233.190.172:8000/searchPost/'+(offset*8)+'/'+req.query.ideaQuery)
                     
                     if (!!response.data.result) {
                         if (req.query.maxData != undefined) {
@@ -519,7 +519,7 @@ app.get('/wallet', (req,res)=>{
     }
     axios({
         method: "get",
-        url: "http://localhost:3000/user/" + sess.userId
+        url: "http://54.233.190.172:8000/user/" + sess.userId
     }).then(async (data) => {
 
     res.render('wallet',{
