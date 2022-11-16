@@ -1,7 +1,7 @@
 var MenuSettingsActive = false;
 
 
-function createMenuSettingsButton(buttonInitialPosition=20, containerHeight=400){
+function createMenuSettingsButton(buttonInitialPosition=20, containerHeight=420){
     document.getElementsByClassName("menu-itens")[0].style.height = containerHeight + "px";
     document.getElementsByClassName("settings-menu")[0].style.transform = "translateY(-" + buttonInitialPosition +"px)";
    

@@ -59,9 +59,9 @@ function applyFilter(){
 
 
     if (filter[0] == 'non-filter') {
-        window.location.href = `http://54.207.184.106:8080/home?offset=0`;
+        window.location.href = `http://localhost:8080/home?offset=0`;
     }else{
-        window.location.href = `http://54.207.184.106:8080/home?filter=${filter[0]}&offset=0`;
+        window.location.href = `http://localhost:8080/home?filter=${filter[0]}&offset=0`;
     }
 
 

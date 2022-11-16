@@ -15,14 +15,22 @@ async function openIdeaModal(id){
     id = parseInt(id);
     currentProject = id;
 
-    let result = await axios.get(`http://54.233.190.172:8000/findPub/${id}`);
+    let result = await axios.get(`http://localhost:3000/findPub/${id}`);
 
     //var texto = reader.readAsArrayBuffer(result.data.pubData.mainIdea.data)
     
-
+    console.log(result)
     document.getElementsByClassName('model-title')[0].innerHTML = `<h1>${result.data.pubData.title}</h1>`;
     document.getElementsByClassName('model-sub')[0].innerHTML = `<i>${result.data.pubData.ideaSummary}</i>`;
     document.getElementsByClassName('card-modal-idea')[0].innerHTML = `${result.data.pubData.mainIdea}`;
+    document.getElementsByClassName('modal-category')[0].children[0].innerHTML = `#${result.data.pubData.category}`;
+    document.getElementsByClassName('modal-category')[0].children[1].innerHTML = `@${result.data.pubData.createdBy}`;
+    
+    let date = result.data.pubData.createdAt;
+    let day = date.slice(0, 10)
+    let daySplit = day.split('-')
+    let brDate = `${daySplit[2]}/${daySplit[1]}/${daySplit[0]}`
+    document.getElementsByClassName('modal-category')[0].children[2].innerHTML = brDate
 
     result.data.pubData.images.forEach(data=>{
         let newImg = document.createElement('img')
@@ -40,7 +48,7 @@ async function openIdeaModal(id){
             donateTable = false;
         }else{
             
-            var data = await axios.get(`http://54.233.190.172:8000/listDonates/${id}`);
+            var data = await axios.get(`http://localhost:3000/listDonates/${id}`);
             console.log(data);
             
             var lista = `
@@ -68,7 +76,7 @@ async function openIdeaModal(id){
                     lista += ` 
                     <tr>
                         <td>
-                            <span></span>
+                            <span style="background-image: url('${item.profilePhoto}')"></span>
                         </td>
                         <td>${item.username}</td>
                         <td>${item.investment}$</td>
@@ -110,7 +118,7 @@ async function confirmPurchase(userId){
     var credits = parseFloat(document.getElementById('amountToPay-input').value)
 
     try {
-        var result = await axios.post('http://54.233.190.172:8000/donateCredits', {
+        var result = await axios.post('http://localhost:3000/donateCredits', {
             userId,
             credits,
             projectId: currentProject
@@ -167,14 +175,14 @@ async function openModal(elementId, itemId, allowFeedback=true){
     itemId = parseInt(itemId)
     console.log(itemId)
 
-    let result = await axios.get(`http://54.233.190.172:8000/findPub/${itemId}`);
+    let result = await axios.get(`http://localhost:3000/findPub/${itemId}`);
     let title = result.data.pubData.title;
     document.getElementsByClassName('insertIdeaName')[0].innerHTML = `"${title}"`;
     document.getElementsByClassName('insertIdeaName')[1].innerHTML = `"${title}"`;
     document.getElementsByClassName('sendFeedback')[0].onclick = async ()=>{
 
         try {
-            let sendFeedbackResult = await axios.post('http://54.233.190.172:8000/sendFeedback', {
+            let sendFeedbackResult = await axios.post('http://localhost:3000/sendFeedback', {
                 userId,
                 ideaId: itemId,
                 feedbackMsg: document.getElementById('feedback-textArea').value,
@@ -186,14 +194,17 @@ async function openModal(elementId, itemId, allowFeedback=true){
 
     };
     document.getElementsByClassName('sendReport')[0].onclick = async () => {
-       
-        let sendReportResult = await axios.post('http://54.233.190.172:8000/sendReport', {
-            userId,
-            reportMsg: document.getElementById('report-textArea').value,
-            ideaReport: itemId,
-            reportCategorie: reportCategorie.value
-        })
-        console.log(sendReportResult)
+       try {
+           let sendReportResult = await axios.post('http://localhost:3000/sendReport', {
+               userId,
+               reportMsg: document.getElementById('report-textArea').value,
+               ideaReport: itemId,
+               reportCategorie: reportCategorie.value
+           })
+           statusModal('success', sendReportResult.data.msg) 
+       } catch (error) {
+           statusModal('failed', error) 
+       }
 
 
     };

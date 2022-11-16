@@ -23,6 +23,13 @@
     <input type="hidden" id="userId" value="<%=id%>">
     
     <%- include('./partials/header.ejs') %>
+    <% if(typeof(maxIdeasWriten) !='undefined' ){ %>
+        <div class="errorMsg">
+            <b>
+                Você não pode mais escrever. Espere a proxima temporada, ou compre um ticket de escrita! :)
+            </b>
+        </div>
+        <%}%>
     
     
     <!--   ---MENU---    -->
@@ -214,7 +221,7 @@
                         <i onclick="likePub('<%= item.id %>')" class="fa-solid fa-heart like"></i>
                         <div>
                             <p><%= item.initialAmountRequired %></p>
-                            <progress value="500" max="<%= item.initialAmountRequired %>"></progress>
+                            <progress value="<%=item.investment%>" max="<%= item.initialAmountRequired %>"></progress>
                         </div>
                             <i onclick="favoritePub('<%= item.id %>')" class="fa-solid fa-star like"></i>
                     </div>
@@ -247,6 +254,7 @@
 <script src="/js/menuSettingsButton.js">
     
 </script>
+
 <script src="/js/filter.js"></script>
 <script src="/js/getNavDown.js"></script>
 <script src="/js/nextPreview.js"></script>
@@ -255,213 +263,16 @@
 
     
 </script>
+
 <script src="/js/idea.js">    
 </script>
-<script >
-    document.getElementById('home').className = "active"
-
-
-
-
-    for (let i = 0; i < document.getElementsByClassName('card-header').length; i++) {
-            const subLength = document.getElementsByClassName('card-header')[i].firstChild.nextSibling.nextElementSibling
-
-            if (subLength.innerHTML.length>75) {
-                subLength.innerHTML = subLength.innerHTML.slice(0, 75)+"<b>...</b>";
-            }
-
-            
-        }
-
-        //formula!!
-       //document.getElementsByClassName('post-card')[0].style.backgroundImage = "url('https://i.pinimg.com/originals/85/85/d6/8585d6750cc7ecfcae2a4b603fc3319a.jpg')";
-
-
-
+<script src="/js/home.js" >
 </script>
 
 
 <script src="/js/search.js">
-//passar todos os scripts pra esse script a parte dps 
 </script>
-<script>
-
-    const postsArrayInitialState = document.getElementsByClassName('posts')[0].innerHTML;
-
-
-    document.getElementById('search').addEventListener('keydown', ()=>{searchIdea()})
-
-
-
-    function searchIdea(){
-
-            
-
-        if (document.getElementById('search').value.length < 1) {
-            document.getElementsByClassName('posts')[0].innerHTML = postsArrayInitialState
-        }
-
-        axios.get('http://54.233.190.172:8000/searchPost/0/' + document.getElementById('search').value)
-            .then(posts => {
-
-                const arrayPosts = posts.data.result;
-
-                //criação de um post
-
-                document.getElementsByClassName('posts')[0].innerHTML = ''
-
-                console.log(arrayPosts)
-
-                if (!arrayPosts) {
-                    document.getElementsByClassName('posts')[0].innerHTML = 'HMMMM... sem ideias por enquanto.'
-                }
-
-                arrayPosts.forEach(element => {
-                    console.log(element)
-                    let postCard = document.createElement('div');
-                    postCard.classList.add('post-card')
-                    postCard.id = element.id
-                    postCard.style.backgroundImage = "url(" + element.imageUrl + ")";
-
-
-
-                    let cardHeader = document.createElement('div');
-                    cardHeader.classList.add('card-header');
-                    cardHeader.onclick = () => {
-                        openIdeaModal(element.id)
-                    }
-                    let h2CardHeader = document.createElement('h2');
-                    h2CardHeader.innerHTML = element.title
-                    let pCardHeader = document.createElement('p');
-                    pCardHeader.innerHTML = element.ideaSummary
-                    let cardImg = document.createElement('div');
-                    cardImg.classList.add('card-img');
-                    let cardInfo = document.createElement('div');
-                    cardInfo.classList.add('card-info');
-                    let interaction1 = document.createElement('i');
-                    interaction1.className = 'fa-solid fa-heart like'
-                    interaction1.onclick = () => {
-                        likePub(element.id)
-                    }
-
-                    let div1 = document.createElement('div');
-                    let pAmount = document.createElement('p');
-                    pAmount.innerHTML = element.initialAmountRequired
-                    let progressBar = document.createElement('progress');
-                    progressBar.max = element.initialAmountRequired
-                    progressBar.value = "500"
-
-
-                    let interaction2 = document.createElement('i');
-                    interaction2.className = 'fa-solid fa-star like';
-                    interaction2.onclick = () => {
-                        favoritePub(element.id)
-                    }
-
-
-                    postCard.appendChild(cardHeader)
-                    cardHeader.appendChild(h2CardHeader)
-                    cardHeader.appendChild(pCardHeader)
-                    postCard.appendChild(cardImg)
-                    postCard.appendChild(cardInfo)
-                    cardInfo.appendChild(interaction1)
-                    cardInfo.appendChild(div1)
-                    div1.appendChild(pAmount)
-                    div1.appendChild(progressBar)
-                    cardInfo.appendChild(interaction2)
-                    document.getElementsByClassName('posts')[0].appendChild(postCard)
-
-
-                })
-
-
-
-
-
-
-            })
-            .catch(error => {
-                console.log('nada encontrado')
-            })
-
-    }
-
-
-
-</script>
-
-
-<script>
-    // REPORT FEEDBACK SCRIPTS
-
-    let currentPage;
-    let previewPage;
-
-    function selectAction(action){
-        currentPage = action+'1';
-        previewPage = 'selectAction'
-
-
-        console.log(currentPage)
-        document.getElementById('select-action').style.display = 'none';
-
-        if(action == 'feedback') {
-            document.getElementById('pages').style.display = 'flex';
-            document.getElementById('report-page').style.display = 'none'
-            document.getElementById('feedback-page').style.display = 'flex'
-            document.getElementsByClassName('fa-arrow-left')[0].style.display = 'initial'
-        }else{
-            document.getElementById('pages').style.display = 'flex';
-            document.getElementById('report-page').style.display = 'flex'
-            document.getElementById('report-option').style.display = 'flex'
-            document.getElementById('feedback-page').style.display = 'none'
-            document.getElementsByClassName('fa-arrow-left')[0].style.display = 'initial'
-
-        }
-    }
-
-    function selectReportCategorie(categorie){
-        
-        previewPage = 'report1'
-
-        document.getElementById('reportCategorie').value = categorie;
-
-        document.getElementById('report-option').style.display = 'none'
-        document.getElementById('report-form').style.display = 'flex'
-        document.getElementsByClassName('fa-arrow-left')[0].style.display = 'initial'
-                
-    }
-
-    function getPreviewPage(){
-        
-        console.log(previewPage)
-
-        switch (previewPage) {
-            case 'selectAction':
-                document.getElementById('pages').style.display = 'none';
-                document.getElementById('select-action').style.display = 'flex';
-                document.getElementsByClassName('fa-arrow-left')[0].style.display = 'none'
-                break;
-                case 'report1': 
-                document.getElementsByClassName('fa-arrow-left')[0].style.display = 'initial'
-                document.getElementById('pages').style.display = 'flex';
-                document.getElementById('report-page').style.display = 'flex'
-                document.getElementById('report-option').style.display = 'flex'
-                document.getElementById('feedback-page').style.display = 'none'
-                document.getElementById('report-form').style.display = 'none';
-                previewPage = 'selectAction'
-                
-            break;
-            default:
-                break;
-        }
-
-    }
-
-
-
-
-
+<script src="/js/reportFeedback.js">
 </script>
 
 </html>

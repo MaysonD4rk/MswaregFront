@@ -1,11 +1,12 @@
 var currentState = 0;
 let usernameInput = document.getElementById('username').value
 const currentUsername = usernameInput
-const userId = document.getElementById('userId').value
+
 const currentUser = document.getElementById('currentUser').value
+const currentPage = 'profilePage'
 async function editAboutMe(id){
 
-    var editAboutMe = await axios.put('http://54.233.190.172:8000/updateUserInfo', {
+    var editAboutMe = await axios.put('http://localhost:3000/updateUserInfo', {
         id: parseInt(id),
         aboutMe: document.getElementById('aboutMeTextArea').value
     })
@@ -70,3 +71,11 @@ function statusModal(status, msg) {
         }, 2000);
     }
 }
+
+if (!!document.getElementById(`follow${currentUser}`)) {
+    document.getElementById(`follow${currentUser}`).onclick = ()=>{
+        follow(currentUser)
+    }
+}
+
+

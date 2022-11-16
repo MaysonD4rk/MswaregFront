@@ -1,33 +1,49 @@
-(async function verifyFollow(){
-    console.log(userId.value, currentUser.value)
-    try {
-        let follow = await axios.get('http://54.233.190.172:8000/verifyFollow/' + userId.value + '/' + currentUser.value);
-        console.log(follow.data.follow)
-        if (follow.data.follow){
-            document.getElementById('follow').classList = 'followed-button';
-            document.getElementById('follow').innerHTML = 'Followed <i class="fa-solid fa-check"></i> '
-        }else{
-            document.getElementById('follow').classList = 'follow-button';
-            document.getElementById('follow').innerHTML = 'Follow '
-        }
-    } catch (error) {
-        console.log(error)
+addEventListener('DOMContentLoaded', (event) => {
+    if (currentPage == 'generalSearch') {
+        verifyFollow();
+    }else{
+        verifyFollow(document.getElementsByClassName('main-div'));
     }
-})()
+});
 
+async function verifyFollow(users=document.getElementsByClassName('userResults')){
+    
+    
+    for (let i = 0; i < users.length; i++) {
+        const elementId = users[i].id;
+        const id = parseInt(elementId.split('user')[1])
+        try {
+            let follow = await axios.get('http://localhost:3000/verifyFollow/' + userId + '/' + id);
+            console.log(follow.data.follow)
+            if (follow.data.follow) {
+                document.getElementById('follow'+id).classList = 'followed-button';
+                document.getElementById('follow'+id).innerHTML = 'Followed <i class="fa-solid fa-check"></i> '
+            } else {
+                document.getElementById('follow'+id).classList = 'follow-button';
+                document.getElementById('follow'+id).innerHTML = 'Follow '
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    
+}
 
-async function follow(){
+async function follow(followingId){
+    followingId = parseInt(followingId)
+    console.log(followingId)
     try {
-        let follow = await axios.post('http://54.233.190.172:8000/followUser',{
+        let follow = await axios.post('http://localhost:3000/followUser',{
             userId,
-            followingId: currentUser
+            followingId: followingId
         })
         if (follow.data.follow) {
-            document.getElementById('follow').classList = 'followed-button';
-            document.getElementById('follow').innerHTML = 'Followed <i class="fa-solid fa-check"></i> '
+            document.getElementById('follow' + followingId).classList = 'followed-button';
+            document.getElementById('follow' + followingId).innerHTML = 'Followed <i class="fa-solid fa-check"></i> '
         } else {
-            document.getElementById('follow').classList = 'follow-button';
-            document.getElementById('follow').innerHTML = 'Follow '
+            document.getElementById('follow' + followingId).classList = 'follow-button';
+            document.getElementById('follow' + followingId).innerHTML = 'Follow '
         }
         
     } catch (error) {

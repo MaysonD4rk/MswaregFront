@@ -366,17 +366,17 @@
         if(ideaInfo.content.length >= 500){
 
             try {
-                var pub = await axios.post('http://54.233.190.172:8000/pub',{
+                var pub = await axios.post('http://localhost:3000/pub',{
                     title: inputTitle.value, 
                     ideaSummary: inputSummary.value,
                     mainIdea: ideaInfo.content, 
                     userId, 
-                    categoryId: 1, 
-                    initialAmountRequired: parseFloat(professionalInfo[1].finalAmount),
+                    categoryId: parseInt(document.getElementById('categoryId').value),
+                    initialAmountRequired: 5000,//parseFloat(professionalInfo[1].finalAmount),
                     images: mainImages,
                     allowFeedbacks: document.getElementById('allowFeedback').checked
                 })
-                window.location.href = `http://54.207.184.106:8080/addPubImg/${pub.data[0]}`;
+                window.location.href = `http://localhost:8080/addPubImg/${pub.data[0]}`;
             } catch (error) {
                 console.log(error)
             }

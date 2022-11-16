@@ -205,7 +205,8 @@
 
 #investors-table table tr>td {
     width: 40px;
-    height: 35px;
+    height: 40px;
+    background-size: 40px;
 }
 
 #investors-table table tr>td>span {
@@ -281,7 +282,7 @@
     word-break: break-word;
 }
 
-.model-category {
+.modal-category {
     display: flex;
     flex-grow: 0.2;
     width: 100%;

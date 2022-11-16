@@ -13,11 +13,30 @@
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/sendAmsg.css">
     
+    <script src="/js/follow.js"></script>
+    <script>verifyFollow()</script>
+    <%if(offsetBtn){%>
+    <script src="/js/nextPreview.js"></script>
+    <%}%>
 </head>
 <body>
     <input type="hidden" id="userId" value="<%=id%>">
+    <% if(typeof(query) != 'undefined' && typeof(queryType)){%>
+    <input id="queryInput" type="hidden" value="<%=query%>">
+    <input id="queryType" type="hidden" value="<%=queryType%>">
+    <%}%>
+
     <%- include('./partials/header.ejs') %>
     <%- include('./partials/floatingMenu.ejs') %>
+
+    <% if(typeof(maxData) !='undefined' ){ %>
+        <div class="errorMsg">
+            <b>
+                Limite de dados alcançado
+            </b>
+        </div>
+        <%}%>
+
 
     <% if(typeof(usersList) == 'undefined' && typeof(msgList) == 'undefined' && typeof(postList) == 'undefined'){%>
     <div class="searchBar">
@@ -28,37 +47,41 @@
     </div>
     <%}%>
 
-    
     <% if(typeof(msgList) !='undefined' ){%>
-        <div class="asks">
-        <%msgList.forEach(item=>{%>
-            <div class="ask-item">
-                <div style="background-image: url('<%=item.profilePhoto%>');" class="ask-item-img">img</div>
-                <div class="ask-item-info">
-            
-                    <div>
-                        <h3>from: @<%=item.username%>
-                        </h3>
+        <div>
+            <div class="asks">
+            <%msgList.forEach(item=>{%>
+                <div class="ask-item">
+                    <div style="background-image: url('<%=item.profilePhoto%>');" class="ask-item-img">img</div>
+                    <div class="ask-item-info">
+                
+                        <div>
+                            <h3>from: @<%=item.username%>
+                            </h3>
+                        </div>
+                        <div>
+                            <h3>to: @<%=item.recipientName%>
+                            </h3>
+                        </div>
+                        <h3>msg: </h3>
+                        <div class="ask-text">
+                
+                            <%=item.msg%>
+                
+                
+                        </div>
+                
                     </div>
-                    <div>
-                        <h3>to: @<%=item.recipientName%>
-                        </h3>
-                    </div>
-                    <h3>msg: </h3>
-                    <div class="ask-text">
-            
-                        <%=item.msg%>
-            
-            
-                    </div>
-            
                 </div>
-            </div>
+                
+                <%})%>
             
-            <%})%>
-        </div>
-        <%}%>
+                
+            </div>
         
+            <br><br><br><br>
+        <%}%>
+    </div>
 
     <!--POST A SER REDENRIZADO-->
 
@@ -99,13 +122,11 @@
     <!--///////POST A SER REDENRIZADO-->
     <!-- CONTAINER DE USERS REDENRIZADOS-->
     <div class="container">
-        <div class="responseCards">
-            
-        </div>
+        <div class="responseCards"></div>
 
         <% if(typeof(usersList) != 'undefined'){
             usersList.forEach(item=>{%>
-                <div id="userResults">
+                <div class="userResults" id="user<%=item.id%>">
                     <div class="user-result-card">
                         <div class="imgDiv">
                             <%if(item.profilePhoto != null){%>
@@ -115,202 +136,39 @@
                                 <%}%>
                             </div>
                         <div class="user-result-card-info">
-                            <a href="http://54.207.184.106:8080/profile/<%=item.username%>">@<%= item.username %></a>
-                            <button>Follow</button>
+                            <a href="http://localhost:8080/profile/<%=item.username%>">@<%= item.username %></a>
+                            <button id="follow<%=item.id%>" onclick="follow('<%=item.id%>')">Follow</button>
                         </div>
                     </div>
         
                 </div>
-
-            <%})}%>
-
+                <%})}%>
+                
+                <%if(offsetBtn){%>
+                    <%- include('partials/buttonNextPrevious.ejs') %>
+                    <%}%>
+                    <i id="loadIcon"class="fa-solid fa-spinner"></i>
+                    
     </div>
+        <br><br><br><br><br><br><br><br><br>
+
     <!-- //////CONTAINER-->
         <%- include('./partials/modal.ejs') %>
 
-    <br><br><br><br><br><br><br>
+    
     
     <%- include('./partials/footer.ejs') %>
     
 </body>
+
 <script src="https://kit.fontawesome.com/4fd5a3a7ad.js" crossorigin="anonymous"></script>
 <script src="/js/menuSettingsButton.js"></script>
 <script src="/js/getNavDown.js"></script>
 <script src="/js/modal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/generalSearch.js">
+</script>
 <script src="/js/idea.js"></script>
 
-<script>
-    let divIdeaCreated = false
-    let divMsgsCreated = false;
-    let divUsersCreated = false;
-    let currentSearchValue = ''
-    document.getElementById('search').addEventListener('keydown',async (e)=>{
-
-        currentSearchValue = document.getElementById('search').value;
-        
-        if (document.getElementById('search').value.length>0) {
-            
-            try {
-                const results = await axios.get('http://54.233.190.172:8000/generalSeach/'+currentSearchValue);
-                renderCards(results)
-                
-            } catch (error) {
-                console.log(error)
-                console.log('ta cheganod nesse erro aqui')
-            }
-        }else{
-            document.getElementsByClassName('responseCards')[0].innerHTML = ''
-            divIdeaCreated =false
-            divMsgsCreated =false
-            divUsersCreated =false
-        }
-    })
-
-
-    function renderCards(results){
-        
-        let ideasResult = results.data.results.ideaResult[0].results
-        let msgsResult = results.data.results.msgsResult[0].results
-        let usersResult = results.data.results.usersResult[0].results
-
-        if (ideasResult>0) {
-            
-            if (divIdeaCreated) {
-                if (!!document.getElementById('ideasText')) {
-                    document.getElementById('ideasText').innerHTML = `${results.data.results.ideaResult[0].results} results`
-                }else{
-                    divIdeaCreated=false
-                }
-             }else{
-                divIdeaCreated = true;
-                let card = document.createElement('div');
-                card.classList = 'card';
-                card.onclick = () => {
-                    location.href = 'http://54.207.184.106:8080/search?ideaQuery=' + currentSearchValue;
-                }
-                card.id = "ideaCard"
-                 let cardItens = document.createElement('div');
-                cardItens.classList = 'card-itens'
-                cardItens.innerHTML = `
-                             <h3>Ideas</h3>
-                             <p id="ideasText">${results.data.results.ideaResult[0].results} resultados</p>
-                         `
-                let cardItensIcon = document.createElement('div');
-                cardItensIcon.classList = 'card-itens';
-                cardItensIcon.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`
-
-                card.appendChild(cardItens)
-                card.appendChild(cardItensIcon)
-                document.getElementsByClassName('responseCards')[0].appendChild(card);
-             }
-        }else{
-            if (!!document.getElementById('ideaCard')){
-                document.getElementById('ideaCard').remove()
-            }
-        }
-
-
-        if (msgsResult > 0) {
-            
-            if (divMsgsCreated) {
-                if (!!document.getElementById('msgsText')) {
-                    document.getElementById('msgsText').innerHTML = `${results.data.results.msgsResult[0].results} results`
-                } else {
-                    divMsgsCreated = false
-                }
-            } else {
-                divMsgsCreated = true;
-                let card = document.createElement('div');
-                card.classList = 'card';
-                card.onclick= ()=>{
-                    location.href = 'http://54.207.184.106:8080/search?msgQuery='+currentSearchValue;
-                }
-                card.id = "msgsCard"
-                let cardItens = document.createElement('div');
-                cardItens.classList = 'card-itens'
-                cardItens.innerHTML = `
-                             <h3>Mensagens</h3>
-                             <p id="msgsText">${results.data.results.msgsResult[0].results} resultados</p>
-                         `
-                let cardItensIcon = document.createElement('div');
-                cardItensIcon.classList = 'card-itens';
-                cardItensIcon.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`
-
-                card.appendChild(cardItens)
-                card.appendChild(cardItensIcon)
-                document.getElementsByClassName('responseCards')[0].appendChild(card);
-            }
-        } else {
-            if (!!document.getElementById('msgsCard')) {
-                document.getElementById('msgsCard').remove()
-            }
-        }
-
-        if (usersResult > 0) {
-            
-            if (divUsersCreated) {
-                if (!!document.getElementById('usersText')) {
-                    document.getElementById('usersText').innerHTML = `${results.data.results.usersResult[0].results} results`
-                } else {
-                    divUsersCreated = false
-                }
-            } else {
-                divUsersCreated = true;
-                let card = document.createElement('div');
-                card.classList = 'card';
-                card.onclick = () => {
-                    location.href = 'http://54.207.184.106:8080/search?userQuery=' + currentSearchValue;
-                }
-                card.id = "usersCard"
-                let cardItens = document.createElement('div');
-                cardItens.classList = 'card-itens'
-                cardItens.innerHTML = `
-                             <h3>Users</h3>
-                             <p id="usersText">${results.data.results.usersResult[0].results} resultados</p>
-                         `
-                let cardItensIcon = document.createElement('div');
-                cardItensIcon.classList = 'card-itens';
-                cardItensIcon.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`
-
-                card.appendChild(cardItens)
-                card.appendChild(cardItensIcon)
-                document.getElementsByClassName('responseCards')[0].appendChild(card);
-            }
-        } else {
-            if (!!document.getElementById('usersCard')) {
-                document.getElementById('usersCard').remove()
-            }
-        }
-
-        // if (results.data.results.ideaResult[0].results > 0) {
-        //     if (divUsersCreated) {
-        //         document.getElementById('ideasText').innerHTML = `${results.data.results.ideaResult[0].results} results`
-        //     } else {
-        //         divIdeaCreated = true;
-        //         let card = document.createElement('div');
-        //         card.classList = 'card';
-        //         card.id = "ideaCard"
-        //         let cardItens = document.createElement('div');
-        //         cardItens.classList = 'card-itens'
-        //         cardItens.innerHTML = `
-        //                     <h3>Ideas</h3>
-        //                     <p id="ideasText">${results.data.results.ideaResult[0].results} resultados</p>
-        //                 `
-        //         let cardItensIcon = document.createElement('div');
-                // cardItensIcon.classList = 'card-itens';
-                // cardItensIcon.innerHTML = `<i class="fa-solid fa-arrow-right"></i>`
-
-                // card.appendChild(cardItens)
-                // card.appendChild(cardItensIcon)
-                // document.getElementsByClassName('responseCards')[0].appendChild(card);
-        //     }
-        // } else {
-        //     document.getElementById('ideaCard').remove()
-        //     divIdeaCreated = false
-        // }
-    }
-
-</script>
 
 </html>

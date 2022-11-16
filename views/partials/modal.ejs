@@ -29,7 +29,7 @@
                     <button class="actionButton"><i class="fa-solid fa-scroll"></i></button>
                 </div>
 
-                <div class="model-category">
+                <div class="modal-category">
                     <div> #Category </div>
                     <div> @Maison </div>
                     <div>05/29/2022 </div>
@@ -39,87 +39,6 @@
     </div>
     <div id="investors-table">
     
-        <div class="table">
-            <table>
-                <tr>
-                    <th>
-                    </th>
-                    <th>Nome</th>
-                    <th>investimento</th>
-                </tr>
-                <tr>
-                    <td>
-                        <span></span>
-                    </td>
-                    <td>joao</td>
-                    <td>300R$</td>
-                </tr>
-                <tr>
-                    <td>
-                        <span></span>
-                    </td>
-                    <td>Maison</td>
-                    <td>500R$</td>
-                </tr>
-                <tr>
-                    <td>
-                        <span></span>
-                    </td>
-                    <td>Renan</td>
-                    <td>100R$</td>
-                </tr>
-                <tr>
-                    <td>
-                        <span></span>
-                    </td>
-                    <td>joao</td>
-                    <td>300R$</td>
-                </tr>
-                <tr>
-                    <td>
-                        <span></span>
-                    </td>
-                    <td>Maison</td>
-                    <td>500R$</td>
-                </tr>
-                <tr>
-                    <td>
-                        <span></span>
-                    </td>
-                    <td>Renan</td>
-                    <td>100R$</td>
-                </tr>
-                <tr>
-                    <td>
-                        <span></span>
-                    </td>
-                    <td>joao</td>
-                    <td>300R$</td>
-                </tr>
-                <tr>
-                    <td>
-                        <span></span>
-                    </td>
-                    <td>Maison</td>
-                    <td>500R$</td>
-                </tr>
-                <tr>
-                    <td>
-                        <span></span>
-                    </td>
-                    <td>Renan</td>
-                    <td>100R$</td>
-                </tr>
-
-                
-            </table>
-        </div>
-        <div class="confirm">
-            <div class="total-value-donated"> Total investido: $1000</div>
-            <div class="confirm-confirm"> 
-                <input type="number" placeholder="Quantia" id="amountToPay-input"> <button onclick="donate()">Ok!</button>
-            </div>
-        </div>
         
     </div>
 </div>
@@ -129,7 +48,7 @@
         <span onclick="closeModal('sure')"><b>X</b></span>
         <h1>VOCÊ TEM CERTEZA QUE:</h1>
         <h2>irá utilizar R$ *** do seus créditos para realizar esta ação?</h2>
-        <button class="green-button" onclick="confirmPurchase('<%=id%>')">SIM</button> <button class="red-button">NÃO</button>
+        <button class="green-button" onclick="confirmPurchase('<%=id%>')">SIM</button> <button onclick="closeModal('sure')" class="red-button">NÃO</button>
     </div>
 </div>
 
