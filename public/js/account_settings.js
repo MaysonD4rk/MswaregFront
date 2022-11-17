@@ -19,7 +19,7 @@ async function changePass(email, token) {
                         password: newPass
                     }, {
                         headers: {
-                            'Authorization': `Basic ${token}`
+                            'Authorization': `Bearer ${token}`
                         }
                     })
 
