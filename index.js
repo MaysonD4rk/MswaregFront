@@ -101,6 +101,7 @@ app.post('/login', (req, res)=>{
         console.log(result)
         if (result.status == 200) {
             sess.email = email;
+            sess.token = result.data.token
             sess.userId = result.data.id
             res.redirect('/home');
         }
@@ -259,7 +260,8 @@ app.get('/accountSettings', (req, res) => {
 
         res.render('account_settings', {
             userData: data.data[0], 
-            email: data.data[0].email
+            email: data.data[0].email,
+            token: sess.token
         })
     })
 

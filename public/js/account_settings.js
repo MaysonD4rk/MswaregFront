@@ -1,4 +1,4 @@
-async function changePass(email) {
+async function changePass(email, token) {
     var oldPass = document.getElementsByName('oldPass')[0].value
     var newPass = document.getElementsByName('newPass')[0].value
     var confirmNewPass = document.getElementsByName('confirmNewPass')[0].value
@@ -17,6 +17,10 @@ async function changePass(email) {
                     var updatePass = await axios.put('http://54.233.190.172:8000/updatePass', {
                         email: email,
                         password: newPass
+                    }, {
+                        headers: {
+                            'Authorization': `Basic ${token}`
+                        }
                     })
 
                     if (updatePass.status == 200) {
