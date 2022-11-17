@@ -98,6 +98,7 @@ app.post('/login', (req, res)=>{
             password,
         }
     }).then(result => {
+        console.log(result)
         if (result.status == 200) {
             sess.email = email;
             sess.userId = result.data.id
