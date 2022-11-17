@@ -376,7 +376,7 @@
                     images: mainImages,
                     allowFeedbacks: document.getElementById('allowFeedback').checked
                 })
-                window.location.href = `http://54.207.184.106:8080/addPubImg/${pub.data[0]}`;
+                window.location.href = `http://mswareg.mswareg.com:8080/addPubImg/${pub.data[0]}`;
             } catch (error) {
                 console.log(error)
             }

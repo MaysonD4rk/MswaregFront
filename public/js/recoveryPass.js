@@ -10,7 +10,7 @@ function confirmPassChange(token, email) {
             email: email,
             password: pass
         }).then(res => {
-            window.location.href = 'http://54.207.184.106:8080/login'
+            window.location.href = 'http://mswareg.mswareg.com:8080/login'
         }).catch(err => {
             console.log(err)
         })

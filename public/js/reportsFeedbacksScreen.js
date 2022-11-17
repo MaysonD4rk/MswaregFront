@@ -134,7 +134,7 @@ async function renderReports(ideaId, reports, categorie) {
                             <h1>REPORTS</h1>
                         
                         <h4>From: ${reports} users</h4>
-                        <a onclick="openIdeaNewTab('http://54.207.184.106:8080/getIdeaById/${ideaId}')" href="#">CLIQUE PARA VER IDEIA </a>
+                        <a onclick="openIdeaNewTab('http://mswareg.mswareg.com:8080/getIdeaById/${ideaId}')" href="#">CLIQUE PARA VER IDEIA </a>
                         <h3>Categorie: ${categorie}
                         <p>
                             ""
