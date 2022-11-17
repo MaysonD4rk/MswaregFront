@@ -261,7 +261,7 @@ app.get('/accountSettings', (req, res) => {
         res.render('account_settings', {
             userData: data.data[0], 
             email: data.data[0].email,
-            token: sess.token
+            AuthToken: sess.token
         })
     })
 
