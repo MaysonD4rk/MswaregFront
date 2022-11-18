@@ -31,9 +31,8 @@
 async function likePub(pubId) {
     pubId = parseInt(pubId)
 
-    const cookies = document.cookie.split(';');
-    const cookie2 = cookies[1].split('=');
-    const authToken = cookie2[1];
+    const cookies = document.cookie.split('=');
+    const authToken = cookies[1];
 
     try {
         console.log(`tentando`)
