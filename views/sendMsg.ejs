@@ -120,7 +120,7 @@
         let msg = document.getElementById('msg').value
 
         try {
-            let tryWrite = await axios.post('http://localhost:8000/writeMsg',{userId: senter, recipientName: recipient, msg}, {
+            let tryWrite = await axios.post('http://54.233.190.172:8000/writeMsg',{userId: senter, recipientName: recipient, msg}, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
