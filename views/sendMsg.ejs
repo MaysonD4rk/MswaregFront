@@ -111,13 +111,20 @@
 
 
     async function writeMsg(senter){
+        const cookies = document.cookie.split(';');
+        const cookie2 = cookies[1].split('=');
+        const authToken = cookie2[1];
         let recipient = document.getElementById('textTo').value;
         senter = parseInt(senter);
         console.log(senter)
         let msg = document.getElementById('msg').value
 
         try {
-            let tryWrite = await axios.post('http://54.233.190.172:8000/writeMsg',{userId: senter, recipientName: recipient, msg})
+            let tryWrite = await axios.post('http://localhost:8000/writeMsg',{userId: senter, recipientName: recipient, msg}, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        })
             document.getElementsByClassName('statusModal')[0].style.display = 'flex';
             document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.className = 'success';
             document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.innerHTML = tryWrite.data.msg;

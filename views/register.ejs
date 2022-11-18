@@ -50,6 +50,21 @@
 
 <body>
 
+    <% if(typeof(error) != 'undefined'){%>
+        <div class="errorMsg">
+            <b>
+                Nome ou email de usuário já existem, por favor colocar informações diferentes.
+            </b>
+        </div>
+    <%}%>
+    <% if(typeof(dbError) !='undefined' ){%>
+        <div class="errorMsg">
+            <b>
+               Estamos enfrentando dificuldades com o banco de dados, por favor, tente novamente ou mais tarde.
+            </b>
+        </div>
+        <%}%>
+
 
     <div id="content">
         <h1>MSGAMES</h1>

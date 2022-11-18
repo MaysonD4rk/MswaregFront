@@ -473,13 +473,20 @@ async function confirmCropFunction(action){
         console.log(imgRestored)
 
     }else{
+
+        const cookies = document.cookie.split('=');
+        const authToken = cookies[1];
         if (currentFormat == 'profile') {
         
             try {
-                var resposta = await axios.put('http://54.233.190.172:8000/updatePhotoProfile',{
+                var resposta = await axios.put('http://localhost:8000/updatePhotoProfile',{
                     userId,
                     profileUrl: canvas.toDataURL()
-                })
+                }, {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`
+                        }
+                    })
                 if(resposta.status == 200){
                     window.location.href = `/profile/${username}`
                 }
@@ -491,11 +498,15 @@ async function confirmCropFunction(action){
             
         }else{
             try {
-                var resposta = await axios.put('http://54.233.190.172:8000/updateIdeaPhoto', {
+                var resposta = await axios.put('http://localhost:8000/updateIdeaPhoto', {
                     userId,
                     pubIdeaId,
                     imgUrl: canvas.toDataURL()
-                })
+                }, {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`
+                        }
+                    })
 
                 if (resposta.status == 200) {
                     window.location.href = `/home`
