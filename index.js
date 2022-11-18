@@ -77,7 +77,7 @@ app.get('/login', (req, res) => {
     
     res.clearCookie('authToken');
     req.session.destroy();
-    res.clearCookie('name');
+    
 
     if (req.query['error'] === 'true') {
         res.render('login',{
