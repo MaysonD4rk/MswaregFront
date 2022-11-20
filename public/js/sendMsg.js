@@ -44,7 +44,7 @@ textTo.addEventListener('keydown', (event) => {
         modalUserList.style.display = 'none'
     }
 
-    axios.get('http://localhost:8000/searchUser/' + document.getElementById('textTo').value)
+    axios.get('http://54.233.190.172:8000/searchUser/' + document.getElementById('textTo').value)
         .then((res) => {
 
             res.data.result.row.forEach(element => {
@@ -88,7 +88,7 @@ function searchMsg() {
     }
 
 
-    axios.get('http://localhost:8000/searchMsgList/0/' + document.getElementById('search').value)
+    axios.get('http://54.233.190.172:8000/searchMsgList/0/' + document.getElementById('search').value)
         .then(msgs => {
 
             msgs.data.result.row.forEach(element => {

@@ -22,7 +22,7 @@ function searchIdea() {
         document.getElementsByClassName('posts')[0].innerHTML = postsArrayInitialState
     }
 
-    axios.get('http://localhost:8000/searchPost/0/' + document.getElementById('search').value)
+    axios.get('http://54.233.190.172:8000/searchPost/0/' + document.getElementById('search').value)
         .then(posts => {
 
             const arrayPosts = posts.data.result;
