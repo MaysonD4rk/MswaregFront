@@ -49,6 +49,7 @@ app.get('/home', async (req, res)=>{
             })
 
             console.log(posts.data)
+            console.log(data.data[0])
             if (req.query.maxIdeasWriten != undefined) {
                 res.render('index', {
                     id: sess.userId,
