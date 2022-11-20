@@ -57,6 +57,13 @@ input{
     border-radius: 10px;
 }
 
+.orange-button {
+    background-color: rgb(212, 169, 11);
+    padding: 5px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
 .red-button {
     background-color: rgb(255, 5, 5);
     padding: 5px;

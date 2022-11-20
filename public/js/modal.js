@@ -15,7 +15,7 @@ async function openIdeaModal(id){
     id = parseInt(id);
     currentProject = id;
 
-    let result = await axios.get(`http://54.233.190.172:8000/findPub/${id}`);
+    let result = await axios.get(`http://localhost:8000/findPub/${id}`);
 
     //var texto = reader.readAsArrayBuffer(result.data.pubData.mainIdea.data)
     
@@ -48,7 +48,7 @@ async function openIdeaModal(id){
             donateTable = false;
         }else{
             
-            var data = await axios.get(`http://54.233.190.172:8000/listDonates/${id}`);
+            var data = await axios.get(`http://localhost:8000/listDonates/${id}`);
             console.log(data);
             
             var lista = `
@@ -120,7 +120,7 @@ async function confirmPurchase(userId){
     const cookie2 = cookies[1].split('=');
     const authToken = cookie2[1];
     try {
-        var result = await axios.post('http://54.233.190.172:8000/donateCredits', {
+        var result = await axios.post('http://localhost:8000/donateCredits', {
             userId,
             credits,
             projectId: currentProject
@@ -181,7 +181,7 @@ async function openModal(elementId, itemId, allowFeedback=true){
     itemId = parseInt(itemId)
     console.log(itemId)
 
-    let result = await axios.get(`http://54.233.190.172:8000/findPub/${itemId}`);
+    let result = await axios.get(`http://localhost:8000/findPub/${itemId}`);
     let title = result.data.pubData.title;
     document.getElementsByClassName('insertIdeaName')[0].innerHTML = `"${title}"`;
     document.getElementsByClassName('insertIdeaName')[1].innerHTML = `"${title}"`;
@@ -190,7 +190,7 @@ async function openModal(elementId, itemId, allowFeedback=true){
         const cookie2 = cookies[1].split('=');
         const authToken = cookie2[1];
         try {
-            let sendFeedbackResult = await axios.post('http://54.233.190.172:8000/sendFeedback', {
+            let sendFeedbackResult = await axios.post('http://localhost:8000/sendFeedback', {
                 userId,
                 ideaId: itemId,
                 feedbackMsg: document.getElementById('feedback-textArea').value,
@@ -209,7 +209,7 @@ async function openModal(elementId, itemId, allowFeedback=true){
         const cookies = document.cookie.split('=');
         const authToken = cookies[1];
        try {
-           let sendReportResult = await axios.post('http://54.233.190.172:8000/sendReport', {
+           let sendReportResult = await axios.post('http://localhost:8000/sendReport', {
                userId,
                reportMsg: document.getElementById('report-textArea').value,
                ideaReport: itemId,
