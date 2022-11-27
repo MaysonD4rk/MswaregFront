@@ -16,13 +16,17 @@
     <% if(typeof pubIdeaId != 'undefined'){%>
     <input id="pubIdeaId" type="hidden" value="<%=pubIdeaId%>">
     <%}%>
+        <div style="height: 100px;"></div>
+
     <div class="crop-container">
         <div id="cropImg">
             <!-- <div class="circle-crop">
                 
             </div> -->
            <img id="photoPreview" draggable="false" src="" alt="">
+           
         </div>
+
         
         <div id="actionButton">
             <div>
@@ -41,6 +45,9 @@
         </div>
            
     </div>
+
+        <div style="height: 200px;"></div>
+
 
 
     <img draggable="false" class="format circle" id="topCircle" src="/img/topCircle.png" width="150" alt="">
