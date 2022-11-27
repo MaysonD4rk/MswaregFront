@@ -361,13 +361,13 @@
 
     async function send(){
 
-
+        document.getElementById('areusure').style.display='none';
 
         if(ideaInfo.content.length >= 500){
             const cookies = document.cookie.split('=');
             const authToken = cookies[1];
             try {
-                var pub = await axios.post('http://54.233.190.172:8000/pub',{
+                var pub = await axios.post('http://localhost:8000/pub',{
                     title: inputTitle.value, 
                     ideaSummary: inputSummary.value,
                     mainIdea: ideaInfo.content, 
@@ -381,7 +381,7 @@
                 'Authorization': `Bearer ${authToken}`
             }
         })
-                window.location.href = `http://mswareg.mswareg.com:8080/addPubImg/${pub.data[0]}`;
+                window.location.href = `http://localhost:8080/addPubImg/${pub.data[0]}`;
             } catch (error) {
                 console.log(error)
             }

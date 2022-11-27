@@ -245,7 +245,7 @@ function onLoadImage(event, initialW=380) {
     // desenhar a imagem no contexto
     //photoPreview.src = canvas.toDataURL()
     
-    if ((preCanvasW / preCanvasH) >= 1.62337662 && (preCanvasW / preCanvasH) <= 1.8 ) {
+    if ((preCanvasW / preCanvasH) >= 1.62337662 && (preCanvasW / preCanvasH) <= 1.95 ) {
         console.log('16:9')
         canvas.width = initialW;
         canvas.height = initialW / (preCanvasW / preCanvasH)
@@ -275,7 +275,7 @@ function onLoadImage(event, initialW=380) {
 
         photoPreview.src = canvas.toDataURL()
         
-    } else if ((preCanvasW / preCanvasH) >= 1.3 && (preCanvasW / preCanvasH) <= 1.5){
+    } else if ((preCanvasW / preCanvasH) >= 1.2 && (preCanvasW / preCanvasH) <= 1.5){
         console.log('4:3')
         canvas.width = initialW;
         canvas.height = initialW / (preCanvasW / preCanvasH)
@@ -307,6 +307,9 @@ function onLoadImage(event, initialW=380) {
 
         photoPreview.src = canvas.toDataURL()
 
+    }else{
+        console.log('n caiu em ngm');
+        console.log((preCanvasW / preCanvasH))
     }
     
     //photoPreview.height = canvas.height
@@ -479,7 +482,7 @@ async function confirmCropFunction(action){
         if (currentFormat == 'profile') {
         
             try {
-                var resposta = await axios.put('http://54.233.190.172:8000/updatePhotoProfile',{
+                var resposta = await axios.put('http://localhost:8000/updatePhotoProfile',{
                     userId,
                     profileUrl: canvas.toDataURL()
                 }, {
@@ -498,7 +501,7 @@ async function confirmCropFunction(action){
             
         }else{
             try {
-                var resposta = await axios.put('http://54.233.190.172:8000/updateIdeaPhoto', {
+                var resposta = await axios.put('http://localhost:8000/updateIdeaPhoto', {
                     userId,
                     pubIdeaId,
                     imgUrl: canvas.toDataURL()

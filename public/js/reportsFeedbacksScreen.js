@@ -96,7 +96,7 @@ async function renderFeedback(itemId) {
     const cookies = document.cookie.split('=');
     const authToken = cookies[1];
     
-    const feedback = await axios.get('http://54.233.190.172:8000/getFeedback/' + itemId, {
+    const feedback = await axios.get('http://localhost:8000/getFeedback/' + itemId, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }})
@@ -126,7 +126,7 @@ async function renderReports(ideaId, reports, categorie) {
     const cookies = document.cookie.split('=');
     const authToken = cookies[1];
 
-    const reportsList = await axios.get('http://54.233.190.172:8000/getReports/' + ideaId,{
+    const reportsList = await axios.get('http://localhost:8000/getReports/' + ideaId,{
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }})
@@ -145,7 +145,7 @@ async function renderReports(ideaId, reports, categorie) {
                             <h1>REPORTS</h1>
                         
                         <h4>From: ${reports} users</h4>
-                        <a onclick="openIdeaNewTab('http://mswareg.mswareg.com:8080/getIdeaById/${ideaId}')" href="#">CLIQUE PARA VER IDEIA </a>
+                        <a onclick="openIdeaNewTab('http://localhost:8080/getIdeaById/${ideaId}')" href="#">CLIQUE PARA VER IDEIA </a>
                         <h3>Categorie: ${categorie}
                         <p>
                             ""
@@ -177,7 +177,7 @@ async function limitList(tab) {
 
         document.getElementsByClassName('loadIcon')[0].remove()
 
-        let loadList = await axios.get('http://54.233.190.172:8000/listFeedbacks/' + userId + "/" + offsetFeedback)
+        let loadList = await axios.get('http://localhost:8000/listFeedbacks/' + userId + "/" + offsetFeedback)
         console.log(loadList.data.result)
         if (loadList.data.result.length < 1) {
             loadFeedbackIconShowed = true
@@ -215,7 +215,7 @@ async function limitList(tab) {
 
         document.getElementsByClassName('loadIcon')[0].remove()
 
-        let loadList = await axios.get('http://54.233.190.172:8000/listReports/' + offsetReports)
+        let loadList = await axios.get('http://localhost:8000/listReports/' + offsetReports)
         if (loadList.data.result.length < 1) {
             loadReportIconShowed = true
             document.getElementsByClassName('loadIcon')[0].remove()
@@ -259,7 +259,7 @@ async function reportDecision(decision, ideaId) {
     if (decision == 'disable') {
         console.log('entrou aqui 1')
         try {
-            let result = await axios.put('http://54.233.190.172:8000/disableIdea', { ideaId }, {
+            let result = await axios.put('http://localhost:8000/disableIdea', { ideaId }, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
@@ -271,7 +271,7 @@ async function reportDecision(decision, ideaId) {
         }
     } else {
         try {
-            let result = await axios.put('http://54.233.190.172:8000/releaseIdea', { ideaId },{
+            let result = await axios.put('http://localhost:8000/releaseIdea', { ideaId },{
                 headers: {
                     'Authorization': `Bearer ${authToken}`
                 }
@@ -291,7 +291,7 @@ async function deleteFeedback(itemId) {
     const cookies = document.cookie.split('=');
     const authToken = cookies[1];
     try {
-        let response = await axios.delete('http://54.233.190.172:8000/deleteFeedkback/' + itemId, {
+        let response = await axios.delete('http://localhost:8000/deleteFeedkback/' + itemId, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }

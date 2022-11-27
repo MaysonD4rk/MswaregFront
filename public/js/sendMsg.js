@@ -44,7 +44,7 @@ textTo.addEventListener('keydown', (event) => {
         modalUserList.style.display = 'none'
     }
 
-    axios.get('http://54.233.190.172:8000/searchUser/' + document.getElementById('textTo').value)
+    axios.get('http://localhost:8000/searchUser/' + document.getElementById('textTo').value)
         .then((res) => {
 
             res.data.result.row.forEach(element => {
@@ -88,7 +88,7 @@ function searchMsg() {
     }
 
 
-    axios.get('http://54.233.190.172:8000/searchMsgList/0/' + document.getElementById('search').value)
+    axios.get('http://localhost:8000/searchMsgList/0/' + document.getElementById('search').value)
         .then(msgs => {
 
             msgs.data.result.row.forEach(element => {
@@ -132,6 +132,43 @@ function searchMsg() {
         .catch(error => {
             console.log('nada encontrado')
         })
+
+}
+
+
+
+async function writeMsg(senter) {
+    const cookies = document.cookie.split('=');
+    const authToken = cookies[1];
+    let recipient = document.getElementById('textTo').value;
+    senter = parseInt(senter);
+    console.log(senter)
+    let msg = document.getElementById('msg').value
+
+    try {
+        let tryWrite = await axios.post('http://localhost:8000/writeMsg', { userId: senter, recipientName: recipient, msg }, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        })
+        document.getElementsByClassName('statusModal')[0].style.display = 'flex';
+        document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.className = 'success';
+        document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.innerHTML = tryWrite.data.msg;
+        console.log('deu certo')
+
+        setTimeout(() => {
+            document.getElementsByClassName('statusModal')[0].style.display = 'none';
+
+        }, 500);
+    } catch (error) {
+        document.getElementsByClassName('statusModal')[0].style.display = 'flex';
+        document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.className = 'failed';
+        document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.innerHTML = 'usuário não encontrado, tome cuidado!';
+        setTimeout(() => {
+            document.getElementsByClassName('statusModal')[0].style.display = 'none';
+            console.log('deu erro')
+        }, 500);
+    }
 
 }
 
