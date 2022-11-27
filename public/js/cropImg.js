@@ -110,14 +110,14 @@ const events = {
                         document.getElementsByClassName('square')[i].style.display = 'none'
 
                     }
-                    document.getElementById('topCircle').style.top = (event.clientY - 96) + "px";
+                    document.getElementById('topCircle').style.top = (window.scrollY + event.clientY - 96) + "px";
                     document.getElementById('rightCircle').style.left = (event.clientX + 67) + "px";
                     document.getElementById('leftCircle').style.left = (event.clientX - 100) + "px";
-                    document.getElementById('bottomCircle').style.top = (event.clientY + 75) + "px";
+                    document.getElementById('bottomCircle').style.top = (window.scrollY + event.clientY + 75) + "px";
     
                     document.getElementById('topCircle').style.left = (event.clientX - 75) + "px";
-                    document.getElementById('rightCircle').style.top = (event.clientY - 67) + "px";
-                    document.getElementById('leftCircle').style.top = (event.clientY - 67) + "px";
+                    document.getElementById('rightCircle').style.top = (window.scrollY + event.clientY - 67) + "px";
+                    document.getElementById('leftCircle').style.top = (window.scrollY + event.clientY - 67) + "px";
                     document.getElementById('bottomCircle').style.left = (event.clientX - 75) + "px";
                 } else {
                     for (let i = 0; i < document.getElementsByClassName('square').length; i++) {
@@ -128,14 +128,14 @@ const events = {
                         document.getElementsByClassName('circle')[i].style.display = 'none'
 
                     }
-                    document.getElementById('topSquare').style.top = (event.clientY - 220.5) + "px";
+                    document.getElementById('topSquare').style.top = (window.scrollY + event.clientY - 220.5) + "px";
                     document.getElementById('rightSquare').style.left = (event.clientX + 140) + "px";
                     document.getElementById('leftSquare').style.left = (event.clientX - 187) + "px";
-                    document.getElementById('bottomSquare').style.top = (event.clientY + 150) + "px";
+                    document.getElementById('bottomSquare').style.top = (window.scrollY + event.clientY + 150) + "px";
     
                     document.getElementById('topSquare').style.left = (event.clientX - 150) + "px";
-                    document.getElementById('rightSquare').style.top = (event.clientY - 205) + "px";
-                    document.getElementById('leftSquare').style.top = (event.clientY - 198) + "px";
+                    document.getElementById('rightSquare').style.top = (window.scrollY + event.clientY - 205) + "px";
+                    document.getElementById('leftSquare').style.top = (window.scrollY + event.clientY - 198) + "px";
                     document.getElementById('bottomSquare').style.left = (event.clientX - 158) + "px";
                 }
     
@@ -152,24 +152,24 @@ const events = {
             if (flagMove) {
 
                 if (currentFormat == 'profile') {
-                    document.getElementById('topCircle').style.top = (event.clientY - 96) + "px";
+                    document.getElementById('topCircle').style.top = (window.scrollY + event.clientY - 96) + "px";
                     document.getElementById('rightCircle').style.left = (event.clientX + 67) + "px";
                     document.getElementById('leftCircle').style.left = (event.clientX - 100) + "px";
-                    document.getElementById('bottomCircle').style.top = (event.clientY+75) + "px";
+                    document.getElementById('bottomCircle').style.top = (window.scrollY + event.clientY+75) + "px";
 
                     document.getElementById('topCircle').style.left = (event.clientX - 75) + "px";
-                    document.getElementById('rightCircle').style.top = (event.clientY - 67) + "px";
-                    document.getElementById('leftCircle').style.top = (event.clientY - 67) + "px";
+                    document.getElementById('rightCircle').style.top = (window.scrollY + event.clientY - 67) + "px";
+                    document.getElementById('leftCircle').style.top = (window.scrollY + event.clientY - 67) + "px";
                     document.getElementById('bottomCircle').style.left = (event.clientX - 75) + "px";
                 } else {
-                    document.getElementById('topSquare').style.top = (event.clientY - 220.5) + "px";
+                    document.getElementById('topSquare').style.top = (window.scrollY + event.clientY - 220.5) + "px";
                     document.getElementById('rightSquare').style.left = (event.clientX + 140) + "px";
                     document.getElementById('leftSquare').style.left = (event.clientX - 187) + "px";
-                    document.getElementById('bottomSquare').style.top = (event.clientY + 150) + "px";
+                    document.getElementById('bottomSquare').style.top = (window.scrollY + event.clientY + 150) + "px";
 
                     document.getElementById('topSquare').style.left = (event.clientX - 150) + "px";
-                    document.getElementById('rightSquare').style.top = (event.clientY - 205) + "px";
-                    document.getElementById('leftSquare').style.top = (event.clientY - 198) + "px";
+                    document.getElementById('rightSquare').style.top = (window.scrollY + event.clientY - 205) + "px";
+                    document.getElementById('leftSquare').style.top = (window.scrollY + event.clientY - 198) + "px";
                     document.getElementById('bottomSquare').style.left = (event.clientX - 158) + "px";
                 }
             }
