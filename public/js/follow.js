@@ -13,7 +13,7 @@ async function verifyFollow(users=document.getElementsByClassName('userResults')
         const elementId = users[i].id;
         const id = parseInt(elementId.split('user')[1])
         try {
-            let follow = await axios.get('http://localhost:8000/verifyFollow/' + userId + '/' + id);
+            let follow = await axios.get('http://54.233.190.172:8000/verifyFollow/' + userId + '/' + id);
             console.log(follow.data.follow)
             if (follow.data.follow) {
                 document.getElementById('follow'+id).classList = 'followed-button';
@@ -38,7 +38,7 @@ async function follow(followingId){
     followingId = parseInt(followingId)
     console.log(followingId)
     try {
-        let follow = await axios.post('http://localhost:8000/followUser',{
+        let follow = await axios.post('http://54.233.190.172:8000/followUser',{
             userId,
             followingId: followingId
         }, {
