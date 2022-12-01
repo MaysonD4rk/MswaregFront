@@ -14,7 +14,7 @@ if (!!document.getElementById('search')) {
         if (document.getElementById('search').value.length > 0) {
     
             try {
-                const results = await axios.get('http://54.233.190.172:8000/generalSeach/' + currentSearchValue);
+                const results = await axios.get('https://server.mswareg.com/generalSeach/' + currentSearchValue);
                 renderCards(results)
     
             } catch (error) {
@@ -50,7 +50,7 @@ function renderCards(results) {
             let card = document.createElement('div');
             card.classList = 'card';
             card.onclick = () => {
-                location.href = 'http://mswareg.mswareg.com:8080/search?ideaQuery=' + currentSearchValue;
+                location.href = 'https://mswareg.mswareg.com/search?ideaQuery=' + currentSearchValue;
             }
             card.id = "ideaCard"
             let cardItens = document.createElement('div');
@@ -87,7 +87,7 @@ function renderCards(results) {
             let card = document.createElement('div');
             card.classList = 'card';
             card.onclick = () => {
-                location.href = 'http://mswareg.mswareg.com:8080/search?msgQuery=' + currentSearchValue;
+                location.href = 'https://mswareg.mswareg.com/search?msgQuery=' + currentSearchValue;
             }
             card.id = "msgsCard"
             let cardItens = document.createElement('div');
@@ -123,7 +123,7 @@ function renderCards(results) {
             let card = document.createElement('div');
             card.classList = 'card';
             card.onclick = () => {
-                location.href = 'http://mswareg.mswareg.com:8080/search?userQuery=' + currentSearchValue;
+                location.href = 'https://mswareg.mswareg.com/search?userQuery=' + currentSearchValue;
             }
             card.id = "usersCard"
             let cardItens = document.createElement('div');
@@ -174,7 +174,7 @@ async function loadMoreItens() {
                 if ((document.getElementsByTagName('body')[0].scrollHeight - window.scrollY) <= 761) {
                     ++offsetUsersSearch
                     try {
-                        let users = await axios.get(`http://54.233.190.172:8000/getSearchListUser/${offsetUsersSearch * 20}/${queryInput}`);
+                        let users = await axios.get(`https://server.mswareg.com/getSearchListUser/${offsetUsersSearch * 20}/${queryInput}`);
                         console.log(users.data.results)
                         if (!users.data.results || users.data.results.length<1) {
                             allLoaded = true
@@ -205,7 +205,7 @@ async function loadMoreItens() {
                                 let userResultCardInfo = document.createElement('div');
                                     userResultCardInfo.classList = 'user-result-card-info'
                                     userResultCardInfo.innerHTML = `
-                                        <a href="http://mswareg.mswareg.com:8080/profile/${user.username}">@${user.username}</a>
+                                        <a href="https://mswareg.mswareg.com/profile/${user.username}">@${user.username}</a>
                                             <button>Follow</button>
                                     `
 
@@ -234,7 +234,7 @@ async function loadMoreItens() {
                 if ((document.getElementsByTagName('body')[0].scrollHeight - window.scrollY) <= 761) {
                     ++offsetMsgsSearch
                     try {
-                        let msgs = await axios.get(`http://54.233.190.172:8000/searchForMsg/${offsetMsgsSearch * 15}/${queryInput}`);
+                        let msgs = await axios.get(`https://server.mswareg.com/searchForMsg/${offsetMsgsSearch * 15}/${queryInput}`);
                         console.log(msgs)
                         if (msgs.data.result == undefined) {
                             allLoaded = true;

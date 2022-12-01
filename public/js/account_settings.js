@@ -10,7 +10,7 @@ async function changePass(email, token) {
         console.log(authToken)
 
         try {
-            var verifyOldPass = await axios.post('http://54.233.190.172:8000/login', {
+            var verifyOldPass = await axios.post('https://server.mswareg.com/login', {
                 email: email,
                 password: oldPass
             })
@@ -18,7 +18,7 @@ async function changePass(email, token) {
             if (verifyOldPass.status == 200) {
                 console.log(verifyOldPass)
                 try {
-                    var updatePass = await axios.put('http://54.233.190.172:8000/updatePass', {
+                    var updatePass = await axios.put('https://server.mswareg.com/updatePass', {
                         email: email,
                         password: newPass
                     }, {
@@ -58,7 +58,7 @@ async function updateInfo() {
     let LastName = document.getElementById('lastNameInput').value
     const userId = document.getElementById('userId').value
     try {
-        let updateInfo = await axios.put('http://54.233.190.172:8000/updateInfo', {
+        let updateInfo = await axios.put('https://server.mswareg.com/updateInfo', {
             FirstName,
             LastName,
             userId
@@ -81,7 +81,7 @@ async function updateNotification() {
     let notification6 = document.getElementById('notification6').checked;
 
     try {
-        const updateNotification = await axios.put('http://54.233.190.172:8000/updateNotifications', {
+        const updateNotification = await axios.put('https://server.mswareg.com/updateNotifications', {
             notification1,
             notification2,
             notification3,
