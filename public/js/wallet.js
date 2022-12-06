@@ -31,16 +31,18 @@ const currentCredits = document.getElementById('currentCredits').value
         }
     }
     
-    async function fastBuy(value) {
-        try {
-            let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(value)}`);
-            console.log(qrCodeData);
-            document.getElementById('modal-payment-method').style.display = 'flex'
-            document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
-            document.getElementById('qrcodeTxt').value = `${qrCodeData.data.qrCodeTxt}`
-        } catch (error) {
-            console.log(error)
-        }
+    function fastBuy(value) {
+         setTimeout(async () => {
+            try {
+                let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(value)}`);
+                console.log(qrCodeData);
+                document.getElementById('modal-payment-method').style.display = 'flex'
+                document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
+                document.getElementById('qrcodeTxt').value = `${qrCodeData.data.qrCodeTxt}`
+            } catch (error) {
+                console.log(error)
+            }
+        }, 100);
     }
     
     function copyTxt() {
