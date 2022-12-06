@@ -229,8 +229,8 @@ async function renderWithdraw(userId){
                 <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
                 
 
-                <button onclick="withdrawstatus(${userId}, 'deny', '${withdrawInfo.data[0].email}')" style="background-color: red;">Negar</button>
-                <button onclick="withdrawstatus(${userId}, 'done', '${withdrawInfo.data[0].email}')" style="background-color: green;">Feito</button>
+                <button onclick="withdrawstatus(${userId}, 'deny', '${withdrawInfo.data[0].email}','withdrawDiv${withdrawInfo.data[0].id}')" style="background-color: red;">Negar</button>
+                <button onclick="withdrawstatus(${userId}, 'done', '${withdrawInfo.data[0].email}','withdrawDiv${withdrawInfo.data[0].id}')" style="background-color: green;">Feito</button>
 
                             <h1>Withdraw</h1>
                         <h2>First Name: ${withdrawInfo.data[0].FirstName}</h2> 
@@ -383,7 +383,7 @@ async function deleteFeedback(itemId) {
 }
 
 
-async function withdrawstatus(userId, status, email){
+async function withdrawstatus(userId, status, email, divId){
 
     const cookies = document.cookie.split('=');
     console.log(document.cookie)
@@ -398,7 +398,7 @@ async function withdrawstatus(userId, status, email){
                     'authorization': `Bearer ${authToken}`
                 }
             })
-            window.location.reload()
+            document.getElementById(divId).remove()
     } catch (error) {
         console.log(error)
     }

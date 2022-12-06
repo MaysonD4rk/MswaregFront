@@ -346,7 +346,7 @@ app.get('/addPubImg/:pubIdea', (req, res) => {
 
 })
 
-app.get('/seusFeedbacks',async (req, res)=>{
+app.get('/seusFeedbacks',(req, res)=>{
     sess = req.session
 
     console.log(req.cookies.authToken)
@@ -355,9 +355,12 @@ app.get('/seusFeedbacks',async (req, res)=>{
         res.redirect('/login')
     }
 
-    
+    axios({
+        method: "get",
+        url: "https://server.mswareg.com/user/" + sess.userId
+    }).then(async (data) => {
 
-        const data = await axios.get('https://server.mswareg.com/user/'+sess.userId)
+        
 
         const feedbackList = await axios.get('https://server.mswareg.com/listFeedbacks/'+sess.userId+'/0')
         
@@ -389,7 +392,7 @@ app.get('/seusFeedbacks',async (req, res)=>{
                 withdrawalList: withdrawalList.data
             })
         }
-    
+    })
 
     
 })
