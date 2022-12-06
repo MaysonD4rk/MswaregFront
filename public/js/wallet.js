@@ -77,8 +77,15 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
         if (currentCredits - withdrawValue < 0) {
             alert('Você não tem saldo o suficiente para retirar.')
         }else{
+            const cookies = document.cookie.split('=');
+            const authToken = cookies[1];
             try {
-                const request = await axios.post('https://server.mswareg.com/withdrawRequest', { userId, value: withdrawValue })
+                const request = await axios.post('https://server.mswareg.com/withdrawRequest', { userId, value: withdrawValue },
+                {
+                    headers:{
+                        'authorization': `Bearer ${authToken}`
+                    }
+                })
                 console.log(request)
                 alert('pedido de retirada realizado.')
             } catch (error) {
