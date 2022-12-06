@@ -2,8 +2,7 @@
 <html lang="en">
 
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2467408169618011"
-        crossorigin="anonymous"></script>
+
     <meta charset="UTF-8">
     <title>Account Settings UI Design</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -15,7 +14,7 @@
 
 <body>
 
-    <input type="hidden" id="userId" value="<%=userData.userId%>">
+    <input type="hidden" id="userId" value="<%=userData.id%>">
     
     <section class="py-5 my-5">
         <div class="container">
@@ -68,8 +67,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Username</label>
-                                    <input type="text" class="form-control" disabled value="@MayD4rk">
-                                    <a href="#">10R$ to change username</a>
+                                    <input type="text" class="form-control" id="usernameInput" value="<%=userData.username%>">
+                                    <a href="#" id="changeUsername">10R$ to change username</a>
                                 </div>
                             </div>
 

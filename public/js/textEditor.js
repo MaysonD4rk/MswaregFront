@@ -4,7 +4,12 @@
     var boldInsertStatus= false;
     var fReader = new FileReader();
     var cardModalImg = document.getElementsByClassName('card-modal-images')[0]
-    
+    let listenerType = ''
+    if (screen.availWidth < 1000) {
+        listenerType = 'change'
+    }else{
+        listenerType = 'keypress'
+    }
 
     const professionalInfo = [{
             DevAprendiz: 0,
@@ -202,7 +207,7 @@
     
     
 
-    addEventListener('keypress',(event)=>{
+    addEventListener(listenerType,(event)=>{
         let inputTitle = document.getElementById('content-title')
         let inputSummary = document.getElementsByClassName('content-summary')[0];
 
@@ -367,7 +372,7 @@
             const cookies = document.cookie.split('=');
             const authToken = cookies[1];
             try {
-                var pub = await axios.post('https://server.mswareg.com/pub',{
+                var pub = await axios.post('http://localhost:8000/pub',{
                     title: inputTitle.value, 
                     ideaSummary: inputSummary.value,
                     mainIdea: ideaInfo.content, 
@@ -378,10 +383,10 @@
                     allowFeedbacks: document.getElementById('allowFeedback').checked
                 }, {
             headers: {
-                'Authorization': `Bearer ${authToken}`
+                'authorization': `Bearer ${authToken}`
             }
         })
-                window.location.href = `https://mswareg.mswareg.com/addPubImg/${pub.data[0]}`;
+                window.location.href = `http://localhost:8080/addPubImg/${pub.data[0]}`;
             } catch (error) {
                 console.log(error)
             }

@@ -48,8 +48,7 @@
 #myTab{
     display: flex;
     flex-direction: row;
-    
-    width: 215px;
+    min-width: 350px;
 }
 
 .listFeedbacks-reports{
@@ -74,6 +73,7 @@
 }
 
 #reportsList{ display: none;}
+#withdrawList{ display: none;}
 #feedbacksList{display: initial;}
 
 
@@ -88,7 +88,6 @@
     #myTab {
             display: flex;
             flex-direction: row;
-    
             width: 100%;
         }
 }

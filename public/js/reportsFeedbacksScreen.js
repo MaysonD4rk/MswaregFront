@@ -9,15 +9,25 @@ function listFeedbackReports(tab) {
         console.log('entrou feedbacks')
 
         document.getElementById('reports-tab-container').style.display = "none"
+        document.getElementById('withdraw-tab-container').style.display = "none"
+        document.getElementById('withdrawList').style.display = 'none'
 
         document.getElementById('reportsList').style.display = 'none';
         document.getElementById('feedbacksList').style.display = 'initial';
-    } else {
+    } else if (tab == "reports"){
         document.getElementById('feedbacks-tab-container').style.display = "none"
-
-        console.log('entrou reportsList')
+        document.getElementById('withdraw-tab-container').style.display = "none"
+        
         document.getElementById('feedbacksList').style.display = 'none'
+        document.getElementById('withdrawList').style.display = 'none'
         document.getElementById('reportsList').style.display = 'initial'
+    } else if (tab == "withdraw") {
+        document.getElementById('feedbacks-tab-container').style.display = "none"
+        document.getElementById('reports-tab-container').style.display = "none"
+        
+        document.getElementById('feedbacksList').style.display = 'none'
+        document.getElementById('reportsList').style.display = 'none'
+        document.getElementById('withdrawList').style.display = 'initial'
     }
 }
 
@@ -32,7 +42,7 @@ async function openSelection(fromW, itemId, reports = 0, categorie = "") {
             try {
                 document.getElementsByClassName('loadIcon')[0].remove()
             } catch (error) {
-
+                console.log(error)
             }
 
             document.getElementById('feedbacks-tab-container').style.display = "flex"
@@ -40,8 +50,9 @@ async function openSelection(fromW, itemId, reports = 0, categorie = "") {
             renderFeedback(itemId)
 
             document.getElementById('reports-tab-container').style.display = "none"
+            document.getElementById('withdraw-tab-container').style.display = "none"
             document.getElementById('myTab').style.display = 'none'
-        } else {
+        } else if(fromW == 'report') {
             try {
                 document.getElementsByClassName('loadIcon')[0].remove()
             } catch (error) {
@@ -51,6 +62,19 @@ async function openSelection(fromW, itemId, reports = 0, categorie = "") {
             document.getElementById('reports-tab-container').style.display = "flex"
             renderReports(itemId, reports, categorie)
             document.getElementById('feedbacks-tab-container').style.display = "none"
+            document.getElementById('withdraw-tab-container').style.display = "none"
+            document.getElementById('myTab').style.display = 'none'
+        }else if(fromW == 'withdraw'){
+            try {
+                document.getElementsByClassName('loadIcon')[0].remove()
+            } catch (error) {
+
+            }
+
+            document.getElementById('withdraw-tab-container').style.display = "flex"
+            renderWithdraw(itemId)
+            document.getElementById('feedbacks-tab-container').style.display = "none"
+            document.getElementById('reports-tab-container').style.display = "none"
             document.getElementById('myTab').style.display = 'none'
         }
     } else {
@@ -64,8 +88,10 @@ async function openSelection(fromW, itemId, reports = 0, categorie = "") {
             document.getElementById('feedbacks-tab-container').style.display = "flex"
             renderFeedback(itemId)
             document.getElementById('reports-tab-container').style.display = "none"
+            document.getElementById('withdraw-tab-container').style.display = "none"
 
-        } else {
+
+        } else if (fromW == 'report') {
             try {
                 document.getElementsByClassName('loadIcon')[0].remove()
             } catch (error) {
@@ -75,7 +101,19 @@ async function openSelection(fromW, itemId, reports = 0, categorie = "") {
             document.getElementById('reports-tab-container').style.display = "flex"
             renderReports(itemId, reports, categorie)
             document.getElementById('feedbacks-tab-container').style.display = "none"
+            document.getElementById('withdraw-tab-container').style.display = "none"
 
+        } else if (fromW == 'withdraw') {
+            try {
+                document.getElementsByClassName('loadIcon')[0].remove()
+            } catch (error) {
+
+            }
+
+            document.getElementById('withdraw-tab-container').style.display = "flex"
+            renderWithdraw(itemId)
+            document.getElementById('feedbacks-tab-container').style.display = "none"
+            document.getElementById('reports-tab-container').style.display = "none"
         }
         document.getElementById('feedbacks-tab-container').style.display = "flex"
     }
@@ -93,12 +131,15 @@ function returnToList() {
 
 
 async function renderFeedback(itemId) {
+    console.log('entrou em renderFeedback')
     const cookies = document.cookie.split('=');
+    console.log(document.cookie)
     const authToken = cookies[1];
+    console.log(cookies)
     
-    const feedback = await axios.get('https://server.mswareg.com/getFeedback/' + itemId, {
+    const feedback = await axios.get(`http://localhost:8000/getFeedback/${itemId}/${userId}`, {
             headers: {
-                'Authorization': `Bearer ${authToken}`
+                'authorization': `Bearer ${authToken}`
             }})
 
 
@@ -125,10 +166,13 @@ async function renderFeedback(itemId) {
 async function renderReports(ideaId, reports, categorie) {
     const cookies = document.cookie.split('=');
     const authToken = cookies[1];
+    console.log(cookies)
+    console.log(authToken)
+    console.log(document.cookie)
 
-    const reportsList = await axios.get('https://server.mswareg.com/getReports/' + ideaId,{
+    const reportsList = await axios.get('http://localhost:8000/getReports/' + ideaId,{
             headers: {
-                'Authorization': `Bearer ${authToken}`
+                'authorization': `Bearer ${authToken}`
             }})
 
     console.log(reportsList.data.reports)
@@ -145,7 +189,7 @@ async function renderReports(ideaId, reports, categorie) {
                             <h1>REPORTS</h1>
                         
                         <h4>From: ${reports} users</h4>
-                        <a onclick="openIdeaNewTab('https://mswareg.mswareg.com/getIdeaById/${ideaId}')" href="#">CLIQUE PARA VER IDEIA </a>
+                        <a onclick="openIdeaNewTab('http://localhost:8080/getIdeaById/${ideaId}')" href="#">CLIQUE PARA VER IDEIA </a>
                         <h3>Categorie: ${categorie}
                         <p>
                             ""
@@ -164,6 +208,40 @@ async function renderReports(ideaId, reports, categorie) {
 
 }
 
+async function renderWithdraw(userId){
+    const cookies = document.cookie.split('=');
+    const authToken = cookies[1];
+    console.log(cookies)
+    console.log(authToken)
+    console.log(document.cookie)
+
+    const withdrawInfo = await axios.get('http://localhost:8000/findWithdrawRequestByUserId/' + userId, {
+        headers: {
+            'authorization': `Bearer ${authToken}`
+        }
+    })
+
+    console.log(withdrawInfo)
+
+
+    let textHtml = `
+                
+                <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
+                
+
+                <button onclick="withdrawstatus(${userId}, 'deny', '${withdrawInfo.data[0].email}')" style="background-color: red;">Negar</button>
+                <button onclick="withdrawstatus(${userId}, 'done', '${withdrawInfo.data[0].email}')" style="background-color: green;">Feito</button>
+
+                            <h1>Withdraw</h1>
+                        <h2>First Name: ${withdrawInfo.data[0].FirstName}</h2> 
+                        <h2>Last Name: ${withdrawInfo.data[0].Lastname}</h2> 
+                        <h2>Valor: ${withdrawInfo.data[0].valueReq}</h2> 
+                        <h2>Saldo: ${withdrawInfo.data[0].credits}</h2>
+                
+                `
+    document.getElementById('withdraw-tab-container').innerHTML = textHtml
+}
+
 function openIdeaNewTab(link){
     window.open(link);
 }
@@ -177,7 +255,7 @@ async function limitList(tab) {
 
         document.getElementsByClassName('loadIcon')[0].remove()
 
-        let loadList = await axios.get('https://server.mswareg.com/listFeedbacks/' + userId + "/" + offsetFeedback)
+        let loadList = await axios.get('http://localhost:8000/listFeedbacks/' + userId + "/" + offsetFeedback)
         console.log(loadList.data.result)
         if (loadList.data.result.length < 1) {
             loadFeedbackIconShowed = true
@@ -215,7 +293,7 @@ async function limitList(tab) {
 
         document.getElementsByClassName('loadIcon')[0].remove()
 
-        let loadList = await axios.get('https://server.mswareg.com/listReports/' + offsetReports)
+        let loadList = await axios.get('http://localhost:8000/listReports/' + offsetReports)
         if (loadList.data.result.length < 1) {
             loadReportIconShowed = true
             document.getElementsByClassName('loadIcon')[0].remove()
@@ -259,9 +337,9 @@ async function reportDecision(decision, ideaId) {
     if (decision == 'disable') {
         console.log('entrou aqui 1')
         try {
-            let result = await axios.put('https://server.mswareg.com/disableIdea', { ideaId }, {
+            let result = await axios.put('http://localhost:8000/disableIdea', { ideaId }, {
             headers: {
-                'Authorization': `Bearer ${authToken}`
+                'authorization': `Bearer ${authToken}`
             }
         })
             console.log(result)
@@ -271,9 +349,9 @@ async function reportDecision(decision, ideaId) {
         }
     } else {
         try {
-            let result = await axios.put('https://server.mswareg.com/releaseIdea', { ideaId },{
+            let result = await axios.put('http://localhost:8000/releaseIdea', { ideaId },{
                 headers: {
-                    'Authorization': `Bearer ${authToken}`
+                    'authorization': `Bearer ${authToken}`
                 }
             })
             console.log(result)
@@ -285,15 +363,15 @@ async function reportDecision(decision, ideaId) {
 }
 
 
-
 async function deleteFeedback(itemId) {
     console.log('entrou aqui')
     const cookies = document.cookie.split('=');
     const authToken = cookies[1];
+    console.log(authToken)
     try {
-        let response = await axios.delete('https://server.mswareg.com/deleteFeedkback/' + itemId, {
+        let response = await axios.delete(`http://localhost:8000/deleteFeedkback/${itemId}/${userId}`, {
             headers: {
-                'Authorization': `Bearer ${authToken}`
+                'authorization': `Bearer ${authToken}`
             }
         } )
         location.reload()
@@ -304,6 +382,27 @@ async function deleteFeedback(itemId) {
 
 }
 
+
+async function withdrawstatus(userId, status, email){
+
+    const cookies = document.cookie.split('=');
+    console.log(document.cookie)
+    const authToken = cookies[1];
+    try {
+            await axios.put('http://localhost:8000/withdrawstatus',{
+                userId,
+                status,
+                email
+            },{
+                headers:{
+                    'authorization': `Bearer ${authToken}`
+                }
+            })
+            window.location.reload()
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 

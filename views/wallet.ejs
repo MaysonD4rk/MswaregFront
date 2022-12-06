@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2467408169618011"
-        crossorigin="anonymous"></script>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +14,8 @@
 </head>
 <body>
     <input type="hidden" id="userId" value="<%=userData.id%>">
-
+    <input type="hidden" id="currentCredits" value="<%=userData.credits%>">
+    
     
     <div id="modal-payment-method">
         <div class="payment-method-container">
@@ -76,14 +76,14 @@
         </div>
         <h1>Retirar dinheiro</h1>
         <div class="WalletTable">
-            <div class="takeOffWallet">
+            <div class="withdrawClass">
                 você tem: <%= userData.credits %>R$ na carteira
-                <input id="withdraw" type="text" placeholder="Quanto deseja retirar?">
-                <button class="green-button">Retirar</button>
+                <input id="withdraw" type="number" placeholder="Quanto deseja retirar?">
+                <button id="withdrawBtn" class="green-button">Retirar</button>
             </div>
         </div>
         <p>Sobre Retirada: Demora de 10min-2h para você receber o dinheiro em sua carteira.</p>
-        <p>Você solicitar 1 retirada por dia, caso necessário retirar novamente, consulte um suporte.</p>
+        <p>Você só pode solicitar 1 retirada por vez. Espere receber o dinheiro em sua carteira caso queira retirar novamente.</p>
     </div>
 <%- include('./partials/floatingMenu.ejs') %>
 </body>

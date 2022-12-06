@@ -15,7 +15,7 @@ async function openIdeaModal(id){
     id = parseInt(id);
     currentProject = id;
 
-    let result = await axios.get(`https://server.mswareg.com/findPub/${id}`);
+    let result = await axios.get(`http://localhost:8000/findPub/${id}`);
 
     //var texto = reader.readAsArrayBuffer(result.data.pubData.mainIdea.data)
     
@@ -48,8 +48,10 @@ async function openIdeaModal(id){
             donateTable = false;
         }else{
             
-            var data = await axios.get(`https://server.mswareg.com/listDonates/${id}`);
+            var data = await axios.get(`http://localhost:8000/listDonates/${id}`);
             console.log(data);
+
+            const totalInvestment = !!result.data.pubData.totalInvestment ? result.data.pubData.totalInvestment:0
             
             var lista = `
             
@@ -65,7 +67,7 @@ async function openIdeaModal(id){
 
             var finishList = `</table></div>
             <div class="confirm">
-            <div class="total-value-donated"> Total investido: $1000</div>
+            <div class="total-value-donated"> Total investido: R$${totalInvestment}</div>
             <div class="confirm-confirm"> 
                 <input type="number" placeholder="Quantia" id="amountToPay-input"> <button onclick="donate()">Ok!</button>
             </div>
@@ -108,6 +110,7 @@ async function openIdeaModal(id){
 
 function donate(){
     document.getElementById('sure').style.display = "flex"
+    document.getElementById('sureMsg').innerHTML = `irá utilizar R$ ${document.getElementById('amountToPay-input').value} do seus créditos para realizar esta ação?`
 }
 
 
@@ -119,13 +122,13 @@ async function confirmPurchase(userId){
     const cookies = document.cookie.split('=');
     const authToken = cookies[1];
     try {
-        var result = await axios.post('https://server.mswareg.com/donateCredits', {
+        var result = await axios.post('http://localhost:8000/donateCredits', {
             userId,
             credits,
             projectId: currentProject
         }, {
             headers: {
-                'Authorization': `Bearer ${authToken}`
+                'authorization': `Bearer ${authToken}`
             }
         })
 
@@ -176,11 +179,10 @@ async function openModal(elementId, itemId, allowFeedback=true){
     }
     
     document.getElementById(elementId).style.display= "flex";
-    document.getElementById(elementId).style.top = window.scrollY+"px"
     itemId = parseInt(itemId)
     console.log(itemId)
 
-    let result = await axios.get(`https://server.mswareg.com/findPub/${itemId}`);
+    let result = await axios.get(`http://localhost:8000/findPub/${itemId}`);
     let title = result.data.pubData.title;
     document.getElementsByClassName('insertIdeaName')[0].innerHTML = `"${title}"`;
     document.getElementsByClassName('insertIdeaName')[1].innerHTML = `"${title}"`;
@@ -188,13 +190,13 @@ async function openModal(elementId, itemId, allowFeedback=true){
         const cookies = document.cookie.split('=');
         const authToken = cookies[1];
         try {
-            let sendFeedbackResult = await axios.post('https://server.mswareg.com/sendFeedback', {
+            let sendFeedbackResult = await axios.post('http://localhost:8000/sendFeedback', {
                 userId,
                 ideaId: itemId,
                 feedbackMsg: document.getElementById('feedback-textArea').value,
             }, {
             headers: {
-                'Authorization': `Bearer ${authToken}`
+                'authorization': `Bearer ${authToken}`
             }
         })
             statusModal('success', sendFeedbackResult.data.msg) 
@@ -207,14 +209,14 @@ async function openModal(elementId, itemId, allowFeedback=true){
         const cookies = document.cookie.split('=');
         const authToken = cookies[1];
        try {
-           let sendReportResult = await axios.post('https://server.mswareg.com/sendReport', {
+           let sendReportResult = await axios.post('http://localhost:8000/sendReport', {
                userId,
                reportMsg: document.getElementById('report-textArea').value,
                ideaReport: itemId,
                reportCategorie: reportCategorie.value
            }, {
             headers: {
-                'Authorization': `Bearer ${authToken}`
+                'authorization': `Bearer ${authToken}`
             }
         })
            statusModal('success', sendReportResult.data.msg) 

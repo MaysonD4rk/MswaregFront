@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2467408169618011"
-        crossorigin="anonymous"></script>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,7 +34,11 @@
                         <a class="nav-link" id="reports-tab" data-toggle="tab" href="#reports" role="tab" aria-controls="reports"
                             aria-selected="false" onclick="listFeedbackReports('reports')">Reports</a>
                     </li>
-                <%}%>
+                    <li class="nav-item">
+                        <a class="nav-link" id="withdraw-tab" data-toggle="tab" href="#withdraw" role="tab" aria-controls="withdraw"
+                            aria-selected="false" onclick="listFeedbackReports('withdraw')">withdrawal list</a>
+                    </li>
+                    <%}%>
                 <div class="listFeedbacks-reports" id="feedbacksList">
                     <% feedbackList.forEach(item=>{%>
 
@@ -67,6 +70,24 @@
 
                 </div>
 
+                <div class="listFeedbacks-reports" id="withdrawList">
+                    <!-- APENAS PARA MODERADORES! -->
+                
+                
+                
+                    <% if(typeof(withdrawalList) !='undefined' ){withdrawalList.forEach(item=>{%>
+                
+                        <div onclick="openSelection('withdraw', '<%=item.userId%>')">
+                            userId: <%=item.userId%> <br>
+                            Email: <%=item.email%> <br>
+                            Valor: <%=item.valueReq%> <br>
+                        </div>
+                
+                        <%})}%>
+                
+                </div>
+
+
             </ul>
             <div class="tab-content" id="myTabContent">
                 
@@ -83,6 +104,16 @@
                             <h1>REPORT</h1>
                             
                             
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="withdraw" role="tabpanel" aria-labelledby="withdraw-tab">
+                    <div class="tab-container" id="withdraw-tab-container">
+                        <div>
+                            <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
+                            <h1>WITHDRAW</h1>
+                
+                
                         </div>
                     </div>
                 </div>

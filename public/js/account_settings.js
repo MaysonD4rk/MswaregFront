@@ -1,3 +1,50 @@
+
+(async function verifyNotifications(){
+    try {
+        const notifications = await axios.get("http://localhost:8000/verifyActiveNotifications/"+document.getElementById('userId').value);
+        
+        console.log(notifications.data.notificationsList[0])
+        if (!!notifications.data.notificationsList[0].IN1_notification) {
+            document.getElementById('notification1').checked = true
+
+        } else {
+            document.getElementById('notification1').checked = false
+        }
+        if (!!notifications.data.notificationsList[0].IN2_notification) {
+            document.getElementById('notification2').checked = true
+
+        } else {
+            document.getElementById('notification2').checked = false
+        }
+        if (!!notifications.data.notificationsList[0].IN3_notification) {
+            document.getElementById('notification3').checked = true
+
+        } else {
+            document.getElementById('notification3').checked = false
+        }
+        if (!!notifications.data.notificationsList[0].FN1_notification) {
+            document.getElementById('notification4').checked = true
+        }else{
+            document.getElementById('notification4').checked = false
+        }
+        if (!!notifications.data.notificationsList[0].FN2_notification) {
+            document.getElementById('notification5').checked = true
+        }else{
+            document.getElementById('notification5').checked = false
+        }
+        if (!!notifications.data.notificationsList[0].FN3_notification) {
+            document.getElementById('notification6').checked = true
+
+        } else {
+            document.getElementById('notification6').checked = false
+        }
+        
+    } catch (error) {
+        console.log(error)
+    }
+})()
+
+
 async function changePass(email, token) {
     var oldPass = document.getElementsByName('oldPass')[0].value
     var newPass = document.getElementsByName('newPass')[0].value
@@ -10,7 +57,7 @@ async function changePass(email, token) {
         console.log(authToken)
 
         try {
-            var verifyOldPass = await axios.post('https://server.mswareg.com/login', {
+            var verifyOldPass = await axios.post('http://localhost:8000/login', {
                 email: email,
                 password: oldPass
             })
@@ -18,12 +65,12 @@ async function changePass(email, token) {
             if (verifyOldPass.status == 200) {
                 console.log(verifyOldPass)
                 try {
-                    var updatePass = await axios.put('https://server.mswareg.com/updatePass', {
+                    var updatePass = await axios.put('http://localhost:8000/updatePass', {
                         email: email,
                         password: newPass
                     }, {
                         headers: {
-                            'Authorization': `Bearer ${authToken}`
+                            'authorization': `Bearer ${authToken}`
                         }
                     })
 
@@ -57,11 +104,18 @@ async function updateInfo() {
     let FirstName = document.getElementById('nameInput').value
     let LastName = document.getElementById('lastNameInput').value
     const userId = document.getElementById('userId').value
+    console.log(userId)
+    const cookies = document.cookie.split('=');
+    const authToken = cookies[1];
     try {
-        let updateInfo = await axios.put('https://server.mswareg.com/updateInfo', {
+        let updateInfo = await axios.put('http://localhost:8000/updateInfo', {
             FirstName,
             LastName,
             userId
+        }, {
+            headers: {
+                'authorization': `Bearer ${authToken}`
+            }
         })
         console.log(updateInfo)
     } catch (error) {
@@ -79,9 +133,10 @@ async function updateNotification() {
     let notification4 = document.getElementById('notification4').checked;
     let notification5 = document.getElementById('notification5').checked;
     let notification6 = document.getElementById('notification6').checked;
-
+    const cookies = document.cookie.split('=');
+    const authToken = cookies[1];
     try {
-        const updateNotification = await axios.put('https://server.mswareg.com/updateNotifications', {
+        const updateNotification = await axios.put('http://localhost:8000/updateNotifications', {
             notification1,
             notification2,
             notification3,
@@ -89,6 +144,10 @@ async function updateNotification() {
             notification5,
             notification6,
             userId
+        }, {
+            headers: {
+                'authorization': `Bearer ${authToken}`
+            }
         })
 
         console.log(updateNotification)
@@ -97,4 +156,27 @@ async function updateNotification() {
     }
 
 
+}
+
+
+document.getElementById('changeUsername').onclick = async ()=>{
+    const username = document.getElementById('usernameInput').value
+    const cookies = document.cookie.split('=');
+    const authToken = cookies[1];
+    try {
+        const changeUsername = await axios.put('http://localhost:8000/changeUsername',{
+            userId:userId.value,
+            username
+        }, {
+            headers: {
+                'authorization': `Bearer ${authToken}`
+            }
+        });
+
+        if(changeUsername.status == 200){
+            alert('Username alterado com sucesso :)')
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
