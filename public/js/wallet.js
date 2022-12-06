@@ -11,8 +11,9 @@ const currentCredits = document.getElementById('currentCredits').value
     
             var caringTax = parseFloat(value / 100 * 1)
             var companyTax = parseFloat(value / 100 * 0.5)
+            var apiPixTax = parseFloat(value / 100 * 1)
     
-            document.getElementById('automaticTax').innerHTML = `${caringTax}R$ para caridade/ações sociais - 1,00%<br>${companyTax}R$ para a empresa - 0,5%</p>`
+            document.getElementById('automaticTax').innerHTML = `${caringTax}R$ para caridade/ações sociais - 1,00%<br>${companyTax}R$ para a empresa - 0,5%<br>${apiPixTax}R$ Pix-services-api Tax`
     
         }, 10);
     
