@@ -78,7 +78,7 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
             alert('Você não tem saldo o suficiente para retirar.')
         }else{
             try {
-                const request = await axios.post('http://localhost:8000/withdrawRequest', { userId, value: withdrawValue })
+                const request = await axios.post('https://server.mswareg.com/withdrawRequest', { userId, value: withdrawValue })
                 console.log(request)
                 alert('pedido de retirada realizado.')
             } catch (error) {
