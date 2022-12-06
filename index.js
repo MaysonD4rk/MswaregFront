@@ -224,7 +224,6 @@ app.get('/profile/:username', async (req,res)=>{
 
     try {
         let userProfileData = await axios.get('https://server.mswareg.com/getByUsername/'+userProfile);
-        console.log(userProfileData.data.result.usernameRow)
         
         if (userProfileData.data.result.status) {
             
@@ -237,7 +236,7 @@ app.get('/profile/:username', async (req,res)=>{
                     url: "https://server.mswareg.com/getFollows/" + userProfileData.data.result.usernameRow.usersTable[0].id
                 }).then(async(followData)=>{
                     
-                    const contentList = await axios.get(`https://server.mswareg.com/profilePageContentList/${sess.userId}/`+offset)
+                    const contentList = await axios.get(`https://server.mswareg.com/profilePageContentList/${userProfileData.data.result.usernameRow.usersTable[0].id}/`+offset)
                     console.log(contentList.data.result)
                     res.render('profilePage.ejs', {
                         id: sess.userId,
