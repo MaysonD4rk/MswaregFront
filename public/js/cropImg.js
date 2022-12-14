@@ -482,7 +482,7 @@ async function confirmCropFunction(action) {
         if (currentFormat == 'profile') {
 
             try {
-                var resposta = await axios.put('https://server.mswareg.com/updatePhotoProfile', {
+                var resposta = await axios.put('http://localhost:8000/updatePhotoProfile', {
                     userId,
                     profileUrl: canvas.toDataURL()
                 }, {
@@ -501,7 +501,7 @@ async function confirmCropFunction(action) {
 
         } else {
             try {
-                var resposta = await axios.put('https://server.mswareg.com/updateIdeaPhoto', {
+                var resposta = await axios.put('http://localhost:8000/updateIdeaPhoto', {
                     userId,
                     pubIdeaId,
                     imgUrl: canvas.toDataURL()

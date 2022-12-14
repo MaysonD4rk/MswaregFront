@@ -1,6 +1,6 @@
 (async function verifyNotifications(){
     try {
-        const notifications = await axios.get("https://server.mswareg.com/verifyActiveNotifications/"+document.getElementById('userId').value);
+        const notifications = await axios.get("http://localhost:8000/verifyActiveNotifications/"+document.getElementById('userId').value);
         
         console.log(notifications.data.notificationsList[0])
         if (!!notifications.data.notificationsList[0].IN1_notification) {
@@ -58,7 +58,7 @@ async function changePass(email, token) {
         console.log(authToken)
 
         try {
-            var verifyOldPass = await axios.post('https://server.mswareg.com/login', {
+            var verifyOldPass = await axios.post('http://localhost:8000/login', {
                 email: email,
                 password: oldPass
             })
@@ -66,7 +66,7 @@ async function changePass(email, token) {
             if (verifyOldPass.status == 200) {
                 console.log(verifyOldPass)
                 try {
-                    var updatePass = await axios.put('https://server.mswareg.com/updatePass', {
+                    var updatePass = await axios.put('http://localhost:8000/updatePass', {
                         email: email,
                         password: newPass
                     }, {
@@ -134,7 +134,7 @@ async function updateInfo() {
     const cookies = document.cookie.split('=');
     const authToken = cookies[1];
     try {
-        let updateInfo = await axios.put('https://server.mswareg.com/updateInfo', {
+        let updateInfo = await axios.put('http://localhost:8000/updateInfo', {
             FirstName,
             LastName,
             pixKey,
@@ -169,7 +169,7 @@ async function updateNotification() {
     const cookies = document.cookie.split('=');
     const authToken = cookies[1];
     try {
-        const updateNotification = await axios.put('https://server.mswareg.com/updateNotifications', {
+        const updateNotification = await axios.put('http://localhost:8000/updateNotifications', {
             notification1,
             notification2,
             notification3,
@@ -197,7 +197,7 @@ document.getElementById('changeUsername').onclick = async ()=>{
     const cookies = document.cookie.split('=');
     const authToken = cookies[1];
     try {
-        const changeUsername = await axios.put('https://server.mswareg.com/changeUsername',{
+        const changeUsername = await axios.put('http://localhost:8000/changeUsername',{
             userId:userId.value,
             username
         }, {
