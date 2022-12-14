@@ -1,4 +1,3 @@
-
 (async function verifyNotifications(){
     try {
         const notifications = await axios.get("http://localhost:8000/verifyActiveNotifications/"+document.getElementById('userId').value);
@@ -43,6 +42,8 @@
         console.log(error)
     }
 })()
+
+const email = document.getElementById('realEmailInput').value
 
 
 async function changePass(email, token) {
@@ -100,17 +101,16 @@ async function changePass(email, token) {
 }
 
 
-async function updateInfo() {
-    let FirstName = document.getElementById('nameInput').value
+async function getTokenUpdateInfo(){
     let LastName = document.getElementById('lastNameInput').value
     const userId = document.getElementById('userId').value
+    const pixKey = document.getElementById('pixKey').value
     console.log(userId)
     const cookies = document.cookie.split('=');
     const authToken = cookies[1];
     try {
-        let updateInfo = await axios.put('http://localhost:8000/updateInfo', {
-            FirstName,
-            LastName,
+        let updateInfoCode = await axios.post('http://localhost:8000/updateInfoToken', {
+            email,
             userId
         }, {
             headers: {
@@ -118,6 +118,39 @@ async function updateInfo() {
             }
         })
         console.log(updateInfo)
+    } catch (error) {
+        console.log(error)
+    }
+    document.getElementById('codeModal').style.display = 'flex';
+}
+
+async function updateInfo() {
+    let FirstName = document.getElementById('nameInput').value
+    let LastName = document.getElementById('lastNameInput').value
+    const userId = document.getElementById('userId').value
+    const pixKey = document.getElementById('pixKey').value
+    const token = document.getElementById('tokenCode').value
+    console.log(userId)
+    const cookies = document.cookie.split('=');
+    const authToken = cookies[1];
+    try {
+        let updateInfo = await axios.put('http://localhost:8000/updateInfo', {
+            FirstName,
+            LastName,
+            pixKey,
+            userId,
+            token
+        }, {
+            headers: {
+                'authorization': `Bearer ${authToken}`
+            }
+        })
+        console.log(updateInfo)
+        if (updateInfo.status == 200) {
+            alert(updateInfo.data.msg)
+            document.getElementById('codeModal').style.display = 'none';
+
+        }
     } catch (error) {
         console.log(error)
     }
@@ -180,3 +213,12 @@ document.getElementById('changeUsername').onclick = async ()=>{
         console.log(error)
     }
 }
+
+
+document.getElementById('pixKey').addEventListener('keypress', (event)=>{
+    console.log(event)
+    if(event.code == 'Space'){
+        event.preventDefault()
+        return
+    }
+})

@@ -9,7 +9,7 @@ async function editAboutMe(id){
     const authToken = cookies[1];
 
     var editAboutMe = await axios.put('http://localhost:8000/updateUserInfo', {
-        id: parseInt(id),
+        userId: parseInt(id),
         aboutMe: document.getElementById('aboutMeTextArea').value
     }, {
             headers: {

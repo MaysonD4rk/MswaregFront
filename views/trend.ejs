@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/nextPreview.js"></script>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbarCss.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/menuSettingsButton.css">
+
+    <!-- style report - feedback screen -->
+    <link rel="stylesheet" href="/css/reportFeeback.css">
+    <!--/// style report - feedback screen -->
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Home</title>
+</head>
+
+<body>
+    <input type="hidden" id="userId" value="<%=id%>">
+
+    <%- include('./partials/header.ejs') %>
+       
+                
+                <!--   ---MENU---    -->
+
+                <%- include('./partials/floatingMenu.ejs') %>
+
+
+                    <!-- ////////////  ---MENU---    -->
+
+
+                    <!--POSTS PART-->
+                    <div class="container">
+                        <div class="posts">
+                            <!--CARDS-->
+                            <% if(pubList !=undefined){ pubList.forEach(item=>{ %>
+
+                                <div id="<%= item.id %>" style="background-image:url('<%= item.imageUrl %>') ;"
+                                    class="post-card">
+                                    <div class="card-header" onclick="openIdeaModal('<%= item.id %>')">
+
+                                        <h2>
+                                            <%= item.title %>
+                                        </h2>
+                                        <p>
+                                            <%=item.ideaSummary%>
+                                        </p>
+
+                                    </div>
+
+                                    <div class="card-img">
+
+                                    </div>
+                                    <div class="card-info">
+                                        <i onclick="likePub('<%= item.id %>')" class="fa-solid fa-heart like"></i>
+                                        <div>
+                                            <p>
+                                                <%= item.initialAmountRequired %>
+                                            </p>
+                                            <progress value="<%=item.investment%>"
+                                                max="<%= item.initialAmountRequired %>"></progress>
+                                        </div>
+                                        <i onclick="favoritePub('<%= item.id %>')" class="fa-solid fa-star like"></i>
+                                    </div>
+                                </div>
+                                <% })}else{ %>
+                                    <div>
+                                        HMMMM... sem ideias por enquanto.
+                                    </div>
+                                    <%} %>
+
+
+
+                                        <!--////CARDS-->
+
+
+
+
+                        </div>
+                    </div><br><br><br><br><br><br><br>
+
+
+                    <%- include('./partials/modal.ejs') %>
+
+                        <%- include('./partials/footer.ejs') %>
+
+</body>
+
+<script src="https://kit.fontawesome.com/4fd5a3a7ad.js" crossorigin="anonymous"></script>
+<script src="/js/menuSettingsButton.js">
+
+</script>
+
+<script src="/js/filter.js"></script>
+<script src="/js/getNavDown.js"></script>
+<script src="/js/nextPreview.js"></script>
+<script src="/js/modal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
+
+
+</script>
+
+<script src="/js/idea.js">
+</script>
+
+
+
+<script src="/js/search.js">
+</script>
+<script src="/js/reportFeedback.js">
+</script>
+<script>
+    document.getElementById('trend').className = "active"
+</script>
+</html>

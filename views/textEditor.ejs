@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Document</title>
+    <title>Compartilhe a ideia :)</title>
 
 
 
@@ -20,24 +20,24 @@
 <body>
 
     <input id="userId" type="hidden" value="<%=userId%>">
-
+    <%if(typeof post != 'undefined'){%><input id="pubId"type="hidden" value="<%=post.id%>"><%}%>
     <div class="container">
         <h1>ESCREVA SUA IDEIA</h1>
         <div class="inputs-editor">
             <label class="label" for="content-title">
-                <input id="content-title" class="content-title" type="text" placeholder="title">
+                <input id="content-title" class="content-title" type="text" placeholder="title" <%if(typeof post != 'undefined'){%>value="<%=post.title%>"<%}%> >
                 <span class="length-left">left: </span>
             </label>
             <br>
             <label class="label" for="content-summary">
-                <textarea class="content-summary" placeholder="summary"></textarea>
+                <textarea class="content-summary" placeholder="summary"><%if(typeof post != 'undefined'){%><%=post.ideaSummary%><%}%></textarea>
                 <span class="length-left">left: </span>
             </label>
         </div>
         <br>
 
         <div class="content-container">
-            <div id="content" contenteditable="true">ESCREVA AQUI A SUA IDEIA</div>
+            <div id="content" contenteditable="true"><%if(typeof post !='undefined' ){%> <%- post.mainIdea%> <%}%></div>
 
             <div class="editor-buttons">
                 <button onclick="renderContent()">
@@ -81,6 +81,11 @@
             <div>
                 <div class="main-card-info">
                     <div class="card-modal-images">
+                        <% if(typeof post != 'undefined'){
+                            const imagesReverse = post.images.reverse()
+                            imagesReverse.forEach(i=>{%>
+                                <img class="imgAdded" src="<%=i.url%>" height="200px">
+                            <%})}%>
                         <img id="addImageButton" src="/img/addimg.png" alt="" height="200px">
                         <input type="file" id="imageFile">
                     </div>
@@ -110,85 +115,7 @@
                 </div>
             </div>
         </div>
-        <div id="investors-table">
-    
-            <div class="table">
-                <table>
-                    <tr>
-                        <th>
-                        </th>
-                        <th>Nome</th>
-                        <th>investimento</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span></span>
-                        </td>
-                        <td>joao</td>
-                        <td>300R$</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span></span>
-                        </td>
-                        <td>Maison</td>
-                        <td>500R$</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span></span>
-                        </td>
-                        <td>Renan</td>
-                        <td>100R$</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span></span>
-                        </td>
-                        <td>joao</td>
-                        <td>300R$</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span></span>
-                        </td>
-                        <td>Maison</td>
-                        <td>500R$</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span></span>
-                        </td>
-                        <td>Renan</td>
-                        <td>100R$</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span></span>
-                        </td>
-                        <td>joao</td>
-                        <td>300R$</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span></span>
-                        </td>
-                        <td>Maison</td>
-                        <td>500R$</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span></span>
-                        </td>
-                        <td>Renan</td>
-                        <td>100R$</td>
-                    </tr>
-    
-    
-                </table>
-            </div>
-    
-        </div>
+        
     </div>
 
     <!--////////////MODAL-->
@@ -215,6 +142,7 @@
                 <option value="8">Sports</option>
                 <option value="9">VR</option>
                 <option value="10">Just an idea</option>
+                <%if(userData.role == 1){%><option value="11">Trend</option><%}%>
             </select>
             
 
@@ -251,8 +179,7 @@
             <button onclick="document.getElementById('areusure').style.display = 'flex'"
                 class="finish-button">FINISH</button>
             <div id="areusure" style="display: none;">
-                <b>are u sure?</b> <button onclick="send()"
-                    style="background-color: transparent; border: none;">Yes</button>
+                <b>are u sure?</b> <button <%if(typeof post != 'undefined'){%>onclick="confirmEditIdea()"<%}else{%> onclick="send()"<%}%> style="background-color: transparent; border: none;">Yes</button>
             </div>
             <button class="finish-info-button"
                 onmouseover="document.getElementsByClassName('span-pro')[0].style.display = 'inline'"

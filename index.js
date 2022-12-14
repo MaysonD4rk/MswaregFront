@@ -48,8 +48,7 @@ app.get('/home', async (req, res)=>{
                 url: `http://localhost:8000/home/${sess.userId}/${offset*8}/${filter}`
             })
 
-            console.log(posts.data)
-            console.log(data.data[0])
+            
             if (req.query.maxIdeasWriten != undefined) {
                 res.render('index', {
                     id: sess.userId,
@@ -74,6 +73,7 @@ app.get('/home', async (req, res)=>{
         })
 
 })
+
 app.get('/login', (req, res) => {
     
     res.clearCookie('authToken');
@@ -160,24 +160,81 @@ app.post('/register', async (req, res)=>{
     }
 })
 
-app.get('/writeIdea', async (req,res)=>{
-    sess = req.session
+app.get('/trend', async (req,res)=>{
+    const pubList = await axios.get('http://localhost:8000/listTrendPub');
+    console.log(pubList.data.result)
+    const sess = req.session;
     if (sess.userId == undefined) {
         res.redirect('/login')
     }
+    axios({
+        method: "get",
+        url: "http://localhost:8000/user/" + sess.userId
+    }).then(async (data) => {
+
+        console.log(data.data[0])
+
+        res.render('trend', {
+            id: sess.userId,
+            userData: data.data[0],
+            pubList: pubList.data.result
+        })
+    })
+})
+
+app.get('/writeIdea', async (req,res)=>{
+    sess = req.session
+
     
-    try {
-        let count = await axios.get('http://localhost:8000/countPosts/'+sess.userId);
-        if(count.data.result >= 4){
-            res.redirect('/home?maxIdeasWriten')
-        }else{
-            res.render('textEditor',{
-                userId: sess.userId
-            })
-        }
-    } catch (error) {
-        console.log(count)
+    if (sess.userId == undefined) {
+        res.redirect('/login')
     }
+
+    axios({
+        method: "get",
+        url: "http://localhost:8000/user/" + sess.userId
+    }).then(async (data) => {
+
+        if(!!req.query.editIdeaId){
+            try {
+                const post = await axios.get('http://localhost:8000/findPub/' + req.query.editIdeaId );
+                console.log(post.data.pubData)
+                if(post.data.pubData.userId == sess.userId){
+                    try {
+                            res.render('textEditor',{
+                                userId: sess.userId,
+                                post: post.data.pubData,
+                                userData: data.data[0]
+                        })
+                    } catch (error) {
+                        console.log(error)
+                    }
+    
+                }else{
+                    res.redirect('/home')
+                }
+    
+            } catch (error) {
+                console.log(error)
+            }
+        }else{
+            try {
+                let count = await axios.get('http://localhost:8000/countPosts/' + sess.userId);
+                if (count.data.result >= 4 && data.data[0].role == 0) {
+                    res.redirect('/home?maxIdeasWriten')
+                } else {
+                    res.render('textEditor', {
+                        userId: sess.userId,
+                        userData: data.data[0]
+                    })
+                }
+            } catch (error) {
+                console.log(count)
+            }
+        }
+
+    })
+    
 
 })
 

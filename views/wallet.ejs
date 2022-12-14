@@ -15,7 +15,7 @@
 <body>
     <input type="hidden" id="userId" value="<%=userData.id%>">
     <input type="hidden" id="currentCredits" value="<%=userData.credits%>">
-    
+    <input type="hidden" id="pixKey"value="<%=userData.pixKey%>">
     
     <div id="modal-payment-method">
         <div class="payment-method-container">
@@ -80,6 +80,7 @@
                 você tem: <%= userData.credits %>R$ na carteira
                 <input id="withdraw" type="number" placeholder="Quanto deseja retirar?">
                 <button id="withdrawBtn" class="green-button">Retirar</button>
+                <p style="font-size: 20px;">Chave pix cadastrada: <span id="pixKeyText" style="background-color: black; user-select: none;"><%=userData.pixKey%></span> <i onclick="showPixKey()" class="fa-solid fa-eye-slash"></i> </p>
             </div>
         </div>
         <p>Sobre Retirada: Demora de 10min-2h para você receber o dinheiro em sua carteira.</p>

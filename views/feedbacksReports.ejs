@@ -77,7 +77,7 @@
                 
                     <% if(typeof(withdrawalList) !='undefined' ){withdrawalList.forEach(item=>{%>
                 
-                        <div onclick="openSelection('withdraw', '<%=item.userId%>')">
+                        <div id="withdrawDiv<%=item.id%>" onclick="openSelection('withdraw', '<%=item.userId%>')">
                             userId: <%=item.userId%> <br>
                             Email: <%=item.email%> <br>
                             Valor: <%=item.valueReq%> <br>

@@ -72,3 +72,40 @@ body {
 	}
 
 }
+
+
+#codeModal{
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(237, 237, 237, 0.5);
+	z-index: 99;
+}
+#codeModal input{
+	outline: none;
+	border: 1px solid rgb(145, 145, 145);
+	border-radius: 30px;
+	font-size: 24px;
+	
+}
+#codeContainer{
+	background-color: #FFF;
+	height: 300px;
+	width: 300px;
+	border: 1px solid black;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	padding: 10px;
+}
+#codeContainer button {
+	border: none;
+	margin-top: 10px;
+	border-radius: 10px;
+	font-size: 23px;
+}

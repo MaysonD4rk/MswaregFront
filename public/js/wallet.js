@@ -1,3 +1,5 @@
+const pixKey = document.getElementById('pixKey').value
+
 const currentCredits = document.getElementById('currentCredits').value
 
     
@@ -68,7 +70,16 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
     document.getElementById('withdrawBtn').onclick = async ()=>{
         console.log(userId)
         const withdrawValue = parseInt(document.getElementById('withdraw').value);
+        
+        if (!pixKey || pixKey == ' '){
+            alert('Não é possivel retirar sem registrar uma chave pix, irei te redirecionar para que possa habilitar sua chave pix.');
+            window.location.href = "http://localhost:8080/accountSettings"
+            return false
+        }
+        
         console.log(currentCredits - withdrawValue)
+        const cookies = document.cookie.split('=');
+        const authToken = cookies[1];
         if (currentCredits <= 0 || withdrawValue <= 0) {
             alert('você não possui saldo em sua conta ou o valor é invalido para a retirada.');
             return;
@@ -78,7 +89,12 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
             alert('Você não tem saldo o suficiente para retirar.')
         }else{
             try {
-                const request = await axios.post('http://localhost:8000/withdrawRequest', { userId, value: withdrawValue })
+                
+                const request = await axios.post('http://localhost:8000/withdrawRequest', { userId, value: withdrawValue },{
+                    headers: {
+                        'authorization': `Bearer ${authToken}`
+                    }
+                })
                 console.log(request)
                 alert('pedido de retirada realizado.')
             } catch (error) {
@@ -91,4 +107,15 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
                 
             }
         }
+    }
+
+
+    function showPixKey(){
+        const pixKeyText = document.getElementById('pixKeyText').style.backgroundColor
+        if (pixKeyText == 'black') {
+            document.getElementById('pixKeyText').style.backgroundColor = 'white'
+        }else{
+            document.getElementById('pixKeyText').style.backgroundColor = 'black'
+        }
+
     }

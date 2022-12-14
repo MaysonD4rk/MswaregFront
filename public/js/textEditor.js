@@ -396,6 +396,39 @@
         }
     }
 
+async function confirmEditIdea() {
+    const pubId = parseInt(document.getElementById('pubId').value)
+    document.getElementById('areusure').style.display = 'none';
+
+    if (ideaInfo.content.length >= 500) {
+        const cookies = document.cookie.split('=');
+        const authToken = cookies[1];
+        try {
+            var pub = await axios.put('http://localhost:8000/pub', {
+                pubId,
+                title: inputTitle.value,
+                ideaSummary: inputSummary.value,
+                mainIdea: ideaInfo.content,
+                userId,
+                categoryId: parseInt(document.getElementById('categoryId').value),
+                initialAmountRequired: 5000,//parseFloat(professionalInfo[1].finalAmount),
+                images: mainImages,
+                allowFeedbacks: document.getElementById('allowFeedback').checked
+            }, {
+                headers: {
+                    'authorization': `Bearer ${authToken}`
+                }
+            })
+            window.location.href = `http://localhost:8080/addPubImg/${pubId}`;
+        } catch (error) {
+            console.log(error)
+        }
+        console.log(document.getElementById('allowFeedback').checked)
+    } else {
+        alert('precisa de mais conteúdo')
+    }
+}
+
 
 var imageFile = document.getElementById('imageFile')
 
@@ -432,3 +465,14 @@ imageFile.addEventListener('change', ()=>{
         }
         
 })
+
+
+setTimeout(() => {
+
+    if(!!document.getElementsByClassName('imgAdded')){
+        for (let i = 0; i < document.getElementsByClassName('imgAdded').length; i++) {
+            const element = document.getElementsByClassName('imgAdded')[i];
+            mainImages.push(element.src);
+        }
+    }
+}, 100);
