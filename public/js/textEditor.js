@@ -372,7 +372,7 @@
             const cookies = document.cookie.split('=');
             const authToken = cookies[1];
             try {
-                var pub = await axios.post('http://localhost:8000/pub',{
+                var pub = await axios.post('https://server.mswareg.com/pub',{
                     title: inputTitle.value, 
                     ideaSummary: inputSummary.value,
                     mainIdea: ideaInfo.content, 
@@ -386,7 +386,7 @@
                 'authorization': `Bearer ${authToken}`
             }
         })
-                window.location.href = `http://localhost:8080/addPubImg/${pub.data[0]}`;
+                window.location.href = `https://mswareg.mswareg.com/addPubImg/${pub.data[0]}`;
             } catch (error) {
                 console.log(error)
             }

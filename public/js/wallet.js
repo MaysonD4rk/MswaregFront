@@ -13,36 +13,40 @@ const currentCredits = document.getElementById('currentCredits').value
     
             var caringTax = parseFloat(value / 100 * 1)
             var companyTax = parseFloat(value / 100 * 0.5)
+            var apiPixTax = parseFloat(value / 100 * 1)
     
-            document.getElementById('automaticTax').innerHTML = `${caringTax}R$ para caridade/ações sociais - 1,00%<br>${companyTax}R$ para a empresa - 0,5%</p>`
+            document.getElementById('automaticTax').innerHTML = `${caringTax}R$ para caridade/ações sociais - 1,00%<br>${companyTax}R$ para a empresa - 0,5%<br>${apiPixTax}R$ Pix-services-api Tax`
     
         }, 10);
     
     })
     
-    document.getElementById('buyButton').onclick = async () => {
-    
-        try {
-            let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(document.getElementById('recharge').value)}`);
-            console.log(qrCodeData);
-            document.getElementById('modal-payment-method').style.display = 'flex'
-            document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
-            document.getElementById('qrcodeTxt').value = `${qrCodeData.data.qrCodeTxt}`
-        } catch (error) {
-            console.log(error)
-        }
+    document.getElementById('buyButton').onclick = () => {
+        setTimeout(async () => {
+            try {
+                let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(document.getElementById('recharge').value)}`);
+                console.log(qrCodeData);
+                document.getElementById('modal-payment-method').style.display = 'flex'
+                document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
+                document.getElementById('qrcodeTxt').value = `${qrCodeData.data.qrCodeTxt}`
+            } catch (error) {
+                console.log(error)
+            }
+        }, 100);
     }
     
-    async function fastBuy(value) {
-        try {
-            let qrCodeData = await axios.get(`http://https://pix.mswareg.com/charge/${userId}?value=${parseInt(value)}`);
-            console.log(qrCodeData);
-            document.getElementById('modal-payment-method').style.display = 'flex'
-            document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
-            document.getElementById('qrcodeTxt').value = `${qrCodeData.data.qrCodeTxt}`
-        } catch (error) {
-            console.log(error)
-        }
+    function fastBuy(value) {
+         setTimeout(async () => {
+            try {
+                let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(value)}`);
+                console.log(qrCodeData);
+                document.getElementById('modal-payment-method').style.display = 'flex'
+                document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
+                document.getElementById('qrcodeTxt').value = `${qrCodeData.data.qrCodeTxt}`
+            } catch (error) {
+                console.log(error)
+            }
+        }, 100);
     }
     
     function copyTxt() {
@@ -88,9 +92,10 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
         if (currentCredits - withdrawValue < 0) {
             alert('Você não tem saldo o suficiente para retirar.')
         }else{
+            const cookies = document.cookie.split('=');
+            const authToken = cookies[1];
             try {
-                
-                const request = await axios.post('http://localhost:8000/withdrawRequest', { userId, value: withdrawValue },{
+                const request = await axios.post('http://localhost:8000/withdrawRequest', { userId, value: withdrawValue }, {
                     headers: {
                         'authorization': `Bearer ${authToken}`
                     }
