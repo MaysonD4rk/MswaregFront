@@ -35,6 +35,7 @@ app.get('/home', async (req, res)=>{
 
     if (sess.userId == undefined) {
         res.redirect('/login')
+        return
     }
 
     axios({
@@ -166,6 +167,7 @@ app.get('/trend', async (req,res)=>{
     const sess = req.session;
     if (sess.userId == undefined) {
         res.redirect('/login')
+        return
     }
     axios({
         method: "get",
@@ -188,6 +190,7 @@ app.get('/writeIdea', async (req, res) => {
 
     if (sess.userId == undefined) {
         res.redirect('/login')
+        return
     }
 
     axios({
@@ -245,6 +248,7 @@ app.get('/sendMsg', async (req, res) => {
 
     if (sess.userId == undefined) {
         res.redirect('/login')
+        return
     }
     let msgs = await axios.get(`http://localhost:8000/listMsgs/${offset*15}`);
 
@@ -277,6 +281,7 @@ app.get('/profile/:username', async (req,res)=>{
     console.log("offset: "+offset)
     if (sess.userId == undefined) {
         res.redirect('/login')
+        return
     }
 
     try {
@@ -327,6 +332,7 @@ app.get('/accountSettings', (req, res) => {
     sess = req.session
     if (sess.userId == undefined) {
         res.redirect('/login')
+        return
     }
 
     axios({
@@ -362,6 +368,7 @@ app.get('/changePhoto', (req, res)=>{
 
     if (sess.userId == undefined) {
         res.redirect('/login')
+        return
     }
 
     axios({
@@ -385,6 +392,7 @@ app.get('/addPubImg/:pubIdea', (req, res) => {
     const pubIdeaId = req.params.pubIdea
     if (sess.userId == undefined) {
         res.redirect('/login')
+        return
     }
 
     axios({
@@ -409,6 +417,7 @@ app.get('/seusFeedbacks',(req, res)=>{
 
     if (sess.userId == undefined) {
         res.redirect('/login')
+        return
     }
 
     axios({
@@ -473,6 +482,7 @@ app.get('/search', async (req, res) => {
     sess = req.session
     if (sess.userId == undefined) {
         res.redirect('/login')
+        return
     }
 
     let offset = req.query.offset;
@@ -610,6 +620,7 @@ app.get('/wallet', (req,res)=>{
     sess = req.session;
     if (sess.userId == undefined) {
         res.redirect('/login')
+        return
     }
     axios({
         method: "get",
@@ -620,6 +631,10 @@ app.get('/wallet', (req,res)=>{
         userData: data.data[0]
     })
     })
+})
+
+app.get('/aboutUs', (req,res)=>{
+    res.render('aboutUs')
 })
 
 

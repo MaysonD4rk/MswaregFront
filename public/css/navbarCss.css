@@ -96,3 +96,11 @@ i {
 }
 
 /*  //////////////NAVBAR PART  */
+
+@media screen and (max-width: 375px) {
+    .navbar ul li {
+        margin-left: 15px;
+        margin-right: 15px;
+
+    }
+}
