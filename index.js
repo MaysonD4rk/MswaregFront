@@ -633,8 +633,12 @@ app.get('/wallet', (req,res)=>{
     })
 })
 
-app.get('/aboutUs', (req,res)=>{
-    res.render('aboutUs')
+app.get('/aboutUs', async (req,res)=>{
+    const donate = await axios.get('http://localhost:5353/donate');
+    res.render('aboutUs', {
+        qrCode: donate.data.imagem,
+        qrCodeTxt: donate.data.qrCodeTxt
+    })
 })
 
 

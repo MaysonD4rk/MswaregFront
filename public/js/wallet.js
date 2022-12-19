@@ -1,7 +1,6 @@
 const pixKey = document.getElementById('pixKey').value
 
 const currentCredits = document.getElementById('currentCredits').value
-
     
     document.getElementById('recharge').addEventListener('keydown', (event) => {
         if (event.key == '.' || event.key == ',' || event.key == '-') {
@@ -24,7 +23,7 @@ const currentCredits = document.getElementById('currentCredits').value
     document.getElementById('buyButton').onclick = () => {
         setTimeout(async () => {
             try {
-                let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(document.getElementById('recharge').value)}`);
+                let qrCodeData = await axios.get(`http://localhost:5353/charge/${userId}?value=${parseInt(document.getElementById('recharge').value)}`);
                 console.log(qrCodeData);
                 document.getElementById('modal-payment-method').style.display = 'flex'
                 document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
@@ -38,7 +37,7 @@ const currentCredits = document.getElementById('currentCredits').value
     function fastBuy(value) {
          setTimeout(async () => {
             try {
-                let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(value)}`);
+                let qrCodeData = await axios.get(`http://localhost:5353/charge/${userId}?value=${parseInt(value)}`);
                 console.log(qrCodeData);
                 document.getElementById('modal-payment-method').style.display = 'flex'
                 document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`

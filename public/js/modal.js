@@ -228,3 +228,26 @@ async function openModal(elementId, itemId, allowFeedback=true){
     };
     
 }
+
+
+async function openInfoModal(userId){
+    try {
+        const userInfo = await axios.get('http://localhost:8000/userHelpInfo/'+userId)
+        console.log(userInfo)
+        document.getElementById('user-info-container').innerHTML = 
+        `
+        <h2>informações do usuário: <i onclick="closeModal('user-info-modal')" class="fa-solid fa-xmark"></i></h2> <br>
+            <ul>
+                <li>Você colaborou com <span style="color: blue;">${userInfo.data.info.totalInvestiment}</span> </li><br>
+                <li>Ajudou em <span style="color: blue;">${userInfo.data.info.ideaHelped}</span> ideias  </li><br>
+                <li>Criou <span style="color: blue;">${userInfo.data.info.madeIdeas}</span> ideias: </li><br>
+                <li>Ajudou a salvar <span style="color: blue;">${parseInt(userInfo.data.info.totalInvestiment/10)}</span> entre pessoas e animais. <span style="font-size: 12px;">(aumentamos 1 a cada 10R$ destinados a caridade)</span></li><br>
+                <li>Suas ideias tem <span style="color: blue;">${userInfo.data.info.countIdeaLikes}</span> likes no total. </li><br>
+                <li style="background-color: rgb(112, 112, 112); color: white;">Você possui <span style="color: blue;">**</span> medalhas. <br>-- medalhas ainda não estão disponíveis.</li>
+            </ul><br><br>
+        `
+        document.getElementById('user-info-modal').style.display = 'flex';
+    } catch (error) {
+        console.log(error)
+    }
+}

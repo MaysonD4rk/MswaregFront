@@ -16,8 +16,26 @@
     <title>Mswareg - Seu perfil</title>
 </head>
 <body>
-
     <%- include('./partials/floatingMenu.ejs') %>
+
+
+    <!--Info modal-->
+    <div id="user-info-modal">
+        <div id="user-info-container">
+            <h2>informações do usuário: <i onclick="closeModal('user-info-modal')" class="fa-solid fa-xmark"></i></h2> <br>
+            <ul>
+                <li>Você colaborou com <span style="color: blue;">**</span> </li><br>
+                <li>Ajudou em <span style="color: blue;">**</span> ideias  </li><br>
+                <li>Criou <span style="color: blue;">**</span> ideias: </li><br>
+                <li>Ajudou a salvar <span style="color: blue;">**</span> entre pessoas e animais. <span style="font-size: 12px;">(aumentamos 1 a cada 10R$ destinados a caridade)</span></li><br>
+                <li>Suas ideias tem <span style="color: blue;">**</span> likes no total. </li><br>
+                <li style="background-color: rgb(112, 112, 112); color: white;">Você possui <span style="color: blue;">**</span> medalhas. <br>-- medalhas ainda não estão disponíveis.</li>
+            </ul><br><br>
+            <h2>Muito obrigado por tudo! :)</h2>
+        </div>
+    </div>
+
+
 
     <input id="username" type="hidden" value="<%= userProfile.users.username %>">
     <input type="hidden" id="userId" value="<%=id%>">
@@ -32,7 +50,7 @@
                 <%}%>
                     <div> EDIT </div>
                 </div>
-                <div><h3>@<%= userProfile.users.username %></h3></div>
+                <div><h3>@<%= userProfile.users.username %> - <i onclick="openInfoModal('<%=userProfile.users.id%>')" style="color: rgb(175, 175, 175);" class="fa-solid fa-circle-info"></i></h3></div>
                 <div><%= userProfile.userInfo.organization %> ¨ <%= userProfile.userInfo.organizationRole %> <% if(userData.username == userProfile.users.username){ %><i class="fa-solid fa-pen-to-square" onclick="openEditModal()"></i><%}%></div>
                 
                 <% if(userData.username != userProfile.users.username){ %>

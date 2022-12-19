@@ -14,6 +14,16 @@
 <body>
     <%- include('./partials/header.ejs') %>
     
+    <div id="qrCodeDonate">
+        <p>pode ajudar os projetos sociais com 10 R$?</p>
+        <img src="<%=qrCode%>" alt="">
+            <input type="text" id="qrcodeTxt" value="<%=qrCodeTxt%>">    
+        <button class="btn-to-copy green-button" data-clipboard-target="#qrcodeTxt">
+            <p>Copiar código pix</p>
+        </button>
+        <a href="/trend" style="font-size: 18px;text-decoration: underline;">Eu tenho uma conta e quero que contabilize nas minhas informações de doações.</a>
+    </div>
+    <br><br><br>
     <div id="content">
         <div id="partnerships">
             <h1>Ongs parceiros</h1>
@@ -23,7 +33,7 @@
                 <div class="partner-info">
                     <h3>Projeto Patinha Feliz</h3>
                     <a href="#" style="color: red; font-size: 24px;">Instagram</a><br>
-                    <a href="#" class="donation-link">Faça uma doação</a>
+                    <a href="#" class="donate-link">Faça uma doação</a>
                     <button class="partner-info-btn">informações do projeto</button>
                 </div>
 
@@ -35,7 +45,7 @@
                 <div class="partner-info">
                     <h3>Ajuda beneficiente para moradores de rua</h3>
                     <a href="#" style="color: red; font-size: 24px;">Instagram</a><br>
-                    <a href="#" class="donation-link">Faça uma doação</a>
+                    <a href="#" class="donate-link">Faça uma doação</a>
                     <button class="partner-info-btn">informações do projeto</button>
                 </div>
             </div>
@@ -45,7 +55,7 @@
                 <div class="partner-info">
                     <h3>Ong que beneficia meio ambiente</h3>
                     <a href="#" style="color: red; font-size: 24px;">Instagram</a><br>
-                    <a href="#" class="donation-link">Faça uma doação</a>
+                    <a href="#" class="donate-link">Faça uma doação</a>
                     <button class="partner-info-btn">informações do projeto</button>
                 </div>
             </div>
@@ -55,7 +65,7 @@
                 <div class="partner-info">
                     <h3>Projeto Crianças</h3>
                     <a href="#" style="color: red; font-size: 24px;">Instagram</a><br>
-                    <a href="#" class="donation-link">Faça uma doação</a>
+                    <a href="#" class="donate-link">Faça uma doação</a>
                     <button class="partner-info-btn">informações do projeto</button>
                 </div>
                 
@@ -85,4 +95,6 @@
     document.getElementById('aboutUs').classList.add('active')
 </script>
 <script src="/js/getNavDown.js"></script>
+<script src="/js/clipboard.js-master/dist/clipboard.min.js"></script>
+<script src="/js/clipboard.js"></script>
 </html>

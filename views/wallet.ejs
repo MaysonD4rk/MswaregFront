@@ -25,8 +25,11 @@
             <div id="qrcodeArea">
                 
             </div>
-            <input type="text" id="qrcodeTxt" disabled>
-            <button onclick="copyTxt()" class="orange-button"> COPY TO CLIPBOARD </button>
+            <input type="text" id="qrcodeTxt">
+            
+            <button class="btn-to-copy" data-clipboard-target="#qrcodeTxt">
+                <p>Copiar</p>
+            </button>
         </div>
     </div>
 
@@ -87,7 +90,9 @@
 <script src="/js/menuSettingsButton.js">
 </script>
 
+<script src="/js/clipboard.js-master/dist/clipboard.min.js"></script>
 <script src="/js/wallet.js"></script>
+<script src="/js/clipboard.js"></script>
 
 <script>
     createMenuSettingsButton(20,390)

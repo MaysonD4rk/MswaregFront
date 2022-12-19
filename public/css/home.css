@@ -364,7 +364,8 @@
 .card-modal-idea {
     word-break: break-word;
     font-size: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
     padding: 30px;
     flex-grow: 6;
 }

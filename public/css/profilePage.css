@@ -127,3 +127,30 @@
 #editModal{
     display: none;
 }
+
+
+#user-info-modal{
+    z-index: 999999999;
+    display: none;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    background-color: rgba(201, 201, 201, 0.3);
+    align-items: center;
+    justify-content: center;
+}
+#user-info-container{
+    height: 400px;
+    width: 350px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+#user-info-container ul {
+    font-size: 18px;
+}

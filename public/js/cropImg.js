@@ -32,6 +32,17 @@ var imgRestored = {
     height: 0,
 }
 
+let zoomMax;
+let zoomMin;
+
+if (currentFormat == 'idea') {
+    zoomMax = 7;
+    zoomMin = -2
+}else{
+    zoomMax = 3;
+    zoomMin = -1
+}
+
 
 document.getElementById('buttonPhotoFile').onclick = () => {
     photoFile.click();
@@ -46,7 +57,7 @@ window.addEventListener('DOMContentLoaded', () => {
         console.log(photoFile.files[0])
 
         Object.keys(photoFile.files[0]).forEach(eventname => {
-            console.log(eventname)
+            console.log('fodase')
         })
 
 
@@ -73,7 +84,6 @@ let actualX, actualY, croppedWidth, croppedHeight;
 
 
 const events = {
-    mouseover() { console.log(currentFormat) },
     mousedown() {
 
         if (!cropped) {
@@ -90,7 +100,6 @@ const events = {
                 croppedHeight = 195
             }
 
-            console.log(`actualX: ${actualX}, actualY: ${actualY}, croppedWidth: ${croppedWidth}, croppedHeight${croppedHeight}`)
 
 
             flagMove = true;
@@ -215,6 +224,9 @@ let zoomGave = 0;
 function onLoadImage(event, initialW = 380) {
     const { width, height } = img
 
+    console.log(initialW)
+    console.log(zoomGave)
+
     imgRestored.height = img.height;
     imgRestored.width = img.width;
 
@@ -222,21 +234,15 @@ function onLoadImage(event, initialW = 380) {
 
 
     if (currentFormat == 'idea') {
-        initialW = 600 + (50 * zoomGave)
+        initialW = initialW + ((50*zoomGave)*0.2);
     } else {
-        initialW = initialW + (50 * zoomGave)
+        initialW = initialW;
     }
 
 
 
-    console.log(event)
-    console.log(initialW)
-
     preCanvasW = width;
     preCanvasH = height;
-
-    console.log(preCanvasW, preCanvasH)
-
 
 
     // limpar o contexto
@@ -245,7 +251,7 @@ function onLoadImage(event, initialW = 380) {
     // desenhar a imagem no contexto
     //photoPreview.src = canvas.toDataURL()
 
-    if ((preCanvasW / preCanvasH) >= 1.62337662 && (preCanvasW / preCanvasH) <= 1.95) {
+    //if ((preCanvasW / preCanvasH) >= 1.62337662 && (preCanvasW / preCanvasH) <= 1.95) {
         console.log('16:9')
         canvas.width = initialW;
         canvas.height = initialW / (preCanvasW / preCanvasH)
@@ -259,65 +265,64 @@ function onLoadImage(event, initialW = 380) {
         photoPreview.src = canvas.toDataURL()
 
 
-    } else if ((preCanvasW / preCanvasH) >= 0.5624297 && (preCanvasW / preCanvasH) <= 0.7) {
-        console.log('9:16')
-        canvas.width = initialW;
-        canvas.height = (initialW + (initialW * (preCanvasW / preCanvasH)))
-        ctx.drawImage(img, 0, 0, initialW, (initialW + (initialW * (preCanvasW / preCanvasH))))
+    // } else if ((preCanvasW / preCanvasH) >= 0.5624297 && (preCanvasW / preCanvasH) <= 0.7) {
+    //     console.log('9:16')
+    //     canvas.width = initialW;
+    //     canvas.height = (initialW + (initialW * (preCanvasW / preCanvasH)))
+    //     ctx.drawImage(img, 0, 0, initialW, (initialW + (initialW * (preCanvasW / preCanvasH))))
 
-        console.log(canvas.height)
-        photoPreview.height = canvas.height
-        photoPreview.width = canvas.width
-        img.height = canvas.height
-        img.width = canvas.width
-        cropImg.style.height = canvas.height + "px"
-        cropImg.style.width = canvas.width + "px"
+    //     console.log(canvas.height)
+    //     photoPreview.height = canvas.height
+    //     photoPreview.width = canvas.width
+    //     img.height = canvas.height
+    //     img.width = canvas.width
+    //     cropImg.style.height = canvas.height + "px"
+    //     cropImg.style.width = canvas.width + "px"
 
-        photoPreview.src = canvas.toDataURL()
+    //     photoPreview.src = canvas.toDataURL()
 
-    } else if ((preCanvasW / preCanvasH) >= 1.2 && (preCanvasW / preCanvasH) <= 1.5) {
-        console.log('4:3')
-        canvas.width = initialW;
-        canvas.height = initialW / (preCanvasW / preCanvasH)
-        ctx.drawImage(img, 0, 0, initialW, (initialW / (preCanvasW / preCanvasH)))
-        console.log(canvas.height)
-        photoPreview.height = canvas.height
-        photoPreview.width = canvas.width
-        img.height = canvas.height
-        img.width = canvas.width
-        cropImg.style.height = canvas.height + "px"
-        cropImg.style.width = canvas.width + "px"
+    // } else if ((preCanvasW / preCanvasH) >= 1.2 && (preCanvasW / preCanvasH) <= 1.5) {
+    //     console.log('4:3')
+    //     canvas.width = initialW;
+    //     canvas.height = initialW / (preCanvasW / preCanvasH)
+    //     ctx.drawImage(img, 0, 0, initialW, (initialW / (preCanvasW / preCanvasH)))
+    //     console.log(canvas.height)
+    //     photoPreview.height = canvas.height
+    //     photoPreview.width = canvas.width
+    //     img.height = canvas.height
+    //     img.width = canvas.width
+    //     cropImg.style.height = canvas.height + "px"
+    //     cropImg.style.width = canvas.width + "px"
 
-        photoPreview.src = canvas.toDataURL()
+    //     photoPreview.src = canvas.toDataURL()
 
-    } else if ((preCanvasW / preCanvasH) >= 2.3 && (preCanvasW / preCanvasH) <= 3) {
-        console.log('21:9')
-        canvas.width = initialW;
-        canvas.height = initialW / (preCanvasW / preCanvasH)
-        console.log(canvas.height)
-        ctx.drawImage(img, 0, 0, initialW, (initialW / (preCanvasW / preCanvasH)))
+    // } else if ((preCanvasW / preCanvasH) >= 2.3 && (preCanvasW / preCanvasH) <= 3) {
+    //     console.log('21:9')
+    //     canvas.width = initialW;
+    //     canvas.height = initialW / (preCanvasW / preCanvasH)
+    //     console.log(canvas.height)
+    //     ctx.drawImage(img, 0, 0, initialW, (initialW / (preCanvasW / preCanvasH)))
 
-        photoPreview.height = canvas.height
-        photoPreview.width = canvas.width
-        img.height = canvas.height
-        img.width = canvas.width
+    //     photoPreview.height = canvas.height
+    //     photoPreview.width = canvas.width
+    //     img.height = canvas.height
+    //     img.width = canvas.width
 
-        cropImg.style.height = canvas.height + "px"
-        cropImg.style.width = canvas.width + "px"
+    //     cropImg.style.height = canvas.height + "px"
+    //     cropImg.style.width = canvas.width + "px"
 
-        photoPreview.src = canvas.toDataURL()
+    //     photoPreview.src = canvas.toDataURL()
 
-    } else {
-        console.log('n caiu em ngm');
-        console.log((preCanvasW / preCanvasH))
-    }
+    // } else {
+    //     console.log('n caiu em ngm');
+    //     console.log((preCanvasW / preCanvasH))
+    // }
 
     //photoPreview.height = canvas.height
     //photoPreview.width = canvas.width
     //photoPreview.src = canvas.toDataURL()
     photoPreview.draggable = false
-    console.log(photoPreview)
-    console.log(canvas)
+    
 
 
 
@@ -408,7 +413,7 @@ console.log(document.getElementById('topCircle').width)
 
 
 function zoom(action) {
-
+    console.log(action)
 
     if (action === "+") {
 
@@ -420,9 +425,14 @@ function zoom(action) {
         // photoPreview.height = ((img.width + 50) / ((img.width + 50) / (img.height + 50)))
         // cropImg.style.width = (img.width + 50)+"px"
         // cropImg.style.height = ((img.width + 50) / ((img.width + 50) / (img.height + 50)))+"px"
-        ++zoomGave
+        if (zoomGave < zoomMax) {
+            ++zoomGave
+            console.log(zoomGave)
+        } else {
+            return
+        }
         onLoadImage(null, (img.width + 50))
-    } else {
+    } else if (action === "-") {
         // img.width = (img.width - 50)
         // img.height = ((img.width - 50) / ((img.width - 50) / (img.height - 50)))
         // canvas.width = (img.width - 50)
@@ -431,13 +441,13 @@ function zoom(action) {
         // photoPreview.height = ((img.width - 50) / ((img.width - 50) / (img.height - 50)))
         // cropImg.style.width = (img.width - 50) + "px"
         // cropImg.style.height = ((img.width - 50) / ((img.width - 50) / (img.height - 50))) + "px"
-        if (zoomGave > 0) {
+        
+        if (zoomGave >= zoomMin) {
             --zoomGave
             console.log(zoomGave)
         } else {
             return
         }
-
         onLoadImage(null, (img.width - 50))
     }
 
@@ -473,7 +483,6 @@ async function confirmCropFunction(action) {
 
 
         img.onload = onLoadImage
-        console.log(imgRestored)
 
     } else {
 
