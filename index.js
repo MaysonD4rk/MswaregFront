@@ -634,7 +634,7 @@ app.get('/wallet', (req,res)=>{
 })
 
 app.get('/aboutUs', async (req,res)=>{
-    const donate = await axios.get('http://localhost:5353/donate');
+    const donate = await axios.get('https://pix.mswareg.com/donate');
     res.render('aboutUs', {
         qrCode: donate.data.imagem,
         qrCodeTxt: donate.data.qrCodeTxt
