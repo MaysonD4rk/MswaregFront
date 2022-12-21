@@ -372,7 +372,7 @@
             const cookies = document.cookie.split('=');
             const authToken = cookies[1];
             try {
-                var pub = await axios.post('http://localhost:8000/pub',{
+                var pub = await axios.post('https://server.mswareg.com/pub',{
                     title: inputTitle.value, 
                     ideaSummary: inputSummary.value,
                     mainIdea: ideaInfo.content, 
@@ -386,7 +386,7 @@
                 'authorization': `Bearer ${authToken}`
             }
         })
-                window.location.href = `http://localhost:8080/addPubImg/${pub.data[0]}`;
+                window.location.href = `https://mswareg.mswareg.com/addPubImg/${pub.data[0]}`;
             } catch (error) {
                 console.log(error)
             }
@@ -404,7 +404,7 @@ async function confirmEditIdea() {
         const cookies = document.cookie.split('=');
         const authToken = cookies[1];
         try {
-            var pub = await axios.put('http://localhost:8000/pub', {
+            var pub = await axios.put('https://server.mswareg.com/pub', {
                 pubId,
                 title: inputTitle.value,
                 ideaSummary: inputSummary.value,
@@ -419,7 +419,7 @@ async function confirmEditIdea() {
                     'authorization': `Bearer ${authToken}`
                 }
             })
-            window.location.href = `http://localhost:8080/addPubImg/${pubId}`;
+            window.location.href = `https://mswareg.mswareg.com/addPubImg/${pubId}`;
         } catch (error) {
             console.log(error)
         }
