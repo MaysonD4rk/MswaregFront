@@ -15,13 +15,15 @@
     <%- include('./partials/header.ejs') %>
     
     <div id="qrCodeDonate">
-        <p>pode ajudar os projetos sociais com 10 R$?</p>
-        <img src="<%=qrCode%>" alt="">
-            <input type="text" id="qrcodeTxt" value="<%=qrCodeTxt%>">    
-        <button class="btn-to-copy green-button" data-clipboard-target="#qrcodeTxt">
-            <p>Copiar código pix</p>
-        </button>
-        <a href="/trend" style="font-size: 18px;text-decoration: underline;">Eu tenho uma conta e quero que contabilize nas minhas informações de doações.</a>
+        <div id="qrCodeContainer">
+            <p>pode ajudar os projetos sociais com 10 R$?</p>
+            <img src="<%=qrCode%>" alt="">
+                <input type="text" id="qrcodeTxt" value="<%=qrCodeTxt%>">    
+            <button class="btn-to-copy green-button" data-clipboard-target="#qrcodeTxt">
+                <p>Copiar código pix</p>
+            </button>
+            <a href="/trend" style="font-size: 18px;text-decoration: underline;">Eu tenho uma conta e quero que contabilize nas minhas informações de doações.</a>
+        </div>
     </div>
     <br><br><br>
     <div id="content">
