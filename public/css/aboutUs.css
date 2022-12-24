@@ -43,6 +43,8 @@
 
 #qrCodeDonate{
     width: 100%;
+}
+#qrCodeContainer{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -50,9 +52,6 @@
     font-size: 24px;
     text-align: center;
     border-radius: 7px;
-    
-}
-#qrCodeContainer{
     background: linear-gradient(145deg, #f0f0f0, #cacaca);
     box-shadow: 10px 10px 37px #7b7b7b,
         -10px -10px 37px #ffffff;
