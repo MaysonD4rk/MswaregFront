@@ -59,6 +59,16 @@
     margin: 30px;
 }
 
+#qrCodeTxt{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: none;
+}
+.btn-to-copy{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /*//////mswareg////////*/
 
 #mswareg{
