@@ -95,6 +95,11 @@ i {
     transform: translateY(35px) !important;
 }
 
+#footer{
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+}
 /*  //////////////NAVBAR PART  */
 
 @media screen and (max-width: 375px) {
