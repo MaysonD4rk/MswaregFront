@@ -126,6 +126,9 @@ footer {
     align-items: center;
     background-color: var(--navlinks);
     color: white;
+
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .buttons-left-right {
