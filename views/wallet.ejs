@@ -34,9 +34,10 @@
     </div>
 
     <div class="container">
-        <h1>Recarregar dinheiro</h1>
         <p>Ao clicar em algum botão de compra, espere até 5 segundos para o modal de pagamento aparecer, ou tente novamente!</p>
+        <br><br>
         <div class="WalletTable">
+        <h1>Recarregar dinheiro</h1>
             <ul>
                 <br><br><br>
                 <li>
@@ -71,15 +72,16 @@
                 </li>
             </ul>
         </div>
-        <h1>Retirar dinheiro</h1>
+        <br><br><br>
         <div class="WalletTable">
+            <h1>Retirar dinheiro</h1>
             <div class="withdrawClass">
                 você tem: <%= userData.credits %>R$ na carteira
                 <input id="withdraw" type="number" placeholder="Quanto deseja retirar?">
                 <button id="withdrawBtn" class="green-button">Retirar</button>
                 <p style="font-size: 20px;">Chave pix cadastrada: <span id="pixKeyText" style="background-color: black; user-select: none;"><%=userData.pixKey%></span> <i onclick="showPixKey()" class="fa-solid fa-eye-slash"></i> </p>
             </div>
-        </div>
+        </div> <br><br><br>
         <p>Sobre Retirada: Demora de 10min-2h para você receber o dinheiro em sua carteira.</p>
         <p>Você só pode solicitar 1 retirada por vez. Espere receber o dinheiro em sua carteira caso queira retirar novamente.</p>
     </div>
