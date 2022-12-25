@@ -366,7 +366,7 @@
     font-size: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
     padding: 30px;
     flex-grow: 6;
 }
