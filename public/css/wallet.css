@@ -34,6 +34,7 @@ input{
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    padding: 15px;
 }
 
 #modal-payment-method{
