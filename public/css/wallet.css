@@ -1,5 +1,8 @@
 .WalletTable{
-    background-color: rgb(227, 227, 227);
+    border-radius: 50px;
+    background: #e0e0e0;
+    box-shadow:  35px 35px 70px #bebebe,
+             -35px -35px 70px #ffffff;  
     max-height: 530px;
     width: 350px;
     font-size: 28px;
