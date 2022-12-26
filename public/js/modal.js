@@ -8,6 +8,7 @@ let reader = new FileReader();
 function closeModal(id){
     document.getElementById(id).style.display = 'none';
     document.getElementById('investors-table').style.display = 'none';
+    document.getElementsByClassName('card-modal-images').innerHTML = ''
     donateTable = false;
 }
 
