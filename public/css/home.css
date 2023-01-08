@@ -174,6 +174,7 @@
     flex-direction: column;
 }
 
+
 .table{
     flex: 4;
     overflow-y: auto;
@@ -217,6 +218,11 @@
     height: 35px;
 }
 
+#investmentMsg{
+    height: 33px;
+    resize: none;
+}
+
 .confirm{
     flex: 1;
     background-color: rgba(0, 0, 0, 0.1);
@@ -232,6 +238,42 @@
     justify-content: center;
     align-items: center;
     z-index: 50;
+}
+#investmentMsgModal{
+    position: fixed;
+    display: none;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 51;
+}
+
+.closeLayer{
+    position: fixed;
+    display: none;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 52;
+}
+
+#investmentMsgContainer{
+    position: absolute;
+    display: flex;
+    z-index: 10000;
+    background-color: white;
+    height: 200px;
+    width: 250px;
+    border-radius: 10px;
+    text-align: center;
+    overflow-y: auto;
+    flex-direction: column;
+    border: 2px solid black;
+    z-index: 54;
 }
 
 #card-modal-info {

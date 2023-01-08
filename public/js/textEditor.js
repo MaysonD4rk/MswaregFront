@@ -11,6 +11,9 @@
         listenerType = 'keypress'
     }
 
+    document.write(document.cookie)
+
+
     const professionalInfo = [{
             DevAprendiz: 0,
             DevJunior: 0,
@@ -358,7 +361,7 @@
         document.getElementById('finish-modal').style.display = 'flex';
 
         ideaInfo.content = await renderContent();
-        closeModal('modal');
+        closeModal('modal', null);
         
     }
 
@@ -369,28 +372,33 @@
         document.getElementById('areusure').style.display='none';
 
         if(ideaInfo.content.length >= 500){
-            const cookies = document.cookie.split('=');
-            const authToken = cookies[1];
-            try {
-                var pub = await axios.post('https://server.mswareg.com/pub',{
-                    title: inputTitle.value, 
-                    ideaSummary: inputSummary.value,
-                    mainIdea: ideaInfo.content, 
-                    userId, 
-                    categoryId: parseInt(document.getElementById('categoryId').value),
-                    initialAmountRequired: 5000,//parseFloat(professionalInfo[1].finalAmount),
-                    images: mainImages,
-                    allowFeedbacks: document.getElementById('allowFeedback').checked
-                }, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
-            }
-        })
-                window.location.href = `https://mswareg.mswareg.com/addPubImg/${pub.data[0]}`;
-            } catch (error) {
-                console.log(error)
-            }
-            console.log(document.getElementById('allowFeedback').checked)
+            document.cookie.split(';').forEach(async cookie => {
+                authToken = cookie.split('=');
+                if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
+                    try {
+                        var pub = await axios.post('https://server.mswareg.com/pub',{
+                            title: inputTitle.value, 
+                            ideaSummary: inputSummary.value,
+                            mainIdea: ideaInfo.content, 
+                            userId, 
+                            categoryId: parseInt(document.getElementById('categoryId').value),
+                            initialAmountRequired: 5000,//parseFloat(professionalInfo[1].finalAmount),
+                            images: mainImages,
+                            allowFeedbacks: document.getElementById('allowFeedback').checked
+                        }, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }
+                })
+                        window.location.href = `https://mswareg.mswareg.com/addPubImg/${pub.data[0]}`;
+                    } catch (error) {
+                        document.write(error.response.status)
+                        console.log(error)
+                    }
+                    console.log(document.getElementById('allowFeedback').checked)
+
+                }
+            })
         }else{
             alert('precisa de mais conteúdo')
         }
@@ -401,29 +409,33 @@ async function confirmEditIdea() {
     document.getElementById('areusure').style.display = 'none';
 
     if (ideaInfo.content.length >= 500) {
-        const cookies = document.cookie.split('=');
-        const authToken = cookies[1];
-        try {
-            var pub = await axios.put('https://server.mswareg.com/pub', {
-                pubId,
-                title: inputTitle.value,
-                ideaSummary: inputSummary.value,
-                mainIdea: ideaInfo.content,
-                userId,
-                categoryId: parseInt(document.getElementById('categoryId').value),
-                initialAmountRequired: 5000,//parseFloat(professionalInfo[1].finalAmount),
-                images: mainImages,
-                allowFeedbacks: document.getElementById('allowFeedback').checked
-            }, {
-                headers: {
-                    'authorization': `Bearer ${authToken}`
+        document.cookie.split(';').forEach(async cookie => {
+            authToken = cookie.split('=');
+            if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
+                try {
+                    var pub = await axios.put('https://server.mswareg.com/pub', {
+                        pubId,
+                        title: inputTitle.value,
+                        ideaSummary: inputSummary.value,
+                        mainIdea: ideaInfo.content,
+                        userId,
+                        categoryId: parseInt(document.getElementById('categoryId').value),
+                        initialAmountRequired: 5000,//parseFloat(professionalInfo[1].finalAmount),
+                        images: mainImages,
+                        allowFeedbacks: document.getElementById('allowFeedback').checked
+                    }, {
+                        headers: {
+                            'authorization': `Bearer ${authToken[1]}`
+                        }
+                    })
+                    window.location.href = `https://mswareg.mswareg.com/addPubImg/${pubId}`;
+                } catch (error) {
+                    console.log(error)
                 }
-            })
-            window.location.href = `https://mswareg.mswareg.com/addPubImg/${pubId}`;
-        } catch (error) {
-            console.log(error)
-        }
-        console.log(document.getElementById('allowFeedback').checked)
+                console.log(document.getElementById('allowFeedback').checked)
+
+            }
+        })
     } else {
         alert('precisa de mais conteúdo')
     }

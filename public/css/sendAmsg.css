@@ -84,7 +84,7 @@ textarea{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-size: 100px;
+    background-size: 75px;
 }
 .ask-item-info{
     width: 100%;

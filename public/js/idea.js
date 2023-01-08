@@ -31,56 +31,73 @@
 async function likePub(pubId) {
     pubId = parseInt(pubId)
 
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-    try {
-        console.log(`tentando`)
-        var status = await axios.put('https://server.mswareg.com/likePub', { pubId, userId }, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
+            try {
+                console.log(`tentando`)
+                var status = await axios.put('https://server.mswareg.com/likePub', { pubId, userId }, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }
+                })
+                console.log(status)
+                if (status.data.msg == 'liked') {
+                    document.getElementById(pubId).classList.add('liked');
+                } else if (status.data.msg == 'unliked') {
+                    document.getElementById(pubId).classList.remove('liked');
+                } else {
+                    if (!!status.data.tryLike.status) {
+                        document.getElementById(pubId).classList.add('liked');
+                    } else {
+                        document.getElementById(pubId).classList.remove('liked');
+                    }
+                }
+
+            } catch (error) {
+                console.log(error)
             }
-        })
-        console.log(status)
-        if (status.data.msg == 'liked') {
-            document.getElementById(pubId).classList.add('liked');
-        } else if (status.data.msg == 'unliked') {
-            document.getElementById(pubId).classList.remove('liked');
-        }else{
-            if (!!status.data.tryLike.status) {
-                document.getElementById(pubId).classList.add('liked');
-            } else {
-                document.getElementById(pubId).classList.remove('liked');
-            }
+
+
         }
+    })
 
-    } catch (error) {
-        console.log(error)
-    }
+    
 }
 
 async function favoritePub(pubId) {
     pubId = parseInt(pubId)
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
+    
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-    try {
-        console.log(`tentando`)
-        let status = await axios.put('https://server.mswareg.com/favoritePub', { userId, pubId }, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
+            try {
+                console.log(`tentando`)
+                let status = await axios.put('https://server.mswareg.com/favoritePub', { userId, pubId }, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }
+                })
+                console.log(status)
+                if (status.data.msg == 'favorited') {
+                    document.getElementById(pubId).classList.add('favorited');
+                    document.getElementById(pubId).classList.add('liked');
+
+                } else {
+                    document.getElementById(pubId).classList.remove('favorited');
+                    document.getElementById(pubId).classList.add('liked');
+
+                }
+        
+            } catch (error) {
+                console.log(error)
             }
-        })
-        console.log(status)
-        if (status.data.msg == 'favorited') {
-            document.getElementById(pubId).classList.add('favorited');
-        } else {
-            document.getElementById(pubId).classList.remove('favorited');
-        }
 
-    } catch (error) {
-        console.log(error)
-    }
+        }
+    })
+
 }
 
 

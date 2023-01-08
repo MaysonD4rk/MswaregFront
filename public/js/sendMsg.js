@@ -138,37 +138,42 @@ function searchMsg() {
 
 
 async function writeMsg(senter) {
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
     let recipient = document.getElementById('textTo').value;
     senter = parseInt(senter);
     console.log(senter)
     let msg = document.getElementById('msg').value
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-    try {
-        let tryWrite = await axios.post('https://server.mswareg.com/writeMsg', { userId: senter, recipientName: recipient, msg }, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
+            try {
+                let tryWrite = await axios.post('https://server.mswareg.com/writeMsg', { userId: senter, recipientName: recipient, msg }, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }
+                })
+                document.getElementsByClassName('statusModal')[0].style.display = 'flex';
+                document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.className = 'success';
+                document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.innerHTML = tryWrite.data.msg;
+                console.log('deu certo')
+        
+                setTimeout(() => {
+                    document.getElementsByClassName('statusModal')[0].style.display = 'none';
+        
+                }, 500);
+            } catch (error) {
+                document.getElementsByClassName('statusModal')[0].style.display = 'flex';
+                document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.className = 'failed';
+                document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.innerHTML = 'usuário não encontrado, tome cuidado!';
+                setTimeout(() => {
+                    document.getElementsByClassName('statusModal')[0].style.display = 'none';
+                    console.log('deu erro')
+                }, 500);
             }
-        })
-        document.getElementsByClassName('statusModal')[0].style.display = 'flex';
-        document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.className = 'success';
-        document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.innerHTML = tryWrite.data.msg;
-        console.log('deu certo')
 
-        setTimeout(() => {
-            document.getElementsByClassName('statusModal')[0].style.display = 'none';
+        }
+    })
 
-        }, 500);
-    } catch (error) {
-        document.getElementsByClassName('statusModal')[0].style.display = 'flex';
-        document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.className = 'failed';
-        document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.innerHTML = 'usuário não encontrado, tome cuidado!';
-        setTimeout(() => {
-            document.getElementsByClassName('statusModal')[0].style.display = 'none';
-            console.log('deu erro')
-        }, 500);
-    }
 
 }
 

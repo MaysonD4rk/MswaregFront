@@ -5,26 +5,31 @@ const currentUsername = usernameInput
 const currentUser = document.getElementById('currentUser').value
 const currentPage = 'profilePage'
 async function editAboutMe(id){
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-    var editAboutMe = await axios.put('https://server.mswareg.com/updateUserInfo', {
-        userId: parseInt(id),
-        aboutMe: document.getElementById('aboutMeTextArea').value
-    }, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
+            var editAboutMe = await axios.put('https://server.mswareg.com/updateUserInfo', {
+                userId: parseInt(id),
+                aboutMe: document.getElementById('aboutMeTextArea').value
+            }, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }
+                })
+        
+        
+            if (editAboutMe.status == 200) {
+                statusModal('success', editAboutMe.data.msg)
+                document.getElementsByClassName('aboutMeMsg')[0].innerHTML = '"' + document.getElementById('aboutMeTextArea').value+'"';
+            }else{
+                statusModal('failed', editAboutMe.data.msg)
             }
-        })
+            openEditModal()
 
+        }
+    })
 
-    if (editAboutMe.status == 200) {
-        statusModal('success', editAboutMe.data.msg)
-        document.getElementsByClassName('aboutMeMsg')[0].innerHTML = '"' + document.getElementById('aboutMeTextArea').value+'"';
-    }else{
-        statusModal('failed', editAboutMe.data.msg)
-    }
-    openEditModal()
 
 }
 

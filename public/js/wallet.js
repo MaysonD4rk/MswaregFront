@@ -21,11 +21,13 @@ const currentCredits = document.getElementById('currentCredits').value
     })
     
     document.getElementById('buyButton').onclick = () => {
+        document.getElementById('waitpls').innerHTML = 'qrcode está sendo gerado, por favor espere!'
+        document.getElementById('modal-payment-method').style.display = 'flex'
         setTimeout(async () => {
             try {
-                let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(document.getElementById('recharge').value)}`);
+                let qrCodeData = await axios.get(`http://192.168.0.186:5353/charge/${userId}?value=${parseInt(document.getElementById('recharge').value)}`);
                 console.log(qrCodeData);
-                document.getElementById('modal-payment-method').style.display = 'flex'
+        document.getElementById('waitpls').innerHTML = ''
                 document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
                 document.getElementById('qrcodeTxt').value = `${qrCodeData.data.qrCodeTxt}`
             } catch (error) {
@@ -35,11 +37,13 @@ const currentCredits = document.getElementById('currentCredits').value
     }
     
     function fastBuy(value) {
+        document.getElementById('modal-payment-method').style.display = 'flex'
+        document.getElementById('waitpls').innerHTML = 'qrcode está sendo gerado, por favor espere!'
          setTimeout(async () => {
             try {
-                let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(value)}`);
+                let qrCodeData = await axios.get(`http://192.168.0.186:5353/charge/${userId}?value=${parseInt(value)}`);
                 console.log(qrCodeData);
-                document.getElementById('modal-payment-method').style.display = 'flex'
+                document.getElementById('waitpls').innerHTML = ''
                 document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
                 document.getElementById('qrcodeTxt').value = `${qrCodeData.data.qrCodeTxt}`
             } catch (error) {
@@ -81,8 +85,7 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
         }
         
         console.log(currentCredits - withdrawValue)
-        const cookies = document.cookie.split('=');
-        const authToken = cookies[1];
+        
         if (currentCredits <= 0 || withdrawValue <= 0) {
             alert('você não possui saldo em sua conta ou o valor é invalido para a retirada.');
             return;
@@ -91,25 +94,30 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
         if (currentCredits - withdrawValue < 0) {
             alert('Você não tem saldo o suficiente para retirar.')
         }else{
-            const cookies = document.cookie.split('=');
-            const authToken = cookies[1];
-            try {
-                const request = await axios.post('https://server.mswareg.com/withdrawRequest', { userId, value: withdrawValue }, {
-                    headers: {
-                        'authorization': `Bearer ${authToken}`
+            document.cookie.split(';').forEach(async cookie => {
+                authToken = cookie.split('=');
+                if (authToken[0] == 'authToken') {
+                    try {
+                        const request = await axios.post('https://server.mswareg.com/withdrawRequest', { userId, value: withdrawValue }, {
+                            headers: {
+                                'authorization': `Bearer ${authToken[1]}`
+                            }
+                        })
+                        console.log(request)
+                        alert('pedido de retirada realizado.')
+                    } catch (error) {
+
+                        if (error.response.data.status == 429) {
+                            alert(error.response.data.msg)
+                        } else {
+                            alert('Algo não ocorreu como esperado. Tente novamente ou mais tarde!')
+                        }
+
                     }
-                })
-                console.log(request)
-                alert('pedido de retirada realizado.')
-            } catch (error) {
-                
-                if(error.response.data.status == 429){
-                    alert(error.response.data.msg)
-                }else{
-                    alert('Algo não ocorreu como esperado. Tente novamente ou mais tarde!')
                 }
-                
-            }
+            })
+
+            
         }
     }
 

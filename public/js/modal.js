@@ -4,15 +4,24 @@ var currentProject = 0;
 const userId = parseInt(document.getElementById('userId').value);
 let reader = new FileReader();
 
+function closeModal(id, closeLayer=[0,1]){
+    if (closeLayer != null) {
+        
+    if (!!document.getElementsByClassName('closeLayer')) {
+        closeLayer.forEach(i => {
+            document.getElementsByClassName('closeLayer')[i].style.display = 'none'
+        })
+    }
+    }
+    
 
-function closeModal(id){
     document.getElementById(id).style.display = 'none';
-    document.getElementById('investors-table').style.display = 'none';
     document.getElementsByClassName('card-modal-images')[0].innerHTML = ''
     donateTable = false;
 }
 
 async function openIdeaModal(id){
+    document.getElementById('investors-table').style.display = 'none';
     id = parseInt(id);
     currentProject = id;
 
@@ -55,7 +64,6 @@ async function openIdeaModal(id){
             const totalInvestment = !!result.data.pubData.totalInvestment ? result.data.pubData.totalInvestment:0
             
             var lista = `
-            
             <div class="table">
             <table>
                 <tr>
@@ -70,14 +78,16 @@ async function openIdeaModal(id){
             <div class="confirm">
             <div class="total-value-donated"> Total investido: R$${totalInvestment}</div>
             <div class="confirm-confirm"> 
-                <input type="number" placeholder="Quantia" id="amountToPay-input"> <button onclick="donate()">Ok!</button>
+                <input type="number" placeholder="Quantia" id="amountToPay-input"> 
+                <textarea id="investmentMsg">escreva um recado!</textarea><br>
+                <button onclick="donate()">Ok!</button>
             </div>
         </div>
             `
 
                 data.data.result.result[0].forEach((item)=>{
                     lista += ` 
-                    <tr>
+                    <tr id="investment${item.id}" onclick="getInvestment(${item.id})">
                         <td>
                             <span style="background-image: url('${item.profilePhoto}')"></span>
                         </td>
@@ -86,6 +96,7 @@ async function openIdeaModal(id){
                     </tr>
                     `
                 })
+            console.log(data.data.result.result[0]);
 
             var finalResult = lista+finishList;
 
@@ -93,6 +104,7 @@ async function openIdeaModal(id){
 
                 
             document.getElementById('investors-table').style.display = 'flex';
+            document.getElementsByClassName('closeLayer')[0].style.display = 'flex';
             donateTable = true;
 
 
@@ -111,39 +123,49 @@ async function openIdeaModal(id){
 
 function donate(){
     document.getElementById('sure').style.display = "flex"
+    document.getElementsByClassName('sure-container')[0].style.display = 'initial'
     document.getElementById('sureMsg').innerHTML = `irá utilizar R$ ${document.getElementById('amountToPay-input').value} do seus créditos para realizar esta ação?`
 }
 
 
 async function confirmPurchase(userId){
-
+    document.getElementsByClassName('sure-container')[0].style.display = 'none'
     var userId = parseInt(userId)
+    console.log('entrou aqui')
 
     var credits = parseFloat(document.getElementById('amountToPay-input').value)
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
-    try {
-        var result = await axios.post('https://server.mswareg.com/donateCredits', {
-            userId,
-            credits,
-            projectId: currentProject
-        }, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
-            }
-        })
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-        console.log(result)
-
-        if(result.status == 200){
-            statusModal('success', result.data.msg)
-        }else{
-            statusModal('failed', "Ops, algo deu errado!")
-        }
+            try {
+                var result = await axios.post('https://server.mswareg.com/donateCredits', {
+                    userId,
+                    credits,
+                    projectId: currentProject,
+                    investmentMsg: document.getElementById('investmentMsg').value,
+                    currentcode: document.getElementById('currentcode').value
+                }, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }
+                })
         
-    } catch (error) {
-        statusModal('failed', error.response.data.msg)
-    }
+                console.log(result)
+        
+                if(result.status == 200){
+                    statusModal('success', result.data.msg)
+                }else{
+                    statusModal('failed', "Ops, algo deu errado!")
+                }
+                
+            } catch (error) {
+                console.log(error)
+                statusModal('failed', error.response.data.msg)
+            }
+
+        }
+    })
 }
 
 
@@ -153,16 +175,16 @@ function statusModal(status, msg){
         document.getElementsByClassName('statusModal-container')[0].innerHTML = `<h1>${msg}<h1>`
         document.getElementsByClassName('statusModal-container')[0].className = 'statusModal-container success';
         setTimeout(() => {
-            closeModal('statusModal');
-            closeModal('sure');
+            closeModal('statusModal', null);
+            closeModal('sure', null);
         }, 2000);
     }else{
         document.getElementById('statusModal').style.display = 'flex';
         document.getElementsByClassName('statusModal-container')[0].innerHTML = `<h1>${msg}<h1>`
         document.getElementsByClassName('statusModal-container')[0].className = 'statusModal-container failed';
         setTimeout(() => {
-            closeModal('statusModal');
-            closeModal('sure');
+            closeModal('statusModal', null);
+            closeModal('sure', null);
         }, 2000);
     }
 }
@@ -188,42 +210,51 @@ async function openModal(elementId, itemId, allowFeedback=true){
     document.getElementsByClassName('insertIdeaName')[0].innerHTML = `"${title}"`;
     document.getElementsByClassName('insertIdeaName')[1].innerHTML = `"${title}"`;
     document.getElementsByClassName('sendFeedback')[0].onclick = async ()=>{
-        const cookies = document.cookie.split('=');
-        const authToken = cookies[1];
-        try {
-            let sendFeedbackResult = await axios.post('https://server.mswareg.com/sendFeedback', {
-                userId,
-                ideaId: itemId,
-                feedbackMsg: document.getElementById('feedback-textArea').value,
-            }, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
+        document.cookie.split(';').forEach(async cookie => {
+            authToken = cookie.split('=');
+            if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
+                try {
+                    let sendFeedbackResult = await axios.post('https://server.mswareg.com/sendFeedback', {
+                        userId,
+                        ideaId: itemId,
+                        feedbackMsg: document.getElementById('feedback-textArea').value,
+                    }, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }
+                })
+                    statusModal('success', sendFeedbackResult.data.msg) 
+                } catch (error) {
+                    statusModal('failed', error ) 
+                }
+
             }
         })
-            statusModal('success', sendFeedbackResult.data.msg) 
-        } catch (error) {
-            statusModal('failed', error ) 
-        }
 
     };
     document.getElementsByClassName('sendReport')[0].onclick = async () => {
-        const cookies = document.cookie.split('=');
-        const authToken = cookies[1];
-       try {
-           let sendReportResult = await axios.post('https://server.mswareg.com/sendReport', {
-               userId,
-               reportMsg: document.getElementById('report-textArea').value,
-               ideaReport: itemId,
-               reportCategorie: reportCategorie.value
-           }, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
+        document.cookie.split(';').forEach(async cookie => {
+            authToken = cookie.split('=');
+            if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
+
+                try {
+                    let sendReportResult = await axios.post('https://server.mswareg.com/sendReport', {
+                        userId,
+                        reportMsg: document.getElementById('report-textArea').value,
+                        ideaReport: itemId,
+                        reportCategorie: reportCategorie.value
+                    }, {
+                     headers: {
+                         'authorization': `Bearer ${authToken[1]}`
+                     }
+                 })
+                    statusModal('success', sendReportResult.data.msg) 
+                } catch (error) {
+                    statusModal('failed', error) 
+                }
+
             }
         })
-           statusModal('success', sendReportResult.data.msg) 
-       } catch (error) {
-           statusModal('failed', error) 
-       }
 
 
     };
@@ -237,7 +268,7 @@ async function openInfoModal(userId){
         console.log(userInfo)
         document.getElementById('user-info-container').innerHTML = 
         `
-        <h2>informações do usuário: <i onclick="closeModal('user-info-modal')" class="fa-solid fa-xmark"></i></h2> <br>
+        <h2>informações do usuário: <i onclick="closeModal('user-info-modal', null)" class="fa-solid fa-xmark"></i></h2> <br>
             <ul>
                 <li>Você colaborou com <span style="color: blue;">${userInfo.data.info.totalInvestiment}</span> </li><br>
                 <li>Ajudou em <span style="color: blue;">${userInfo.data.info.ideaHelped}</span> ideias  </li><br>
@@ -248,6 +279,23 @@ async function openInfoModal(userId){
             </ul><br><br>
         `
         document.getElementById('user-info-modal').style.display = 'flex';
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function getInvestment(investmentId){
+    try {
+        const investmentData = await axios.get('https://server.mswareg.com/getOneDonate/'+investmentId);
+        console.log(investmentData)
+        const investmentMsgContainerHTML = `
+        <h3>valor: <span style="color: blue;">${investmentData.data.result.result.investment}</span></h3>
+        <p id="currentInvestmentMsg">${investmentData.data.result.result.investmentMsg}</p>
+        `
+
+        document.getElementById('investmentMsgContainer').innerHTML = investmentMsgContainerHTML;
+        document.getElementById('investmentMsgModal').style.display = 'flex'
+        document.getElementsByClassName('closeLayer')[1].style.display = 'flex';
     } catch (error) {
         console.log(error)
     }

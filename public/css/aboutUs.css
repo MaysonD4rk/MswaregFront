@@ -62,7 +62,8 @@
 #qrcodeTxt{
     margin-top: 10px;
     margin-bottom: 10px;
-    display: none;
+    color: transparent;
+    background-color: transparent;
 }
 .btn-to-copy{
     margin-top: 10px;

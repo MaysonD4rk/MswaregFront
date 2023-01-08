@@ -132,115 +132,122 @@ function returnToList() {
 
 async function renderFeedback(itemId) {
     console.log('entrou em renderFeedback')
-    const cookies = document.cookie.split('=');
-    console.log(document.cookie)
-    const authToken = cookies[1];
-    console.log(cookies)
-    
-    const feedback = await axios.get(`https://server.mswareg.com/getFeedback/${itemId}/${userId}`, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
-            }})
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-
-
-
-    const textHtml = `
-                
-                <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
-                
-                            <h1>FEEDBACK</h1>
+            const feedback = await axios.get(`https://server.mswareg.com/getFeedback/${itemId}/${userId}`, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }})
+        
+        
+        
+        
+            const textHtml = `
                         
-                        <h4>From: ${feedback.data.feedback[0].username}</h4>
-                        <h4>Idea: ${feedback.data.feedback[0].title}</h4>
+                        <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
+                        
+                                    <h1>FEEDBACK</h1>
+                                
+                                <h4>From: ${feedback.data.feedback[0].username}</h4>
+                                <h4>Idea: ${feedback.data.feedback[0].title}</h4>
+        
+                                <p>
+                                    "${feedback.data.feedback[0].feedbackMsg}"
+                                </p>
+                                <i onclick="deleteFeedback(${itemId})" class="fa-solid fa-trash"></i>
+                        
+                        `
+            document.getElementById('feedbacks-tab-container').innerHTML = textHtml
 
-                        <p>
-                            "${feedback.data.feedback[0].feedbackMsg}"
-                        </p>
-                        <i onclick="deleteFeedback(${itemId})" class="fa-solid fa-trash"></i>
-                
-                `
-    document.getElementById('feedbacks-tab-container').innerHTML = textHtml
+        }
+    })
+    
 }
 
 async function renderReports(ideaId, reports, categorie) {
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
-    console.log(cookies)
-    console.log(authToken)
-    console.log(document.cookie)
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-    const reportsList = await axios.get('https://server.mswareg.com/getReports/' + ideaId,{
-            headers: {
-                'authorization': `Bearer ${authToken}`
-            }})
-
-    console.log(reportsList.data.reports)
-
-
-    let textHtml = `
-                
-                <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
-                
-
-                <button onclick="reportDecision('disable',${ideaId})" style="background-color: red;">DESLIGAR</button>
-                <button onclick="reportDecision('release',${ideaId})" style="background-color: green;">LIBERAR</button>
-
-                            <h1>REPORTS</h1>
+            const reportsList = await axios.get('https://server.mswareg.com/getReports/' + ideaId,{
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }})
+        
+            console.log(reportsList.data.reports)
+        
+        
+            let textHtml = `
                         
-                        <h4>From: ${reports} users</h4>
-                        <a onclick="openIdeaNewTab('https://mswareg.mswareg.com/getIdeaById/${ideaId}')" href="#">CLIQUE PARA VER IDEIA </a>
-                        <h3>Categorie: ${categorie}
-                        <p>
-                            ""
-                        </p>
-                
-                `
+                        <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
+                        
+        
+                        <button onclick="reportDecision('disable',${ideaId})" style="background-color: red;">DESLIGAR</button>
+                        <button onclick="reportDecision('release',${ideaId})" style="background-color: green;">LIBERAR</button>
+        
+                                    <h1>REPORTS</h1>
+                                
+                                <h4>From: ${reports} users</h4>
+                                <a onclick="openIdeaNewTab('https://mswareg.mswareg.com/getIdeaById/${ideaId}')" href="#">CLIQUE PARA VER IDEIA </a>
+                                <h3>Categorie: ${categorie}
+                                <p>
+                                    ""
+                                </p>
+                        
+                        `
+        
+            reportsList.data.reports.forEach(item => {
+                let newHtmlText = `<p>"${item.reportMsg}"</p>`
+        
+                textHtml += newHtmlText
+            })
+            document.getElementById('reports-tab-container').innerHTML = textHtml
 
-    reportsList.data.reports.forEach(item => {
-        let newHtmlText = `<p>"${item.reportMsg}"</p>`
-
-        textHtml += newHtmlText
+        }
     })
-    document.getElementById('reports-tab-container').innerHTML = textHtml
+
 
 
 
 }
 
 async function renderWithdraw(userId){
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
-    console.log(cookies)
-    console.log(authToken)
-    console.log(document.cookie)
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-    const withdrawInfo = await axios.get('https://server.mswareg.com/findWithdrawRequestByUserId/' + userId, {
-        headers: {
-            'authorization': `Bearer ${authToken}`
+            const withdrawInfo = await axios.get('https://server.mswareg.com/findWithdrawRequestByUserId/' + userId, {
+                headers: {
+                    'authorization': `Bearer ${authToken[1]}`
+                }
+            })
+        
+            console.log(withdrawInfo)
+        
+        
+            let textHtml = `
+                        
+                        <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
+                        
+        
+                        <button onclick="withdrawstatus(${userId}, 'done', '${withdrawInfo.data[0].email}','withdrawDiv${withdrawInfo.data[0].id}')" style="background-color: green;">Feito</button>
+                        
+                        <h1>Withdraw</h1>
+                        <h2>First Name: ${withdrawInfo.data[0].FirstName}</h2> 
+                        <h2>Last Name: ${withdrawInfo.data[0].Lastname}</h2> 
+                        <h2>Chave PIX: ${withdrawInfo.data[0].pixKey}</h2> 
+                        <h2>Valor: ${withdrawInfo.data[0].valueReq}</h2> 
+                        <h2>Saldo: ${withdrawInfo.data[0].credits}</h2>
+                        
+                        <button onclick="withdrawstatus(${userId}, 'deny', '${withdrawInfo.data[0].email}','withdrawDiv${withdrawInfo.data[0].id}')" style="background-color: red;">Negar</button>
+                        `
+            document.getElementById('withdraw-tab-container').innerHTML = textHtml
+
         }
     })
 
-    console.log(withdrawInfo)
-
-
-    let textHtml = `
-                
-                <i onclick="returnToList()" class="fa-solid fa-arrow-left"></i>
-                
-
-                <button onclick="withdrawstatus(${userId}, 'done', '${withdrawInfo.data[0].email}','withdrawDiv${withdrawInfo.data[0].id}')" style="background-color: green;">Feito</button>
-                
-                <h1>Withdraw</h1>
-                <h2>First Name: ${withdrawInfo.data[0].FirstName}</h2> 
-                <h2>Last Name: ${withdrawInfo.data[0].Lastname}</h2> 
-                <h2>Chave PIX: ${withdrawInfo.data[0].pixKey}</h2> 
-                <h2>Valor: ${withdrawInfo.data[0].valueReq}</h2> 
-                <h2>Saldo: ${withdrawInfo.data[0].credits}</h2>
-                
-                <button onclick="withdrawstatus(${userId}, 'deny', '${withdrawInfo.data[0].email}','withdrawDiv${withdrawInfo.data[0].id}')" style="background-color: red;">Negar</button>
-                `
-    document.getElementById('withdraw-tab-container').innerHTML = textHtml
 }
 
 function openIdeaNewTab(link){
@@ -333,77 +340,89 @@ async function limitList(tab) {
 
 async function reportDecision(decision, ideaId) {
     console.log(decision)
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
-    if (decision == 'disable') {
-        console.log('entrou aqui 1')
-        try {
-            let result = await axios.put('https://server.mswareg.com/disableIdea', { ideaId }, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
-            }
-        })
-            console.log(result)
-            location.reload()
-        } catch (error) {
-            console.log(error)
-        }
-    } else {
-        try {
-            let result = await axios.put('https://server.mswareg.com/releaseIdea', { ideaId },{
-                headers: {
-                    'authorization': `Bearer ${authToken}`
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
+
+
+            if (decision == 'disable') {
+                console.log('entrou aqui 1')
+                try {
+                    let result = await axios.put('https://server.mswareg.com/disableIdea', { ideaId }, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }
+                })
+                    console.log(result)
+                    location.reload()
+                } catch (error) {
+                    console.log(error)
                 }
-            })
-            console.log(result)
-            location.reload()
-        } catch (error) {
-            console.log(error)
+            } else {
+                try {
+                    let result = await axios.put('https://server.mswareg.com/releaseIdea', { ideaId },{
+                        headers: {
+                            'authorization': `Bearer ${authToken[1]}`
+                        }
+                    })
+                    console.log(result)
+                    location.reload()
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
         }
-    }
+    })
 }
 
 
 async function deleteFeedback(itemId) {
-    console.log('entrou aqui')
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
-    console.log(authToken)
-    try {
-        let response = await axios.delete(`https://server.mswareg.com/deleteFeedkback/${itemId}/${userId}`, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
-            }
-        } )
-        location.reload()
-    } catch (error) {
-        console.log(error)
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-    }
+            try {
+                let response = await axios.delete(`https://server.mswareg.com/deleteFeedback/${itemId}/${userId}`, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }
+                } )
+                location.reload()
+            } catch (error) {
+                console.log(error)
+        
+            }
+        }
+    })
 
 }
 
 
 async function withdrawstatus(userId, status, email, divId){
 
-    const cookies = document.cookie.split('=');
-    console.log(document.cookie)
-    const authToken = cookies[1];
-    console.log(divId)
-    try {
-        await axios.put('https://server.mswareg.com/withdrawstatus', {
-            userId,
-            status,
-            email
-        }, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
+
+            try {
+                await axios.put('https://server.mswareg.com/withdrawstatus', {
+                    userId,
+                    status,
+                    email
+                }, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }
+                })
+                document.getElementById(divId).remove()
+                document.getElementById('withdraw-tab-container').innerHTML = ''
+            } catch (error) {
+                console.log(error)
             }
-        })
-        document.getElementById(divId).remove()
-    } catch (error) {
-        console.log(error)
-    }
+
+        }
+    })
 }
 
 

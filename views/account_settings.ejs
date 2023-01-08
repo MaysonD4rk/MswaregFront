@@ -31,7 +31,7 @@
 
     <section class="py-5 my-5">
         <div class="container">
-            <h1 class="mb-5">Account Settings</h1>
+            <h1 class="mb-5">Configurações da conta</h1>
             <div class="bg-white shadow rounded-lg d-block d-sm-flex">
                 <div class="profile-tab-nav border-right">
                     <div class="p-4">
@@ -48,27 +48,27 @@
                         <a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab"
                             aria-controls="account" aria-selected="true">
                             <i class="fa fa-home text-center mr-1"></i>
-                            Account
+                            Configurações gerais
                         </a>
                         <a class="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab"
                             aria-controls="password" aria-selected="false">
                             <i class="fa fa-key text-center mr-1"></i>
-                            Password
+                            Senha
                         </a>
                         <a class="nav-link" id="security-tab" data-toggle="pill" href="#security" role="tab"
                             aria-controls="security" aria-selected="false">
                             <i class="fa fa-user text-center mr-1"></i>
-                            Security
+                            Segurança
                         </a>
                         <a class="nav-link" id="application-tab" data-toggle="pill" href="#application" role="tab"
                             aria-controls="application" aria-selected="false">
                             <i class="fa fa-tv text-center mr-1"></i>
-                            Application
+                            Aplicação
                         </a>
                         <a class="nav-link" id="notification-tab" data-toggle="pill" href="#notification" role="tab"
                             aria-controls="notification" aria-selected="false">
                             <i class="fa fa-bell text-center mr-1"></i>
-                            Notification
+                            Notificações
                         </a>
                     </div>
                 </div>
@@ -87,13 +87,13 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>First Name</label>
+                                    <label>Primeiro nome</label>
                                     <input type="text" id="nameInput" class="form-control" value="<%=userData.FirstName%>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Last Name</label>
+                                    <label>último nome</label>
                                     <input type="text" id="lastNameInput" class="form-control" value="<%=userData.LastName%>">
                                 </div>
                             </div>
@@ -102,6 +102,26 @@
                                     <label>Email</label>
                                     <input disabled type="text" id="emailInput" class="form-control"
                                         value="<%=userData.email%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <input disabled type="text" class="form-control" value="Mswareg">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Seu código</label>
+                                    <input disabled type="text" class="form-control" value="<%=userData.personalCode%>">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Código sendo utilizado</label>
+                                    <input type="text" id="currentCode" class="form-control" value="<%=userData.currentcode%>">
+                                    <a href="#" onclick="updateCurrentCode()">Alterar código para ajudar um criador.</a>
                                 </div>
                             </div>
 
@@ -114,13 +134,7 @@
                             </div>
 
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Company</label>
-                                    <input disabled type="text" class="form-control" value="Mswareg">
-                                </div>
-                            </div>
-
+                            
 
                         </div>
                         <div>
@@ -129,11 +143,11 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-                        <h3 class="mb-4">Password Settings</h3>
+                        <h3 class="mb-4">Configurações de senha</h3>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Old password</label>
+                                    <label>Antiga senha</label>
                                     <input type="password" class="form-control" name="oldPass">
                                 </div>
                             </div>
@@ -141,19 +155,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>New password</label>
+                                    <label>Nova senha</label>
                                     <input type="password" class="form-control" name="newPass">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Confirm new password</label>
+                                    <label>Confirmar nova senha</label>
                                     <input type="password" class="form-control" name="confirmNewPass">
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <button class="btn btn-primary" onclick="changePass('<%= email%>', '<%=AuthToken%>')" >Update</button>
+                            <button class="btn btn-primary" onclick="changePass('<%= email%>', '<%=AuthToken%>')" >Atualizar</button>
                             <button class="btn btn-light">Cancel</button>
                         </div>
                     </div>
@@ -161,7 +175,7 @@
                         <div class="comingSoon">
                             <h1>COMING SOON!</h1>
                         </div>
-                        <h3 class="mb-4">Security Settings</h3>
+                        <h3 class="mb-4">Configurações de segurança</h3>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -187,7 +201,7 @@
                             </div>
                         </div>
                         <div>
-                            <button class="btn btn-primary">Update</button>
+                            <button class="btn btn-primary">Atualizar</button>
                             <button class="btn btn-light">Cancel</button>
                         </div>
                     </div>
@@ -195,7 +209,7 @@
                         <div class="comingSoon">
                             <h1>COMING SOON!</h1>
                         </div>
-                        <h3>Application Settings</h3>
+                        <h3>Configurações de aplicação</h3>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -219,19 +233,19 @@
                             </div>
                         </div>
                         <div>
-                            <button class="btn btn-primary">Update</button>
+                            <button class="btn btn-primary">Atualizar</button>
                             <button class="btn btn-light">Cancel</button>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="notification" role="tabpanel" aria-labelledby="notification-tab">
-                        <h3 class="mb-4">Notification Settings</h3>
+                        <h3 class="mb-4">Notificações</h3>
 
-                        <h4>Ideas Notification</h4>
+                        <h4>Notificação de ideias</h4>
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="notification1">
                                 <label class="form-check-label" for="notification1">
-                                    Allow the platform to notify you of news
+                                    Permitir que a plataforma te notifique de notícias
                                 </label>
                             </div>
                         </div>
@@ -239,7 +253,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="notification2">
                                 <label class="form-check-label" for="notification2">
-                                    Allow the platform to notify you about trend ideas
+                                    Permitir que a plataforma te notifique sobre "Trend Ideas"
                                 </label>
                             </div>
                         </div>
@@ -247,7 +261,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="notification3">
                                 <label class="form-check-label" for="notification3">
-                                    Allow the platform to notify you about liked ideas
+                                    Permitir que a plataforma te notifique sobre as suas ideias que você curtiu.
                                 </label>
                             </div>
                         </div>
@@ -258,7 +272,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="notification4">
                                 <label class="form-check-label" for="notification4">
-                                    Allow the platform to notify about investments by coming up with a common idea
+                                    Permitir que a plataforma te notifique sobre investimentos sendo realizados em ideias em comum? 
                                 </label>
                             </div>
                         </div>
@@ -267,7 +281,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="notification5">
                                 <label class="form-check-label" for="notification5">
-                                    Allow the platform to notify about investments in your idea
+                                    Permita que a plataforma te notifique sobre investimentos em suas ideias.
                                 </label>
                             </div>
                         </div>
@@ -276,7 +290,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="notification6">
                                 <label class="form-check-label" for="notification6">
-                                    Allow the platform to notify you about the achievement of investment goals in ideas
+                                    Permitir que a plataforma notifique você sobre os metas de investimentos atingidas.
                                 </label>
                             </div>
                         </div>

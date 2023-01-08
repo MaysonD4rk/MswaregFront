@@ -21,13 +21,14 @@
     
     <div id="modal-payment-method">
         <div class="payment-method-container">
-            <button class="red-button" onclick="closeModal('modal-payment-method')">Close</button>
+            <p id="waitpls">qrcode está sendo gerado, por favor espere!</p>
+            <button class="red-button" onclick="closeModal('modal-payment-method', null)">Close</button>
             <div id="qrcodeArea">
                 
             </div>
             <input type="text" id="qrcodeTxt">
             
-            <button class="btn-to-copy" data-clipboard-target="#qrcodeTxt">
+            <button class="btn-to-copy green-button" data-clipboard-target="#qrcodeTxt">
                 <p>Copiar</p>
             </button>
         </div>
@@ -35,7 +36,7 @@
 
     <div class="container">
         <h1>Recarregar dinheiro</h1>
-        <p>Ao clicar em algum botão de compra, espere até 5 segundos para o modal de pagamento aparecer, ou tente novamente!</p>
+        <br>
         <br><br>
         <div class="WalletTable">
             <ul>

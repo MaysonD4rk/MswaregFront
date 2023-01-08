@@ -486,17 +486,18 @@ async function confirmCropFunction(action) {
 
     } else {
 
-        const cookies = document.cookie.split('=');
-        const authToken = cookies[1];
         if (currentFormat == 'profile') {
 
+            document.cookie.split(';').forEach(async cookie => {
+                authToken = cookie.split('=');
+                if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
             try {
                 var resposta = await axios.put('https://server.mswareg.com/updatePhotoProfile', {
                     userId,
                     profileUrl: canvas.toDataURL()
                 }, {
                     headers: {
-                        'authorization': `Bearer ${authToken}`
+                        'authorization': `Bearer ${authToken[1]}`
                     }
                 })
                 if (resposta.status == 200) {
@@ -505,28 +506,34 @@ async function confirmCropFunction(action) {
 
             } catch (error) {
                 console.log(error)
-            }
+            }}
+            })
 
 
         } else {
-            try {
-                var resposta = await axios.put('https://server.mswareg.com/updateIdeaPhoto', {
-                    userId,
-                    pubIdeaId,
-                    imgUrl: canvas.toDataURL()
-                }, {
-                    headers: {
-                        'authorization': `Bearer ${authToken}`
+            document.cookie.split(';').forEach(async cookie => {
+                authToken = cookie.split('=');
+                if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
+                try {
+                    var resposta = await axios.put('https://server.mswareg.com/updateIdeaPhoto', {
+                        userId,
+                        pubIdeaId,
+                        imgUrl: canvas.toDataURL()
+                    }, {
+                        headers: {
+                            'authorization': `Bearer ${authToken[1]}`
+                        }
+                    })
+
+                    if (resposta.status == 200) {
+                        window.location.href = `/home`
                     }
-                })
 
-                if (resposta.status == 200) {
-                    window.location.href = `/home`
+                } catch (error) {
+                    console.log(error)
                 }
-
-            } catch (error) {
-                console.log(error)
             }
+            })
 
             console.log(resposta)
         }

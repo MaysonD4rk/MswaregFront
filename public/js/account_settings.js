@@ -53,42 +53,45 @@ async function changePass(email, token) {
 
     if (newPass == confirmNewPass) {
 
-        const cookies = document.cookie.split('=');
-        const authToken = cookies[1];
-        console.log(authToken)
+        document.cookie.split(';').forEach(async cookie => {
+                authToken = cookie.split('=');
+                if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
+                    try {
+                        var verifyOldPass = await axios.post('https://server.mswareg.com/login', {
+                            email: email,
+                            password: oldPass
+                        })
+            
+                        if (verifyOldPass.status == 200) {
+                            console.log(verifyOldPass)
+                            try {
+                                var updatePass = await axios.put('https://server.mswareg.com/updatePass', {
+                                    email: email,
+                                    password: newPass
+                                }, {
+                                    headers: {
+                                        'authorization': `Bearer ${authToken[1]}`
+                                    }
+                                })
+            
+                                if (updatePass.status == 200) {
+                                    alert(updatePass.data.msg)
+                                    location.href = '/login'
+                                }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        } else {
+                            console.log('senha incorreta Amigão filha da puta')
+                        }
+            
+                    } catch (error) {
+                        console.log('senha incorreta Amigão filha da puta')
+                    }
 
-        try {
-            var verifyOldPass = await axios.post('https://server.mswareg.com/login', {
-                email: email,
-                password: oldPass
+                }
             })
 
-            if (verifyOldPass.status == 200) {
-                console.log(verifyOldPass)
-                try {
-                    var updatePass = await axios.put('https://server.mswareg.com/updatePass', {
-                        email: email,
-                        password: newPass
-                    }, {
-                        headers: {
-                            'authorization': `Bearer ${authToken}`
-                        }
-                    })
-
-                    if (updatePass.status == 200) {
-                        alert(updatePass.data.msg)
-                        location.href = '/login'
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            } else {
-                console.log('senha incorreta Amigão filha da puta')
-            }
-
-        } catch (error) {
-            console.log('senha incorreta Amigão filha da puta')
-        }
 
     } else {
         console.log('as senhas não são iguais')
@@ -106,21 +109,23 @@ async function getTokenUpdateInfo(){
     const userId = document.getElementById('userId').value
     const pixKey = document.getElementById('pixKey').value
     console.log(userId)
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
+    document.cookie.split(';').forEach(async cookie => {
+                authToken = cookie.split('=');
+                if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
     try {
         let updateInfoCode = await axios.post('https://server.mswareg.com/updateInfoToken', {
             email,
             userId
         }, {
             headers: {
-                'authorization': `Bearer ${authToken}`
+                'authorization': `Bearer ${authToken[1]}`
             }
         })
         console.log(updateInfo)
     } catch (error) {
         console.log(error)
     }
+        }})
     document.getElementById('codeModal').style.display = 'flex';
 }
 
@@ -131,8 +136,9 @@ async function updateInfo() {
     const pixKey = document.getElementById('pixKey').value
     const token = document.getElementById('tokenCode').value
     console.log(userId)
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
+    document.cookie.split(';').forEach(async cookie => {
+                authToken = cookie.split('=');
+                if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
     try {
         let updateInfo = await axios.put('https://server.mswareg.com/updateInfo', {
             FirstName,
@@ -142,7 +148,7 @@ async function updateInfo() {
             token
         }, {
             headers: {
-                'authorization': `Bearer ${authToken}`
+                'authorization': `Bearer ${authToken[1]}`
             }
         })
         console.log(updateInfo)
@@ -154,6 +160,7 @@ async function updateInfo() {
     } catch (error) {
         console.log(error)
     }
+        }})
 
 }
 
@@ -166,27 +173,31 @@ async function updateNotification() {
     let notification4 = document.getElementById('notification4').checked;
     let notification5 = document.getElementById('notification5').checked;
     let notification6 = document.getElementById('notification6').checked;
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
-    try {
-        const updateNotification = await axios.put('https://server.mswareg.com/updateNotifications', {
-            notification1,
-            notification2,
-            notification3,
-            notification4,
-            notification5,
-            notification6,
-            userId
-        }, {
-            headers: {
-                'authorization': `Bearer ${authToken}`
-            }
-        })
 
-        console.log(updateNotification)
-    } catch (error) {
-        console.log(error)
-    }
+    document.cookie.split(';').forEach(async cookie => {
+                authToken = cookie.split('=');
+                console.log(authToken)
+                if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
+            try {
+                const updateNotification = await axios.put('https://server.mswareg.com/updateNotifications', {
+                    notification1,
+                    notification2,
+                    notification3,
+                    notification4,
+                    notification5,
+                    notification6,
+                    userId
+                }, {
+                    headers: {
+                        'authorization': `Bearer ${authToken[1]}`
+                    }
+                })
+
+                console.log(updateNotification)
+            } catch (error) {
+                console.log(error)
+            }
+        }})
 
 
 }
@@ -194,15 +205,16 @@ async function updateNotification() {
 
 document.getElementById('changeUsername').onclick = async ()=>{
     const username = document.getElementById('usernameInput').value
-    const cookies = document.cookie.split('=');
-    const authToken = cookies[1];
+    document.cookie.split(';').forEach(async cookie => {
+                authToken = cookie.split('=');
+                if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
     try {
         const changeUsername = await axios.put('https://server.mswareg.com/changeUsername',{
             userId:userId.value,
             username
         }, {
             headers: {
-                'authorization': `Bearer ${authToken}`
+                'authorization': `Bearer ${authToken[1]}`
             }
         });
 
@@ -212,6 +224,7 @@ document.getElementById('changeUsername').onclick = async ()=>{
     } catch (error) {
         console.log(error)
     }
+    }})
 }
 
 
@@ -222,3 +235,26 @@ document.getElementById('pixKey').addEventListener('keypress', (event)=>{
         return
     }
 })
+
+
+async function updateCurrentCode(){
+    document.cookie.split(';').forEach(async cookie => {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
+            try {
+                const updateCode = await axios.put('https://server.mswareg.com/updatePersonalCode', {
+                    userId: document.getElementById('userId').value,
+                    code: document.getElementById('currentCode').value
+                }, {
+                    headers: {
+                        "authorization": `Bearer ${authToken[1]}`
+                    }
+                })
+                console.log(updateCode);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    })
+    
+}

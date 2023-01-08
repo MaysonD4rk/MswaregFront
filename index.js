@@ -186,7 +186,7 @@ app.get('/trend', async (req,res)=>{
 
 app.get('/writeIdea', async (req, res) => {
     sess = req.session
-
+    console.log(req.cookies)
 
     if (sess.userId == undefined) {
         res.redirect('/login')
@@ -315,7 +315,7 @@ app.get('/profile/:username', async (req,res)=>{
             })
             
         }else{
-            console.log('n tem nada amigão')
+            res.redirect('/home')
         }
         
     } catch (error) {
@@ -634,7 +634,7 @@ app.get('/wallet', (req,res)=>{
 })
 
 app.get('/aboutUs', async (req,res)=>{
-    const donate = await axios.get('https://pix.mswareg.com/donate');
+    const donate = await axios.get('http://192.168.0.186:5353/donate');
     res.render('aboutUs', {
         qrCode: donate.data.imagem,
         qrCodeTxt: donate.data.qrCodeTxt
