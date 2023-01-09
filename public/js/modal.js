@@ -4,7 +4,7 @@ var currentProject = 0;
 const userId = parseInt(document.getElementById('userId').value);
 let reader = new FileReader();
 
-function closeModal(id, closeLayer=[0,1]){
+function closeModal(id, closeLayer=[0,1], clearmodalimages=true){
     if (closeLayer != null) {
         
     if (!!document.getElementsByClassName('closeLayer')) {
@@ -16,7 +16,9 @@ function closeModal(id, closeLayer=[0,1]){
     
 
     document.getElementById(id).style.display = 'none';
-    document.getElementsByClassName('card-modal-images')[0].innerHTML = ''
+    if (clearmodalimages) {
+        document.getElementsByClassName('card-modal-images')[0].innerHTML = ''
+    }
     donateTable = false;
 }
 
