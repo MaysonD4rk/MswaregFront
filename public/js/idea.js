@@ -30,7 +30,7 @@
 
 async function likePub(pubId) {
     pubId = parseInt(pubId)
-    document.getElementById(pubId).classList.add('liked')
+    
 
     document.cookie.split(';').forEach(async cookie => {
         authToken = cookie.split('=');
