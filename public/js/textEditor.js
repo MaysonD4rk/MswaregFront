@@ -384,6 +384,7 @@
                             allowFeedbacks: document.getElementById('allowFeedback').checked
                         }, {
                     headers: {
+                        'Content-Type': 'multipart/form-data',
                         'authorization': `Bearer ${authToken[1]}`
                     }
                 })
