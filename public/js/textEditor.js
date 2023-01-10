@@ -358,7 +358,7 @@
         document.getElementById('finish-modal').style.display = 'flex';
 
         ideaInfo.content = await renderContent();
-        closeModal('modal', null);
+        closeModal('modal', null, false);
         
     }
 
