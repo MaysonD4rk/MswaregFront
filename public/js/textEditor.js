@@ -384,8 +384,8 @@
                             allowFeedbacks: document.getElementById('allowFeedback').checked
                         }, {
                     headers: {
+                        'authorization': `Bearer ${authToken[1]}`,
                         'Content-Type': 'multipart/form-data',
-                        'authorization': `Bearer ${authToken[1]}`
                     }
                 })
                         window.location.href = `https://mswareg.mswareg.com/addPubImg/${pub.data[0]}`;
@@ -393,7 +393,6 @@
                         document.write(error.response.status)
                         console.log(error)
                     }
-                    console.log(document.getElementById('allowFeedback').checked)
 
                 }
             })
