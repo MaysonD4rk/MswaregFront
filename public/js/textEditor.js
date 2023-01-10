@@ -367,6 +367,7 @@
     async function send(){
 
         document.getElementById('areusure').style.display='none';
+        console.log(mainImages)
 
         if(ideaInfo.content.length >= 500){
             document.cookie.split(';').forEach(async cookie => {
