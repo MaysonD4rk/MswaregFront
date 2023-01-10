@@ -384,8 +384,7 @@
                             allowFeedbacks: document.getElementById('allowFeedback').checked
                         }, {
                     headers: {
-                        'authorization': `Bearer ${authToken[1]}`,
-                        'Content-Type': 'multipart/form-data',
+                        'authorization': `Bearer ${authToken[1]}`
                     }
                 })
                         window.location.href = `https://mswareg.mswareg.com/addPubImg/${pub.data[0]}`;
