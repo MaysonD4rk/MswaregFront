@@ -11,9 +11,6 @@
         listenerType = 'keypress'
     }
 
-    document.write(document.cookie)
-
-
     const professionalInfo = [{
             DevAprendiz: 0,
             DevJunior: 0,
