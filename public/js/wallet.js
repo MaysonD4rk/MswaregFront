@@ -25,7 +25,7 @@ const currentCredits = document.getElementById('currentCredits').value
         document.getElementById('modal-payment-method').style.display = 'flex'
         setTimeout(async () => {
             try {
-                let qrCodeData = await axios.get(`http://192.168.0.186:5353/charge/${userId}?value=${parseInt(document.getElementById('recharge').value)}`);
+                let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(document.getElementById('recharge').value)}`);
                 console.log(qrCodeData);
         document.getElementById('waitpls').innerHTML = ''
                 document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
@@ -41,7 +41,7 @@ const currentCredits = document.getElementById('currentCredits').value
         document.getElementById('waitpls').innerHTML = 'qrcode está sendo gerado, por favor espere!'
          setTimeout(async () => {
             try {
-                let qrCodeData = await axios.get(`http://192.168.0.186:5353/charge/${userId}?value=${parseInt(value)}`);
+                let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(value)}`);
                 console.log(qrCodeData);
                 document.getElementById('waitpls').innerHTML = ''
                 document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
