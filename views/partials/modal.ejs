@@ -2,7 +2,7 @@
 <div id="modal" style="display: none;">
     ss
     <div id="card-modal-info" >
-        <div class="closeLayer" onclick="closeModal('investors-table', [0])"></div>
+        <div class="closeLayer" onclick="closeModal('investors-table', [0], false)"></div>
         <span class="closeModal" onclick="closeModal('modal')">X</span>
         <div>
             <div class="main-card-info">
@@ -46,10 +46,10 @@
 
 <div id="sure">
     <div class="sure-container">
-        <span onclick="closeModal('sure', null)"><b>X</b></span>
+        <span onclick="closeModal('sure', null, false)"><b>X</b></span>
         <h1>VOCÊ TEM CERTEZA QUE:</h1>
         <h2 id="sureMsg">irá utilizar R$ *** do seus créditos para realizar esta ação?</h2>
-        <button class="green-button" onclick="confirmPurchase('<%=id%>')">SIM</button> <button onclick="closeModal('sure', null)" class="red-button">NÃO</button>
+        <button class="green-button" onclick="confirmPurchase('<%=id%>')">SIM</button> <button onclick="closeModal('sure', null, false)" class="red-button">NÃO</button>
     </div>
 </div>
 
@@ -62,7 +62,7 @@
 </div>
 
 <div id="investmentMsgModal">
-    <div class="closeLayer" onclick="closeModal('investmentMsgModal', [1])"></div>
+    <div class="closeLayer" onclick="closeModal('investmentMsgModal', [1], false)"></div>
     <div id="investmentMsgContainer">
 
     </div>
