@@ -1,7 +1,7 @@
     var url = window.location.href;
     //valor precisa ser diferente na produção. deixar console.log para n ter problemas depois
     console.log(url)
-    var offset = url.slice(26);
+    var offset = url.slice(28);
     console.log(offset)
     var sep = offset.split('?');
 
