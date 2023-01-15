@@ -50,6 +50,7 @@ async function changePass(email, token) {
     var oldPass = document.getElementsByName('oldPass')[0].value
     var newPass = document.getElementsByName('newPass')[0].value
     var confirmNewPass = document.getElementsByName('confirmNewPass')[0].value
+    const userId = document.getElementById('userId').value
 
     if (newPass == confirmNewPass) {
 
@@ -66,6 +67,7 @@ async function changePass(email, token) {
                             console.log(verifyOldPass)
                             try {
                                 var updatePass = await axios.put('https://server.mswareg.com/updatePass', {
+                                    userId: userId,
                                     email: email,
                                     password: newPass
                                 }, {
