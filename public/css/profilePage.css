@@ -154,3 +154,70 @@
 #user-info-container ul {
     font-size: 18px;
 }
+
+
+.follow-modal{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.follow-modal-container{
+    height: 400px;
+    width: 340px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.user-list{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.user-item{
+    font-size: 24px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+
+.user-img{
+    border: 1px solid black;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.follow-button-modal {
+    background-color: aquamarine;
+    margin: 20px;
+    font-size: 23px;
+    border-radius: 10px;
+}
+
+.followed-button-modal {
+    
+    background-color: rgb(211, 211, 211);
+    padding: 5px;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+.user-img{
+    background-size: 50px;
+}

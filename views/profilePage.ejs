@@ -13,10 +13,58 @@
     <script src="/js/nextPreview.js"></script>
     <link rel="icon" href="/img/logo.jpeg">
 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2467408169618011"
+        crossorigin="anonymous"></script>
+
     <title>Mswareg - Seu perfil</title>
 </head>
 <body>
     <%- include('./partials/floatingMenu.ejs') %>
+
+
+    <div class="follow-modal" id="following-modal">
+        <div class="follow-modal-container">
+            <span onclick="closeModal('following-modal', null, false)">X</span>
+            <h1>Following</h1>
+
+            <div class="user-list">
+                <% if(typeof(following) != 'undefined'){followers.forEach(item=>{%>
+                    <div class="user-item" id="user<%=item.following_id%>">
+                        <div>
+                            <div class="user-img"  style="background-image: url('<%=item.profilePhoto%>');"></div>
+                        </div>
+                            <div class="user-username">
+                            @<%=item.followingUsername%>
+                        </div>
+                        
+                        <button id="follow<%=item.following_id%>" onclick="follow(<%=item.following_id%>, true)" class="followed-button-modal"></button>
+                    </div>
+                <%})}%>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="follow-modal" id="followers-modal">
+        <div class="follow-modal-container">
+            <span onclick="closeModal('followers-modal', null, false)">X</span>
+            <h1>Followers</h1>
+    
+            <div class="user-list">
+                <% if(typeof(followers) != 'undefined'){following.forEach(item=>{%>
+                    <div class="user-item"  id="user<%=item.follower_id%>">
+                        <div class="user-img" style="background-image: url('<%=item.profilePhoto%>');"></div>
+                        <div class="user-username">
+                            @<%=item.followerUsername%>
+                        </div>
+                
+                        <button onclick="follow(<%=item.follower_id%>, true)" id="follow<%=item.follower_id%>" class="followed-button-modal"></button>
+                    </div>
+                    <%})}%>
+                
+            </div>
+        </div>
+    </div>
 
 
     <!--Info modal-->
@@ -57,7 +105,7 @@
                     <button id="follow<%=userProfile.users.id%>"></button>
                 <%}else{%>
 
-                    <div> follower <%= followData.followers %> following <%= followData.following %></div>
+                    <div> <a href="#" onclick="openGeneralModal('followers-modal')"> follower</a> <%= followData.followers %> <a href="#" onclick="openGeneralModal('following-modal')">following</a> <%= followData.following %></div>
                 <%}%>
 
 
@@ -114,7 +162,7 @@
                     <%}else if(item.title != undefined){%>
                         <div class="post-card" id="<%= item.id%>" style="background-image: url('<%=item.mainImg%>')">
                             <div class="card-header" onclick="openIdeaModal('<%=item.id%>')">
-                                <a href="https://mswareg.mswareg.com/writeIdea?editIdeaId=<%=item.id%>" style="color: black;"><i class="fa-solid fa-pen"></i></a>
+                                <a href="http://192.168.2.106:8080/writeIdea?editIdeaId=<%=item.id%>" style="color: black;"><i class="fa-solid fa-pen"></i></a>
                                 <h2>
                                     <%=item.title%>
                                 </h2>
@@ -164,6 +212,7 @@
 <script>
     createMenuSettingsButton(20, 410)
 
+    verifyFollow(document.getElementsByClassName('user-item'), true)
 </script>
 
 <script src="/js/profilePage.js"></script>

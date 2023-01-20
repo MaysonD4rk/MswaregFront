@@ -6,20 +6,28 @@ addEventListener('DOMContentLoaded', (event) => {
     }
 });
 
-async function verifyFollow(users=document.getElementsByClassName('userResults')){
+async function verifyFollow(users = document.getElementsByClassName('userResults'), fromList = false){
     
     
     for (let i = 0; i < users.length; i++) {
         const elementId = users[i].id;
         const id = parseInt(elementId.split('user')[1])
+        console.log(elementId.split('user'))
+        console.log(id)
         try {
-            let follow = await axios.get('https://server.mswareg.com/verifyFollow/' + userId + '/' + id);
+            let follow = await axios.get('http://192.168.2.106:8000/verifyFollow/' + userId + '/' + id);
             console.log(follow.data.follow)
             if (follow.data.follow) {
-                document.getElementById('follow'+id).classList = 'followed-button';
+                if (!fromList) {
+                    document.getElementById('follow'+id).classList = 'followed-button';
+                }
+                console.log("follow"+id)
                 document.getElementById('follow'+id).innerHTML = 'Followed <i class="fa-solid fa-check"></i> '
             } else {
-                document.getElementById('follow'+id).classList = 'follow-button';
+                if (!fromList) {
+                    document.getElementById('follow'+id).classList = 'follow-button';
+                }
+                console.log('follow'+id)
                 document.getElementById('follow'+id).innerHTML = 'Follow '
             }
         } catch (error) {
@@ -30,7 +38,7 @@ async function verifyFollow(users=document.getElementsByClassName('userResults')
     
 }
 
-async function follow(followingId){
+async function follow(followingId, fromList=false){
     followingId = parseInt(followingId)
     console.log(followingId)
 
@@ -39,7 +47,7 @@ async function follow(followingId){
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
                     try {
-                        let follow = await axios.post('https://server.mswareg.com/followUser', {
+                        let follow = await axios.post('http://192.168.2.106:8000/followUser', {
                             userId,
                             followingId: followingId
                         }, {
@@ -48,10 +56,14 @@ async function follow(followingId){
                             }
                         })
                         if (follow.data.follow) {
-                            document.getElementById('follow' + followingId).classList = 'followed-button';
+                            if (!fromList) {
+                                document.getElementById('follow' + followingId).classList = 'followed-button';
+                            }
                             document.getElementById('follow' + followingId).innerHTML = 'Followed <i class="fa-solid fa-check"></i> '
                         } else {
+                             if (!fromList) {
                             document.getElementById('follow' + followingId).classList = 'follow-button';
+                            }
                             document.getElementById('follow' + followingId).innerHTML = 'Follow '
                         }
 

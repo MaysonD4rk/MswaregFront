@@ -80,7 +80,7 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
         
         if (!pixKey || pixKey == ' '){
             alert('Não é possivel retirar sem registrar uma chave pix, irei te redirecionar para que possa habilitar sua chave pix.');
-            window.location.href = "https://mswareg.mswareg.com/accountSettings"
+            window.location.href = "http://192.168.2.106:8080/accountSettings"
             return false
         }
         
@@ -98,7 +98,7 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
                 authToken = cookie.split('=');
                 if (authToken[0] == 'authToken') {
                     try {
-                        const request = await axios.post('https://server.mswareg.com/withdrawRequest', { userId, value: withdrawValue }, {
+                        const request = await axios.post('http://192.168.2.106:8000/withdrawRequest', { userId, value: withdrawValue }, {
                             headers: {
                                 'authorization': `Bearer ${authToken[1]}`
                             }

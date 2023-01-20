@@ -19,22 +19,22 @@
 
             offsetArray = querys[1].split('=')
             if (offsetArray[1] == 'NaN') {
-                window.location.href = `https://mswareg.mswareg.com/search?${querys[0]}&offset=1`
+                window.location.href = `http://192.168.2.106:8080/search?${querys[0]}&offset=1`
             }
             if (parseInt(offsetArray[1]) < 0) {
-                window.location.href = `https://mswareg.mswareg.com/search?${querys[0]}&offset=0`
+                window.location.href = `http://192.168.2.106:8080/search?${querys[0]}&offset=0`
             }
             console.log(offsetArray)
             
             offNum = offsetArray[1] == undefined || parseInt(offsetArray[1]) < 0 ? 0 : parseInt(offsetArray[1]);
             
-            nextLocation = `https://mswareg.mswareg.com/${sep[0]}?${querys[0]}&offset=${offNum}`
+            nextLocation = `http://192.168.2.106:8080/${sep[0]}?${querys[0]}&offset=${offNum}`
 
         }else{
             offsetArray = sep[1].split('=')
             offNum = offsetArray[1] == undefined || offsetArray[1]<0 ? 0 : parseInt(offsetArray[1]);
 
-            nextLocation = `https://mswareg.mswareg.com/${sep[0]}?offset=${offNum}`
+            nextLocation = `http://192.168.2.106:8080/${sep[0]}?offset=${offNum}`
 
         }
 
@@ -58,14 +58,14 @@ function nextPreview(order, search=false){
                     offNum += 1
             
                     if (querys.length>1) {
-                        nextLocation = `https://mswareg.mswareg.com/${sep[0]}?${querys[0]}&offset=${offNum}`;
+                        nextLocation = `http://192.168.2.106:8080/${sep[0]}?${querys[0]}&offset=${offNum}`;
                     }else{
-                        nextLocation = `https://mswareg.mswareg.com/${sep[0]}?offset=${offNum}`;
+                        nextLocation = `http://192.168.2.106:8080/${sep[0]}?offset=${offNum}`;
                     }
             
                     
                     if (sep.length<2) {
-                        window.location.href = `https://mswareg.mswareg.com/${sep[0]}?offset=1`;
+                        window.location.href = `http://192.168.2.106:8080/${sep[0]}?offset=1`;
                     }else{
                         window.location.href = nextLocation;
                     }
@@ -79,12 +79,12 @@ function nextPreview(order, search=false){
                     }
             
                     if (querys.length > 1) {
-                        nextLocation = `https://mswareg.mswareg.com/${sep[0]}?${querys[0]}&offset=${offNum}`;
+                        nextLocation = `http://192.168.2.106:8080/${sep[0]}?${querys[0]}&offset=${offNum}`;
                     } else {
-                        nextLocation = `https://mswareg.mswareg.com/${sep[0]}?offset=${offNum}`;
+                        nextLocation = `http://192.168.2.106:8080/${sep[0]}?offset=${offNum}`;
                     }
                     if (sep.length < 2) {
-                        window.location.href = `https://mswareg.mswareg.com/${sep[0]}?offset=0`;
+                        window.location.href = `http://192.168.2.106:8080/${sep[0]}?offset=0`;
                     } else {
                         window.location.href = nextLocation;
                     }
@@ -98,15 +98,15 @@ function nextPreview(order, search=false){
                     console.log(sep)
                     if (!!document.getElementById('search')) {
                         if (sep[0] != 'sendMsg') {
-                            location.href = `https://mswareg.mswareg.com/search?ideaQuery=${document.getElementById('search').value}&offset=${offNum}`;
+                            location.href = `http://192.168.2.106:8080/search?ideaQuery=${document.getElementById('search').value}&offset=${offNum}`;
                         }else{
-                            location.href = `https://mswareg.mswareg.com/search?msgByUsernameQuery=${document.getElementById('search').value}&offset=${offNum}`;
+                            location.href = `http://192.168.2.106:8080/search?msgByUsernameQuery=${document.getElementById('search').value}&offset=${offNum}`;
                         }
                     } else {
                         if (sep[0] != 'sendMsg') {
-                            location.href = `https://mswareg.mswareg.com/search?ideaQuery=${querys[0]}&offset=${offNum}`;
+                            location.href = `http://192.168.2.106:8080/search?ideaQuery=${querys[0]}&offset=${offNum}`;
                         } else {
-                            location.href = `https://mswareg.mswareg.com/search?msgByUsernameQuery=${querys[0]}&offset=${offNum}`;
+                            location.href = `http://192.168.2.106:8080/search?msgByUsernameQuery=${querys[0]}&offset=${offNum}`;
                         }
                     }
                 } else {
@@ -114,16 +114,16 @@ function nextPreview(order, search=false){
                     offNum -= 1
                     if (!!document.getElementById('search')) {
                         if (sep[0] != 'sendMsg') {
-                            location.href = `https://mswareg.mswareg.com/search?ideaQuery=${document.getElementById('search').value}&offset=${offNum}`;
+                            location.href = `http://192.168.2.106:8080/search?ideaQuery=${document.getElementById('search').value}&offset=${offNum}`;
                         } else {
-                            location.href = `https://mswareg.mswareg.com/search?msgByUsernameQuery=${document.getElementById('search').value}&offset=0`;
+                            location.href = `http://192.168.2.106:8080/search?msgByUsernameQuery=${document.getElementById('search').value}&offset=0`;
                         }
                     } else {
                         if (sep[0] != 'sendMsg') {
-                            location.href = `https://mswareg.mswareg.com/search?ideaQuery=${querys[0]}&offset=${offNum}`;
+                            location.href = `http://192.168.2.106:8080/search?ideaQuery=${querys[0]}&offset=${offNum}`;
                         } else {
                             console.log('entrou aqui')
-                            location.href = `https://mswareg.mswareg.com/search?msgByUsernameQuery=${querys[0]}&offset=${offNum}`;
+                            location.href = `http://192.168.2.106:8080/search?msgByUsernameQuery=${querys[0]}&offset=${offNum}`;
                         }
                     }
                 }
@@ -133,14 +133,14 @@ function nextPreview(order, search=false){
                 offNum += 1
 
                 if (querys.length > 1) {
-                    nextLocation = `https://mswareg.mswareg.com/${sep[0]}?${querys[0]}&offset=${offNum}`;
+                    nextLocation = `http://192.168.2.106:8080/${sep[0]}?${querys[0]}&offset=${offNum}`;
                 } else {
-                    nextLocation = `https://mswareg.mswareg.com/${sep[0]}?offset=${offNum}`;
+                    nextLocation = `http://192.168.2.106:8080/${sep[0]}?offset=${offNum}`;
                 }
 
 
                 if (sep.length < 2) {
-                    window.location.href = `https://mswareg.mswareg.com/${sep[0]}?offset=1`;
+                    window.location.href = `http://192.168.2.106:8080/${sep[0]}?offset=1`;
                 } else {
                     window.location.href = nextLocation;
                 }
@@ -154,12 +154,12 @@ function nextPreview(order, search=false){
                 }
 
                 if (querys.length > 1) {
-                    nextLocation = `https://mswareg.mswareg.com/${sep[0]}?${querys[0]}&offset=${offNum}`;
+                    nextLocation = `http://192.168.2.106:8080/${sep[0]}?${querys[0]}&offset=${offNum}`;
                 } else {
-                    nextLocation = `https://mswareg.mswareg.com/${sep[0]}?offset=${offNum}`;
+                    nextLocation = `http://192.168.2.106:8080/${sep[0]}?offset=${offNum}`;
                 }
                 if (sep.length < 2) {
-                    window.location.href = `https://mswareg.mswareg.com/${sep[0]}?offset=0`;
+                    window.location.href = `http://192.168.2.106:8080/${sep[0]}?offset=0`;
                 } else {
                     window.location.href = nextLocation;
                 }
@@ -175,15 +175,15 @@ function nextPreview(order, search=false){
             console.log(currentQuery)
             if (currentQuery[0] == 'msgByUsernameQuery') {
                 if (!!document.getElementById('search')) {
-                    location.href = `https://mswareg.mswareg.com/search?msgByUsernameQuery=${currentQuery[1]}&offset=${offNum}`;
+                    location.href = `http://192.168.2.106:8080/search?msgByUsernameQuery=${currentQuery[1]}&offset=${offNum}`;
                 } else {
-                    location.href = `https://mswareg.mswareg.com/search?${querys[0]}&offset=${offNum}`;
+                    location.href = `http://192.168.2.106:8080/search?${querys[0]}&offset=${offNum}`;
                 }
             }else{
                 if (!!document.getElementById('search')) {
-                    location.href = `https://mswareg.mswareg.com/search?ideaQuery=${document.getElementById('search').value}&offset=${offNum}`;
+                    location.href = `http://192.168.2.106:8080/search?ideaQuery=${document.getElementById('search').value}&offset=${offNum}`;
                 }else{
-                    location.href = `https://mswareg.mswareg.com/search?${querys[0]}&offset=${offNum}`;
+                    location.href = `http://192.168.2.106:8080/search?${querys[0]}&offset=${offNum}`;
                 }
             }
         }else{
@@ -193,15 +193,15 @@ function nextPreview(order, search=false){
             console.log(currentQuery)
             if (currentQuery[0] == 'msgByUsernameQuery') {
                 if (!!document.getElementById('search')) {
-                    location.href = `https://mswareg.mswareg.com/search?msgByUsernameQuery=${currentQuery[1]}&offset=${offNum}`;
+                    location.href = `http://192.168.2.106:8080/search?msgByUsernameQuery=${currentQuery[1]}&offset=${offNum}`;
                 } else {
-                    location.href = `https://mswareg.mswareg.com/search?${querys[0]}&offset=${offNum}`;
+                    location.href = `http://192.168.2.106:8080/search?${querys[0]}&offset=${offNum}`;
                 }
             } else {
                 if (!!document.getElementById('search')) {
-                    location.href = `https://mswareg.mswareg.com/search?ideaQuery=${document.getElementById('search').value}&offset=${offNum}`;
+                    location.href = `http://192.168.2.106:8080/search?ideaQuery=${document.getElementById('search').value}&offset=${offNum}`;
                 } else {
-                    location.href = `https://mswareg.mswareg.com/search?${querys[0]}&offset=${offNum}`;
+                    location.href = `http://192.168.2.106:8080/search?${querys[0]}&offset=${offNum}`;
                 }
             }
         }

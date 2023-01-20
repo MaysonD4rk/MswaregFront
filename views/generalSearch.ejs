@@ -20,6 +20,10 @@
     <%if(offsetBtn){%>
     <script src="/js/nextPreview.js"></script>
     <%}%>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2467408169618011"
+        crossorigin="anonymous"></script>
+
 </head>
 <body>
     <input type="hidden" id="userId" value="<%=id%>">
@@ -138,7 +142,7 @@
                                 <%}%>
                             </div>
                         <div class="user-result-card-info">
-                            <a href="https://mswareg.mswareg.com/profile/<%=item.username%>">@<%= item.username %></a>
+                            <a href="http://192.168.2.106:8080/profile/<%=item.username%>">@<%= item.username %></a>
                             <button id="follow<%=item.id%>" onclick="follow('<%=item.id%>')">Follow</button>
                         </div>
                     </div>

@@ -9,7 +9,7 @@ async function editAboutMe(id){
         authToken = cookie.split('=');
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-            var editAboutMe = await axios.put('https://server.mswareg.com/updateUserInfo', {
+            var editAboutMe = await axios.put('http://192.168.2.106:8000/updateUserInfo', {
                 userId: parseInt(id),
                 aboutMe: document.getElementById('aboutMeTextArea').value
             }, {
@@ -88,5 +88,123 @@ if (!!document.getElementById(`follow${currentUser}`)) {
         follow(currentUser)
     }
 }
+let loadFollowingIconShowed = false;
+let loadFollowersIconShowed = false;
+let followingOffset = 1;
+let followerOffset = 1;
+
+async function limitList(tab) {
+    if (tab == 'following') {
+        
+        loadFollowingIconShowed = false
+        let offset = (followingOffset*20)
+        document.getElementsByClassName('loadIcon')[0].remove()
+
+        let loadList = await axios.get('http://192.168.2.106:8000/getUsersRelations/'+offset+'/'+userId+'/follower')
+        console.log(loadList.data)
+        if (loadList.data.length < 1) {
+            loadFollowingIconShowed = true
+            console.log('tem mais porra nenhuma mlk')
+            return
+        }
+
+        loadList.data.forEach(item => {
+            let div = document.createElement('div');
+            div.innerHTML = `
+               <div class="user-item" id="user${item.following_id}">
+                        <div>
+                            <div class="user-img"></div>
+                        </div>
+                            <div class="user-username">
+                            @${item.followingUsername}
+                        </div>
+                        
+                        <button onclick="follow(${item.following_id}, true)" id="follow${item.following_id}" class="followed-button-modal"></button>
+                    </div>
+                `;
+            verifyFollow(document.getElementsByClassName('user-item'), true)
+            document.getElementsByClassName('user-list')[0].appendChild(div);
+            ++followingOffset
+
+        })
+
+
+        console.log(document.getElementsByClassName('user-list')[0].scrollTop)
+        console.log(document.getElementsByClassName('user-list')[0].scrollHeight)
+
+
+    } else {
+
+        loadFollowingIconShowed = false
+        let offset = (followerOffset * 20)
+        document.getElementsByClassName('loadIcon')[0].remove()
+
+        let loadList = await axios.get('http://192.168.2.106:8000/getUsersRelations/' + offset + '/' + userId + '/following')
+        console.log(loadList.data)
+        if (loadList.data.length < 1) {
+            loadFollowingIconShowed = true
+            document.getElementsByClassName('loadIcon')[0].remove()
+            return
+        }
+
+        loadList.data.forEach(item => {
+            let div = document.createElement('div');
+            div.innerHTML = `
+               <div class="user-item" id="user${item.following_id}">
+                        <div>
+                            <div class="user-img"></div>
+                        </div>
+                            <div class="user-username">
+                            @${item.followerUsername}
+                        </div>
+                        
+                        <button onclick="follow(${item.following_id})" id="follow${item.following_id}" class="followed-button-modal">Following</button>
+                    </div>
+                `;
+            verifyFollow(document.getElementsByClassName('user-item'), true)
+
+            document.getElementsByClassName('user-list')[1].appendChild(div);
+            ++followerOffset
+
+        })
+
+
+        console.log(document.getElementsByClassName('user-list')[1].scrollTop)
+        console.log(document.getElementsByClassName('user-list')[1].scrollHeight)
+
+
+    }
+}
+
+
+setInterval(() => {
+    
+    if ((document.getElementsByClassName('user-list')[0].scrollHeight - document.getElementsByClassName('user-list')[0].scrollTop) == 343) {
+        if (!loadFollowingIconShowed) {
+
+            let loadIcon = document.createElement('i');
+            loadIcon.classList = 'fa-solid fa-rotate-right loadIcon'
+            console.log(loadIcon)
+            loadIcon.onclick = () => { limitList('following') }
+            document.getElementsByClassName('follow-modal-container')[0].appendChild(loadIcon)
+            loadFollowingIconShowed = true
+        }
+    }
+
+    if ((document.getElementsByClassName('user-list')[1].scrollHeight - document.getElementsByClassName('user-list')[1].scrollTop) == 343) {
+        if (!loadFollowersIconShowed) {
+
+            let loadIcon = document.createElement('i');
+            loadIcon.classList = 'fa-solid fa-rotate-right loadIcon'
+            console.log(loadIcon)
+            loadIcon.onclick = () => { limitList('followers') }
+            document.getElementsByClassName('follow-modal-container')[1].appendChild(loadIcon)
+            loadFollowersIconShowed = true
+        }
+    }
+
+
+    //console.log('entrou aqui')
+}, 1000);
 
 
