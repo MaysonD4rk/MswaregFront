@@ -46,6 +46,7 @@
             <button><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         <div class="asks">
+            <%if(isLogged){%>
             <div class="ask-item">
                 
                 <div class="ask-item-img" style="background-image: url(<%=userData.profilePhotoUrl%>) ;"></div>
@@ -72,6 +73,7 @@
                     <button onclick="writeMsg('<%=id%>')">ENVIAR</button>
                 </div>
             </div>
+            <%}%>
 
             <% if(msgs != undefined){msgs.forEach(msg => { %>
                 <div class="ask-item">

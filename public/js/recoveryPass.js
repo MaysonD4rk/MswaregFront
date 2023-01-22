@@ -5,12 +5,12 @@ function confirmPassChange(token, email) {
 
     if (pass == confirmPass) {
 
-        axios.post('http://192.168.2.106:8000/changePass', {
+        axios.post('http://192.168.2.104:8000/changePass', {
             token: token,
             email: email,
             password: pass
         }).then(res => {
-            window.location.href = 'http://192.168.2.106:8080/login'
+            window.location.href = 'http://192.168.2.104:8080/login'
         }).catch(err => {
             console.log(err)
         })
@@ -26,7 +26,7 @@ function sendEmail() {
     var email = document.getElementsByName('email')[0].value;
 
     console.log(email)
-    axios.post('http://192.168.2.106:8000/passrecovery', {
+    axios.post('http://192.168.2.104:8000/passrecovery', {
         email
     }).then(res => {
         console.log(res);

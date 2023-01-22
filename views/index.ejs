@@ -30,8 +30,9 @@
 </head>
 <body>
     <input type="hidden" id="userId" value="<%=id%>">
+    <%if(typeof userData.currentcode != 'undefined'){%>
     <input type="hidden" id="currentcode" value="<%=userData.currentcode%>">
-    
+    <%}%>
     <%- include('./partials/header.ejs') %>
     <% if(typeof(maxIdeasWriten) !='undefined' ){ %>
         <div class="errorMsg">
@@ -49,6 +50,26 @@
     
     <!-- ////////////  ---MENU---    -->
     
+
+    <!-- PERGAMINHO DOS PATCHS -->
+
+        <div id="patch-modal">
+            <div id="patch-modal-container">
+                <ul>
+                    <li><h3>Patch de atualização 0.1</h3></li><br>
+                    <li>* É possível acessar o site sem logar</li><br>
+                    <li>* É possível visualizar "followers" e "following" dos usúarios</li><br>
+                    <li>* Em breve site apresentará anúncios</li><br><br>
+                    <li style="color: blue;">* Média de investimentos foram mais baixas do que esperado, estamos focados em melhorar a experiência do usuário :)</li><br>
+                    <li>* Bugs reportados foram corrigidos! Se encontrar um bug, pfv reporte em "maysondamarante@mswareg.com" </li>
+                    <li onclick="closeModal('patch-modal')" style="background-color: red;color:white;">CLOSE X</li>
+                </ul>
+            </div>
+        </div>
+
+    <!-- PERGAMINHO DOS PATCHS -->
+
+
     
     
     <!-- FEEDABCK - REPORT SCREEN  -->
@@ -120,10 +141,10 @@
     <!-- ////////// FEEDABCK - REPORT SCREEN   -->
 
 
-
+    <% if(!!isLogged){%>
     <!-- FILTER BUTTON -->
     <span onclick="openFilterModal()" class="filter-icon"><i class="fa-solid fa-filter"></i></span>
-
+    
     <div class="filter">
         <span onclick="closeFilterModal()">X</span>
         <div class="filter-box">
@@ -201,6 +222,8 @@
     </div>
     <!-- FILTER BUTTON -->
 
+    <%}%>
+
         <div class="searchBar">
             
                 <input id="search" type="text" placeholder=" &#xF002;">
@@ -228,12 +251,12 @@
                       
                     </div>
                     <div class="card-info">
-                        <i onclick="likePub('<%= item.id %>')" class="fa-solid fa-heart like"></i>
+                        <%if(isLogged){%><i onclick="likePub('<%= item.id %>')" class="fa-solid fa-heart like"></i><%}%>
                         <div>
                             <p><%= item.initialAmountRequired %></p>
                             <progress value="<%=item.investment%>" max="<%= item.initialAmountRequired %>"></progress>
                         </div>
-                            <i onclick="favoritePub('<%= item.id %>')" class="fa-solid fa-star like"></i>
+                            <%if(isLogged){%><i onclick="favoritePub('<%= item.id %>')" class="fa-solid fa-star like"></i><%}%>
                     </div>
                 </div>
            <% })}else{ %>

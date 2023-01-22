@@ -29,21 +29,25 @@ app.get('/home', async (req, res)=>{
     var offset = req.query['offset'] == undefined || req.query['offset']<0 ? req.query['offset'] = 0 : req.query['offset'];
     var filter = !!req.query['filter'] ? req.query['filter'] : false;
 
+    let isLogged;
 
-    if (sess.userId == undefined) {
-        res.redirect('/login')
-        return
+    if (sess.userId == undefined || sess.userId == 0) {
+        isLogged = false;
+        sess.userId = 0
+    }else{
+        isLogged = true;
     }
 
     axios({
             method: "get",
-            url: "http://192.168.2.106:8000/user/"+sess.userId
+            url: "http://192.168.2.104:8000/user/"+sess.userId
         }).then(async (data)=>{
             
+            console.log(data);
             
             var posts = await axios({
                 method: "get",
-                url: `http://192.168.2.106:8000/home/${sess.userId}/${offset*8}/${filter}`
+                url: `http://192.168.2.104:8000/home/${sess.userId}/${offset*8}/${filter}`
             })
 
             
@@ -54,7 +58,8 @@ app.get('/home', async (req, res)=>{
                     userData: data.data[0],
                     posts: posts.data.row,
                     offset: 0,
-                    maxIdeasWriten: true
+                    maxIdeasWriten: true,
+                    isLogged
                 });
             }else{
                 res.render('index',{
@@ -62,7 +67,8 @@ app.get('/home', async (req, res)=>{
                     email: sess.email,
                     userData: data.data[0],
                     posts: posts.data.row,
-                    offset: 0
+                    offset: 0,
+                    isLogged
                 });
             }
 
@@ -95,7 +101,7 @@ app.post('/login', (req, res)=>{
 
     axios({
         method: "post",
-        url: "http://192.168.2.106:8000/login",
+        url: "http://192.168.2.104:8000/login",
         data: {
             email,
             password,
@@ -137,7 +143,7 @@ app.post('/register', async (req, res)=>{
     var {username, email, password} = req.body;
 
     try {
-        const result = await axios.post("http://192.168.2.106:8000/user",{
+        const result = await axios.post("http://192.168.2.104:8000/user",{
             username,
             email,
             password
@@ -159,22 +165,27 @@ app.post('/register', async (req, res)=>{
 })
 
 app.get('/trend', async (req,res)=>{
-    const pubList = await axios.get('http://192.168.2.106:8000/listTrendPub');
+    const pubList = await axios.get('http://192.168.2.104:8000/listTrendPub');
     
     const sess = req.session;
-    if (sess.userId == undefined) {
-        res.redirect('/login')
-        return
+    let isLogged;
+
+    if (sess.userId == undefined || sess.userId == 0) {
+        isLogged = false;
+        sess.userId = 0
+    }else{
+        isLogged = true;
     }
     axios({
         method: "get",
-        url: "http://192.168.2.106:8000/user/" + sess.userId
+        url: "http://192.168.2.104:8000/user/" + sess.userId
     }).then(async (data) => {
 
         res.render('trend', {
             id: sess.userId,
             userData: data.data[0],
-            pubList: pubList.data.result
+            pubList: pubList.data.result,
+            isLogged
         })
     })
 })
@@ -190,12 +201,12 @@ app.get('/writeIdea', async (req, res) => {
 
     axios({
         method: "get",
-        url: "http://192.168.2.106:8000/user/" + sess.userId
+        url: "http://192.168.2.104:8000/user/" + sess.userId
     }).then(async (data) => {
 
         if (!!req.query.editIdeaId) {
             try {
-                const post = await axios.get('http://192.168.2.106:8000/findPub/' + req.query.editIdeaId);
+                const post = await axios.get('http://192.168.2.104:8000/findPub/' + req.query.editIdeaId);
                 
                 if (post.data.pubData.userId == sess.userId) {
                     try {
@@ -217,7 +228,7 @@ app.get('/writeIdea', async (req, res) => {
             }
         } else {
             try {
-                let count = await axios.get('http://192.168.2.106:8000/countPosts/' + sess.userId);
+                let count = await axios.get('http://192.168.2.104:8000/countPosts/' + sess.userId);
                 if (count.data.result >= 4 && data.data[0].role == 0) {
                     res.redirect('/home?maxIdeasWriten')
                 } else {
@@ -241,16 +252,20 @@ app.get('/sendMsg', async (req, res) => {
 
     let offset = req.query['offset'] == undefined || req.query['offset'] < 0 ? req.query['offset'] = 0 : req.query['offset'];
 
-    if (sess.userId == undefined) {
-        res.redirect('/login')
-        return
+    let isLogged;
+
+    if (sess.userId == undefined || sess.userId == 0 ) {
+        isLogged = false;
+        sess.userId = 0
+    } else {
+        isLogged = true;
     }
-    let msgs = await axios.get(`http://192.168.2.106:8000/listMsgs/${offset*15}`);
+    let msgs = await axios.get(`http://192.168.2.104:8000/listMsgs/${offset*15}`);
 
     
     axios({
         method: "get",
-        url: "http://192.168.2.106:8000/user/" + sess.userId
+        url: "http://192.168.2.104:8000/user/" + sess.userId
     }).then(async (data) => {
 
         
@@ -258,7 +273,8 @@ app.get('/sendMsg', async (req, res) => {
     res.render('sendMsg', {
         id: sess.userId,
         msgs: msgs.data.row,
-        userData: data.data[0]
+        userData: data.data[0],
+        isLogged
     })})
     
 })
@@ -267,47 +283,54 @@ app.get('/sendMsg', async (req, res) => {
 app.get('/profile/:username', async (req,res)=>{
     sess = req.session
     var userProfile = req.params.username
+
+    if (req.params.username == 'notLogged') {
+        res.redirect('/login');
+        return
+    }
+
     let offset;
     if (req.query.offset == undefined || req.query.offset == NaN || req.query.offset == "NaN" || req.query.offset < 0) {
         offset = 0;
     }else{
         offset = req.query.offset
     }
-    if (sess.userId == undefined) {
-        res.redirect('/login')
-        return
-    }
+    let isLogged;
 
+    if (sess.userId == undefined || sess.userId == 0) {
+        isLogged = false;
+        sess.userId = 0
+    } else {
+        isLogged = true;
+    }
     let followingData;
     let followerData;
 
-    try {
-        followingData = await axios.get('http://192.168.2.106:8000/getUsersRelations/0/' + sess.userId + '/following');
-        followerData = await axios.get('http://192.168.2.106:8000/getUsersRelations/0/' + sess.userId + '/follower');
-    } catch (error) {
-        console.log(error)
-    }
     
-
-
+    
+    
     try {
-        let userProfileData = await axios.get('http://192.168.2.106:8000/getByUsername/'+userProfile);
+        let userProfileData = await axios.get('http://192.168.2.104:8000/getByUsername/'+userProfile);
         
         if (userProfileData.data.result.status) {
+            try {
+                followingData = await axios.get('http://192.168.2.104:8000/getUsersRelations/0/' + userProfileData.data.result.usernameRow.usersTable[0].id + '/following');
+                followerData = await axios.get('http://192.168.2.104:8000/getUsersRelations/0/' + userProfileData.data.result.usernameRow.usersTable[0].id + '/follower');
+            } catch (error) {
+                console.log(error)
+            }
             
             axios({
                 method: "get",
-                url: "http://192.168.2.106:8000/user/" + sess.userId
+                url: "http://192.168.2.104:8000/user/" + sess.userId
             }).then(async (data) => {
                 axios({
                     method: 'get',
-                    url: "http://192.168.2.106:8000/getFollows/" + userProfileData.data.result.usernameRow.usersTable[0].id
+                    url: "http://192.168.2.104:8000/getFollows/" + userProfileData.data.result.usernameRow.usersTable[0].id
                 }).then(async(followData)=>{
                     
                     
-                    console.log(followingData.data[1].profilePhoto)
-                    
-                    const contentList = await axios.get(`http://192.168.2.106:8000/profilePageContentList/${userProfileData.data.result.usernameRow.usersTable[0].id}/`+offset)
+                    const contentList = await axios.get(`http://192.168.2.104:8000/profilePageContentList/${userProfileData.data.result.usernameRow.usersTable[0].id}/`+offset)
                     
                     res.render('profilePage.ejs', {
                         id: sess.userId,
@@ -316,7 +339,8 @@ app.get('/profile/:username', async (req,res)=>{
                         userProfile: { users: userProfileData.data.result.usernameRow.usersTable[0], userInfo: userProfileData.data.result.usernameRow.userinfo[0][0] },
                         contentList: contentList.data.result,
                         following: followerData.data,
-                        followers: followingData.data
+                        followers: followingData.data,
+                        isLogged
                     })
 
                 })
@@ -348,7 +372,7 @@ app.get('/accountSettings', (req, res) => {
 
     axios({
         method: "get",
-        url: "http://192.168.2.106:8000/user/" + sess.userId
+        url: "http://192.168.2.104:8000/user/" + sess.userId
     }).then(async (data) => {
         
 
@@ -384,7 +408,7 @@ app.get('/changePhoto', (req, res)=>{
 
     axios({
         method: "get",
-        url: "http://192.168.2.106:8000/user/" + sess.userId
+        url: "http://192.168.2.104:8000/user/" + sess.userId
     }).then(async (data) => {
         
 
@@ -408,7 +432,7 @@ app.get('/addPubImg/:pubIdea', (req, res) => {
 
     axios({
         method: "get",
-        url: "http://192.168.2.106:8000/user/" + sess.userId
+        url: "http://192.168.2.104:8000/user/" + sess.userId
     }).then(async (data) => {
         
 
@@ -433,12 +457,12 @@ app.get('/seusFeedbacks',(req, res)=>{
 
     axios({
         method: "get",
-        url: "http://192.168.2.106:8000/user/" + sess.userId
+        url: "http://192.168.2.104:8000/user/" + sess.userId
     }).then(async (data) => {
 
         
 
-        const feedbackList = await axios.get('http://192.168.2.106:8000/listFeedbacks/'+sess.userId+'/0')
+        const feedbackList = await axios.get('http://192.168.2.104:8000/listFeedbacks/'+sess.userId+'/0')
         
         
 
@@ -449,12 +473,12 @@ app.get('/seusFeedbacks',(req, res)=>{
                 feedbackList: feedbackList.data.result
             })
         }else{
-            const reportsList = await axios.get('http://192.168.2.106:8000/listReports/0', {
+            const reportsList = await axios.get('http://192.168.2.104:8000/listReports/0', {
                 headers: {
                     'authorization': `Bearer ${req.cookies.authToken}`
                 }
             });
-            const withdrawalList = await axios.get('http://192.168.2.106:8000/listWithdrawalRequests/0',{
+            const withdrawalList = await axios.get('http://192.168.2.104:8000/listWithdrawalRequests/0',{
                 headers: {
                     'authorization': `Bearer ${req.cookies.authToken}`
                 }
@@ -476,7 +500,7 @@ app.get('/seusFeedbacks',(req, res)=>{
 app.get('/getIdeaById/:ideaId', async (req,res)=>{
     const ideaId = req.params.ideaId
     try {
-        let idea = await axios.get(`http://192.168.2.106:8000/findPub/${ideaId}`);
+        let idea = await axios.get(`http://192.168.2.104:8000/findPub/${ideaId}`);
         
     
         res.render('idea', {
@@ -491,10 +515,15 @@ app.get('/getIdeaById/:ideaId', async (req,res)=>{
 
 app.get('/search', async (req, res) => {
     sess = req.session
-    if (sess.userId == undefined) {
-        res.redirect('/login')
-        return
+    let isLogged;
+
+    if (sess.userId == undefined || sess.userId == 0) {
+        isLogged = false;
+        sess.userId = 0
+    } else {
+        isLogged = true;
     }
+    
 
     let offset = req.query.offset;
     if (offset == undefined || offset == NaN || offset == "NaN" || offset == null || offset < 0) {
@@ -505,22 +534,24 @@ app.get('/search', async (req, res) => {
     console.log(offset)
     axios({
         method: "get",
-        url: "http://192.168.2.106:8000/user/" + sess.userId
+        url: "http://192.168.2.104:8000/user/" + sess.userId
     }).then(async (data) => {
         
         if(Object.keys(req.query).length < 1){
             res.render('generalSearch', {
                 id: sess.userId,
                 userData: data.data[0],
-                offsetBtn: false
+                offsetBtn: false,
+                isLogged
             })
         }else{
     
             if(Object.keys(req.query)[0] == 'userQuery'){
                 
-                let response = await axios.get('http://192.168.2.106:8000/getSearchListUser/0/'+req.query.userQuery)
+                let response = await axios.get('http://192.168.2.104:8000/getSearchListUser/0/'+req.query.userQuery)
                 
-                
+                console.log(response)
+
 
                 res.render('generalSearch', {
                     id: sess.userId,
@@ -528,12 +559,14 @@ app.get('/search', async (req, res) => {
                     usersList: response.data.results,
                     queryType: Object.keys(req.query)[0],
                     query: req.query.userQuery,
-                    offsetBtn: false
+                    offsetBtn: false,
+                    isLogged
                 })
 
             }else if (Object.keys(req.query)[0] == 'msgQuery'){
-                let response = await axios.get('http://192.168.2.106:8000/searchForMsg/0/' + req.query.msgQuery)
-                
+                let response = await axios.get('http://192.168.2.104:8000/searchForMsg/0/' + req.query.msgQuery)
+                console.log(response)
+
                 //
                 res.render('generalSearch', {
                     id: sess.userId,
@@ -541,12 +574,15 @@ app.get('/search', async (req, res) => {
                     msgList: response.data.result,
                     queryType: Object.keys(req.query)[0],
                     query: req.query.msgQuery,
-                    offsetBtn: false
+                    offsetBtn: false,
+                    isLogged
                 })
     
             } else if (Object.keys(req.query)[0] == 'msgByUsernameQuery'){
                 try {
-                    let response = await axios.get('http://192.168.2.106:8000/searchMsgList/' + (offset*15) + '/' + req.query.msgByUsernameQuery)
+                    let response = await axios.get('http://192.168.2.104:8000/searchMsgList/' + (offset*15) + '/' + req.query.msgByUsernameQuery)
+                    console.log(response)
+
                     if (response.data.result.row != undefined) {
                         if (req.query.maxData != undefined) {
                             res.render('generalSearch', {
@@ -556,7 +592,8 @@ app.get('/search', async (req, res) => {
                                     queryType: Object.keys(req.query)[0],
                                     query: req.query.msgByUsernameQuery,
                                     offsetBtn: true,
-                                    maxData: true
+                                    maxData: true,
+                                    isLogged
                                 })
                         }else{
                             res.render('generalSearch', {
@@ -565,7 +602,8 @@ app.get('/search', async (req, res) => {
                                 msgList: response.data.result.row,
                                 queryType: Object.keys(req.query)[0],
                                 query: req.query.msgByUsernameQuery,
-                                offsetBtn: true
+                                offsetBtn: true,
+                                isLogged
                             })
                         }
                         }else{
@@ -581,8 +619,8 @@ app.get('/search', async (req, res) => {
                 
                 try {
                     
-                    let response = await axios.get('http://192.168.2.106:8000/searchPost/'+(offset*8)+'/'+req.query.ideaQuery)
-                    
+                    let response = await axios.get('http://192.168.2.104:8000/searchPost/'+(offset*8)+'/'+req.query.ideaQuery)
+                    console.log(response.data)
                     if (!!response.data.result) {
                         if (req.query.maxData != undefined) {
                             
@@ -593,7 +631,8 @@ app.get('/search', async (req, res) => {
                                 queryType: Object.keys(req.query)[0],
                                 query: req.query.ideaQuery,
                                 offsetBtn: true,
-                                maxData: true
+                                maxData: true,
+                                isLogged
                             })
                         }else{
                             res.render('generalSearch', {
@@ -602,7 +641,8 @@ app.get('/search', async (req, res) => {
                                 postList: response.data.result,
                                 queryType: Object.keys(req.query)[0],
                                 query: req.query.ideaQuery,
-                                offsetBtn: true
+                                offsetBtn: true,
+                                isLogged
                             })
 
                         }
@@ -618,7 +658,8 @@ app.get('/search', async (req, res) => {
                 res.render('generalSearch', {
                     id: sess.userId,
                     userData: data.data[0],
-                    offsetBtn: false
+                    offsetBtn: false,
+                    isLogged
                 })
             }
         }
@@ -636,7 +677,7 @@ app.get('/wallet', (req,res)=>{
     }
     axios({
         method: "get",
-        url: "http://192.168.2.106:8000/user/" + sess.userId
+        url: "http://192.168.2.104:8000/user/" + sess.userId
     }).then(async (data) => {
 
     res.render('wallet',{

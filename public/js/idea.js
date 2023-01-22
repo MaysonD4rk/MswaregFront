@@ -7,7 +7,7 @@
         pubId = parseInt(pubId);
 
         try {
-            let likedPub = await axios.get(`http://192.168.2.106:8000/checkLikeFavorite/${pubId}/${userId}`);
+            let likedPub = await axios.get(`http://192.168.2.104:8000/checkLikeFavorite/${pubId}/${userId}`);
             console.log(likedPub)
             if (!!likedPub.data.result.row[0].liked) {
                 document.getElementById(pubId).classList.add('liked');
@@ -38,7 +38,7 @@ async function likePub(pubId) {
 
             try {
                 console.log(`tentando`)
-                var status = await axios.put('http://192.168.2.106:8000/likePub', { pubId, userId }, {
+                var status = await axios.put('http://192.168.2.104:8000/likePub', { pubId, userId }, {
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }
@@ -76,7 +76,7 @@ async function favoritePub(pubId) {
 
             try {
                 console.log(`tentando`)
-                let status = await axios.put('http://192.168.2.106:8000/favoritePub', { userId, pubId }, {
+                let status = await axios.put('http://192.168.2.104:8000/favoritePub', { userId, pubId }, {
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }

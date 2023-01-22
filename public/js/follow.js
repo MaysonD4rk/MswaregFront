@@ -15,7 +15,7 @@ async function verifyFollow(users = document.getElementsByClassName('userResults
         console.log(elementId.split('user'))
         console.log(id)
         try {
-            let follow = await axios.get('http://192.168.2.106:8000/verifyFollow/' + userId + '/' + id);
+            let follow = await axios.get('http://192.168.2.104:8000/verifyFollow/' + userId + '/' + id);
             console.log(follow.data.follow)
             if (follow.data.follow) {
                 if (!fromList) {
@@ -47,7 +47,7 @@ async function follow(followingId, fromList=false){
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
                     try {
-                        let follow = await axios.post('http://192.168.2.106:8000/followUser', {
+                        let follow = await axios.post('http://192.168.2.104:8000/followUser', {
                             userId,
                             followingId: followingId
                         }, {

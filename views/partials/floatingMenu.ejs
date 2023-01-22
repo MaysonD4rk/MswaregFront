@@ -9,6 +9,7 @@
                 <p class="textIcon"><b>log out</b></p>
             </a>
         </div>
+        <% if(!!isLogged){%>
         <div class="menu-item">
             <a href="/seusFeedbacks" class="icon-hover">
                 <i class="fa-solid fa-comments"></i>
@@ -46,7 +47,7 @@
                 <p class="textIcon"><b>R$<%= userData.credits %> </b></p>
             </a>
         </div>
-
+        <%}%>
         
         
     </div>

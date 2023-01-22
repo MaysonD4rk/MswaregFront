@@ -62,7 +62,7 @@
 
                                     </div>
                                     <div class="card-info">
-                                        <i onclick="likePub('<%= item.id %>')" class="fa-solid fa-heart like"></i>
+                                        <%if(isLogged){%><i onclick="likePub('<%= item.id %>')" class="fa-solid fa-heart like"></i><%}%>
                                         <div>
                                             <p>
                                                 <%= item.initialAmountRequired %>
@@ -70,7 +70,7 @@
                                             <progress value="<%=item.investment%>"
                                                 max="<%= item.initialAmountRequired %>"></progress>
                                         </div>
-                                        <i onclick="favoritePub('<%= item.id %>')" class="fa-solid fa-star like"></i>
+                                        <%if(isLogged){%><i onclick="favoritePub('<%= item.id %>')" class="fa-solid fa-star like"></i><%}%>
                                     </div>
                                 </div>
                                 <% })}else{ %>

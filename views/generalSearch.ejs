@@ -115,9 +115,9 @@
                 <i class="fa-solid fa-heart like" onclick="likePub('<%=item.id%>')"></i>
                 <div>
                     <p>
-                        1000
+                        <%=item.initialAmountRequired%>
                     </p>
-                    <progress value="500" max="<%=item.initialAmountRequired%>"></progress>
+                    <progress value="<%=item.investment%>" max="<%=item.initialAmountRequired%>"></progress>
                 </div>
                 <i class="fa-solid fa-star like" onclick="favoritePub('<%=item.id%>')"></i>
             </div>
@@ -142,7 +142,7 @@
                                 <%}%>
                             </div>
                         <div class="user-result-card-info">
-                            <a href="http://192.168.2.106:8080/profile/<%=item.username%>">@<%= item.username %></a>
+                            <a href="http://192.168.2.104:8080/profile/<%=item.username%>">@<%= item.username %></a>
                             <button id="follow<%=item.id%>" onclick="follow('<%=item.id%>')">Follow</button>
                         </div>
                     </div>
