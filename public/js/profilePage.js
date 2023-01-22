@@ -9,7 +9,7 @@ async function editAboutMe(id){
         authToken = cookie.split('=');
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-            var editAboutMe = await axios.put('http://192.168.2.104:8000/updateUserInfo', {
+            var editAboutMe = await axios.put('https://server.mswareg.com/updateUserInfo', {
                 userId: parseInt(id),
                 aboutMe: document.getElementById('aboutMeTextArea').value
             }, {
@@ -100,7 +100,7 @@ async function limitList(tab) {
         let offset = (followingOffset*20)
         document.getElementsByClassName('loadIcon')[0].remove()
 
-        let loadList = await axios.get('http://192.168.2.104:8000/getUsersRelations/'+offset+'/'+userId+'/follower')
+        let loadList = await axios.get('https://server.mswareg.com/getUsersRelations/'+offset+'/'+userId+'/follower')
         console.log(loadList.data)
         if (loadList.data.length < 1) {
             loadFollowingIconShowed = true
@@ -139,7 +139,7 @@ async function limitList(tab) {
         let offset = (followerOffset * 20)
         document.getElementsByClassName('loadIcon')[0].remove()
 
-        let loadList = await axios.get('http://192.168.2.104:8000/getUsersRelations/' + offset + '/' + userId + '/following')
+        let loadList = await axios.get('https://server.mswareg.com/getUsersRelations/' + offset + '/' + userId + '/following')
         console.log(loadList.data)
         if (loadList.data.length < 1) {
             loadFollowingIconShowed = true

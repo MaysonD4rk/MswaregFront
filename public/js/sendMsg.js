@@ -44,7 +44,7 @@ textTo.addEventListener('keydown', (event) => {
         modalUserList.style.display = 'none'
     }
 
-    axios.get('http://192.168.2.104:8000/searchUser/' + document.getElementById('textTo').value)
+    axios.get('https://server.mswareg.com/searchUser/' + document.getElementById('textTo').value)
         .then((res) => {
 
             res.data.result.row.forEach(element => {
@@ -88,7 +88,7 @@ function searchMsg() {
     }
 
 
-    axios.get('http://192.168.2.104:8000/searchMsgList/0/' + document.getElementById('search').value)
+    axios.get('https://server.mswareg.com/searchMsgList/0/' + document.getElementById('search').value)
         .then(msgs => {
 
             msgs.data.result.row.forEach(element => {
@@ -147,7 +147,7 @@ async function writeMsg(senter) {
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
             try {
-                let tryWrite = await axios.post('http://192.168.2.104:8000/writeMsg', { userId: senter, recipientName: recipient, msg }, {
+                let tryWrite = await axios.post('https://server.mswareg.com/writeMsg', { userId: senter, recipientName: recipient, msg }, {
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }

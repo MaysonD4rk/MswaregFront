@@ -374,7 +374,7 @@
                 authToken = cookie.split('=');
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
                     try {
-                        var pub = await axios.post('http://192.168.2.104:8000/pub',{
+                        var pub = await axios.post('https://server.mswareg.com/pub',{
                             title: inputTitle.value, 
                             ideaSummary: inputSummary.value,
                             mainIdea: ideaInfo.content, 
@@ -388,7 +388,7 @@
                         'authorization': `Bearer ${authToken[1]}`
                     }
                 })
-                        window.location.href = `http://192.168.2.104:8080/addPubImg/${pub.data[0]}`;
+                        window.location.href = `https://mswareg.com/addPubImg/${pub.data[0]}`;
                     } catch (error) {
                         document.write(error.response.status)
                         console.log(error)
@@ -410,7 +410,7 @@ async function confirmEditIdea() {
             authToken = cookie.split('=');
             if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
                 try {
-                    var pub = await axios.put('http://192.168.2.104:8000/pub', {
+                    var pub = await axios.put('https://server.mswareg.com/pub', {
                         pubId,
                         title: inputTitle.value,
                         ideaSummary: inputSummary.value,
@@ -425,7 +425,7 @@ async function confirmEditIdea() {
                             'authorization': `Bearer ${authToken[1]}`
                         }
                     })
-                    window.location.href = `http://192.168.2.104:8080/addPubImg/${pubId}`;
+                    window.location.href = `https://mswareg.com/addPubImg/${pubId}`;
                 } catch (error) {
                     console.log(error)
                 }
