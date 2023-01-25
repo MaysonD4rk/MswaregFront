@@ -19,16 +19,15 @@ function confirmPassChange(token, email) {
         alert('as senhas não são compatíveis')
     }
 
-    console.log(token)
+    
 }
 
 function sendEmail() {
     var email = document.getElementsByName('email')[0].value;
 
-    console.log(email)
     axios.post('https://server.mswareg.com/passrecovery', {
         email
     }).then(res => {
-        console.log(res);
+        return
     })
 }

@@ -20,7 +20,7 @@ function checkFilterItem(filterCategorie){
         document.getElementsByName(filterCategorie)[0].parentElement.style.background = 'blue'
         document.getElementsByName(filterCategorie)[0].checked = true
         filter[0] = filterCategorie;
-        console.log(filter)
+        
         return
     }
 
@@ -32,7 +32,7 @@ function checkFilterItem(filterCategorie){
         document.getElementsByName(filterCategorie)[0].checked = false
         if (filter.indexOf(filterCategorie) !== -1) {
             filter.splice(filter.indexOf(filterCategorie), 1);
-            console.log(filter)
+            
         }
         return
     }
@@ -44,10 +44,6 @@ function checkFilterItem(filterCategorie){
     document.getElementsByName(lastFilter)[0].checked = false
     
     filter[0] = filterCategorie;
-    console.log(filter)
-    
-    
-    
     
 }
 

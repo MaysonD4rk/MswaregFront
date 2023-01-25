@@ -8,7 +8,7 @@ function selectAction(action) {
     previewPage = 'selectAction'
 
 
-    console.log(currentPage)
+    
     document.getElementById('select-action').style.display = 'none';
 
     if (action == 'feedback') {
@@ -40,7 +40,7 @@ function selectReportCategorie(categorie) {
 
 function getPreviewPage() {
 
-    console.log(previewPage)
+    
 
     switch (previewPage) {
         case 'selectAction':

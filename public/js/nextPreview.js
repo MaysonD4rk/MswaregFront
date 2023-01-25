@@ -1,8 +1,7 @@
     var url = window.location.href;
     //valor precisa ser diferente na produção. deixar console.log para n ter problemas depois
-    console.log(url)
-    var offset = url.slice(28);
-    console.log(offset)
+    var offset = url.slice(20);
+    
     var sep = offset.split('?');
 
     var querys = [];
@@ -13,7 +12,7 @@
     try {
         
         querys = sep[1].split('&');
-        console.log(querys)
+        
 
         if (querys.length>1) {
 
@@ -24,7 +23,7 @@
             if (parseInt(offsetArray[1]) < 0) {
                 window.location.href = `https://mswareg.com/search?${querys[0]}&offset=0`
             }
-            console.log(offsetArray)
+            
             
             offNum = offsetArray[1] == undefined || parseInt(offsetArray[1]) < 0 ? 0 : parseInt(offsetArray[1]);
             
@@ -52,7 +51,7 @@ function nextPreview(order, search=false){
         if (!!document.getElementById('search')) {
             
             if (document.getElementById('search').value.length <= 0) {
-                console.log('entrou aqui 2')
+                
     
                 if (order == 'next') {
                     offNum += 1
@@ -91,11 +90,11 @@ function nextPreview(order, search=false){
                 }
                 
             }else{
-                console.log(offsetArray)
+                
                 //offNum = offsetArray[1] == undefined || parseInt(offsetArray[1]) < 0 || offsetArray[1] == 'NaN' ? 1 : parseInt(offsetArray[1]);
                 if (order == 'next') {
                     offNum += 1
-                    console.log(sep)
+                    
                     if (!!document.getElementById('search')) {
                         if (sep[0] != 'sendMsg') {
                             location.href = `https://mswareg.com/search?ideaQuery=${document.getElementById('search').value}&offset=${offNum}`;
@@ -122,7 +121,7 @@ function nextPreview(order, search=false){
                         if (sep[0] != 'sendMsg') {
                             location.href = `https://mswareg.com/search?ideaQuery=${querys[0]}&offset=${offNum}`;
                         } else {
-                            console.log('entrou aqui')
+                            
                             location.href = `https://mswareg.com/search?msgByUsernameQuery=${querys[0]}&offset=${offNum}`;
                         }
                     }
@@ -172,7 +171,7 @@ function nextPreview(order, search=false){
         if (order == 'next') {
             offNum += 1
             currentQuery = querys[0].split('=');
-            console.log(currentQuery)
+            
             if (currentQuery[0] == 'msgByUsernameQuery') {
                 if (!!document.getElementById('search')) {
                     location.href = `https://mswareg.com/search?msgByUsernameQuery=${currentQuery[1]}&offset=${offNum}`;
@@ -190,7 +189,7 @@ function nextPreview(order, search=false){
             
             offNum -= 1
             currentQuery = querys[0].split('=');
-            console.log(currentQuery)
+            
             if (currentQuery[0] == 'msgByUsernameQuery') {
                 if (!!document.getElementById('search')) {
                     location.href = `https://mswareg.com/search?msgByUsernameQuery=${currentQuery[1]}&offset=${offNum}`;

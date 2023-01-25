@@ -101,10 +101,8 @@ async function limitList(tab) {
         document.getElementsByClassName('loadIcon')[0].remove()
 
         let loadList = await axios.get('https://server.mswareg.com/getUsersRelations/'+offset+'/'+userId+'/follower')
-        console.log(loadList.data)
         if (loadList.data.length < 1) {
             loadFollowingIconShowed = true
-            console.log('tem mais porra nenhuma mlk')
             return
         }
 
@@ -128,9 +126,7 @@ async function limitList(tab) {
 
         })
 
-
-        console.log(document.getElementsByClassName('user-list')[0].scrollTop)
-        console.log(document.getElementsByClassName('user-list')[0].scrollHeight)
+        
 
 
     } else {
@@ -140,7 +136,7 @@ async function limitList(tab) {
         document.getElementsByClassName('loadIcon')[0].remove()
 
         let loadList = await axios.get('https://server.mswareg.com/getUsersRelations/' + offset + '/' + userId + '/following')
-        console.log(loadList.data)
+        
         if (loadList.data.length < 1) {
             loadFollowingIconShowed = true
             document.getElementsByClassName('loadIcon')[0].remove()
@@ -169,10 +165,6 @@ async function limitList(tab) {
         })
 
 
-        console.log(document.getElementsByClassName('user-list')[1].scrollTop)
-        console.log(document.getElementsByClassName('user-list')[1].scrollHeight)
-
-
     }
 }
 
@@ -184,7 +176,6 @@ setInterval(() => {
 
             let loadIcon = document.createElement('i');
             loadIcon.classList = 'fa-solid fa-rotate-right loadIcon'
-            console.log(loadIcon)
             loadIcon.onclick = () => { limitList('following') }
             document.getElementsByClassName('follow-modal-container')[0].appendChild(loadIcon)
             loadFollowingIconShowed = true
@@ -196,7 +187,6 @@ setInterval(() => {
 
             let loadIcon = document.createElement('i');
             loadIcon.classList = 'fa-solid fa-rotate-right loadIcon'
-            console.log(loadIcon)
             loadIcon.onclick = () => { limitList('followers') }
             document.getElementsByClassName('follow-modal-container')[1].appendChild(loadIcon)
             loadFollowersIconShowed = true

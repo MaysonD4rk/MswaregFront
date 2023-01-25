@@ -12,13 +12,13 @@ let refOfPubId;
 if (document.getElementById('pubIdeaId')) {
     refOfPubId = document.getElementById('pubIdeaId').value
 } else {
-    console.log('n existe pubIdea');
+    return;
 }
 
 if (document.getElementById('usname')) {
     usernameInput = document.getElementById('usname').value
 } else {
-    console.log('n existe usernameInput');
+    return;
 }
 
 
@@ -53,14 +53,6 @@ window.addEventListener('DOMContentLoaded', () => {
     photoFile.addEventListener('change', () => {
         let file = photoFile.files.item(0)
         photoName = file.name;
-
-        console.log(photoFile.files[0])
-
-        Object.keys(photoFile.files[0]).forEach(eventname => {
-            console.log('fodase')
-        })
-
-
 
         // ler um arquivo
         let reader = new FileReader()
@@ -224,8 +216,7 @@ let zoomGave = 0;
 function onLoadImage(event, initialW = 380) {
     const { width, height } = img
 
-    console.log(initialW)
-    console.log(zoomGave)
+    
 
     imgRestored.height = img.height;
     imgRestored.width = img.width;
@@ -252,7 +243,7 @@ function onLoadImage(event, initialW = 380) {
     //photoPreview.src = canvas.toDataURL()
 
     //if ((preCanvasW / preCanvasH) >= 1.62337662 && (preCanvasW / preCanvasH) <= 1.95) {
-        console.log('16:9')
+        
         canvas.width = initialW;
         canvas.height = initialW / (preCanvasW / preCanvasH)
         ctx.drawImage(img, 0, 0, initialW, (initialW / (preCanvasW / preCanvasH)))
@@ -332,7 +323,7 @@ function onLoadImage(event, initialW = 380) {
 
 
 function croppingImg() {
-    console.log('chegou aqui')
+    
     const croppedImage = ctx.getImageData(actualX, actualY, croppedWidth, croppedHeight)
 
     ctx.clearRect(0, 0, ctx.width, ctx.height)
@@ -340,7 +331,7 @@ function croppingImg() {
     img.height = canvas.height = croppedHeight;
     ctx.putImageData(croppedImage, 0, 0)
 
-    console.log(canvas.toDataURL())
+    
 
     cropImg.style.height = (croppedHeight) + 'px'
     cropImg.style.width = (croppedWidth) + 'px'
@@ -372,7 +363,7 @@ function croppingImg() {
     cropped = true;
 
 
-    console.log(photoPreview)
+    
 }
 
 
@@ -386,10 +377,10 @@ function croppingImg() {
 // });
 
 
-document.getElementsByTagName('body')[0].addEventListener('mousedown', (event) => {
-    console.log('x' + event.clientX + 'y' + event.clientY)
+// document.getElementsByTagName('body')[0].addEventListener('mousedown', (event) => {
+//     console.log('x' + event.clientX + 'y' + event.clientY)
 
-})
+// })
 // document.getElementsByTagName('body')[0].addEventListener('mouseup', events.mouseup)
 // document.getElementsByTagName('body')[0].addEventListener('mousemove', events.mousemove)
 
@@ -397,15 +388,6 @@ cropImg.addEventListener('mouseover', events.mouseover)
 cropImg.addEventListener('mousedown', events.mousedown)
 cropImg.addEventListener('mouseup', events.mouseup)
 cropImg.addEventListener('mousemove', events.mousemove)
-
-
-
-
-
-
-console.log(document.getElementById('topCircle').width)
-
-
 
 
 
@@ -427,7 +409,7 @@ function zoom(action) {
         // cropImg.style.height = ((img.width + 50) / ((img.width + 50) / (img.height + 50)))+"px"
         if (zoomGave < zoomMax) {
             ++zoomGave
-            console.log(zoomGave)
+            
         } else {
             return
         }
@@ -444,7 +426,7 @@ function zoom(action) {
         
         if (zoomGave >= zoomMin) {
             --zoomGave
-            console.log(zoomGave)
+            
         } else {
             return
         }

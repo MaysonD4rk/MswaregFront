@@ -26,7 +26,7 @@ const currentCredits = document.getElementById('currentCredits').value
         setTimeout(async () => {
             try {
                 let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(document.getElementById('recharge').value)}`);
-                console.log(qrCodeData);
+                
         document.getElementById('waitpls').innerHTML = ''
                 document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
                 document.getElementById('qrcodeTxt').value = `${qrCodeData.data.qrCodeTxt}`
@@ -42,7 +42,6 @@ const currentCredits = document.getElementById('currentCredits').value
          setTimeout(async () => {
             try {
                 let qrCodeData = await axios.get(`https://pix.mswareg.com/charge/${userId}?value=${parseInt(value)}`);
-                console.log(qrCodeData);
                 document.getElementById('waitpls').innerHTML = ''
                 document.getElementById('qrcodeArea').innerHTML = `<img src="${qrCodeData.data.imagem}" />`
                 document.getElementById('qrcodeTxt').value = `${qrCodeData.data.qrCodeTxt}`
@@ -75,7 +74,7 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
     
 
     document.getElementById('withdrawBtn').onclick = async ()=>{
-        console.log(userId)
+        
         const withdrawValue = parseInt(document.getElementById('withdraw').value);
         
         if (!pixKey || pixKey == ' '){
@@ -84,7 +83,7 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
             return false
         }
         
-        console.log(currentCredits - withdrawValue)
+        
         
         if (currentCredits <= 0 || withdrawValue <= 0) {
             alert('você não possui saldo em sua conta ou o valor é invalido para a retirada.');
@@ -103,7 +102,7 @@ document.getElementById('withdraw').addEventListener('keydown', (event) => {
                                 'authorization': `Bearer ${authToken[1]}`
                             }
                         })
-                        console.log(request)
+                        
                         alert('pedido de retirada realizado.')
                     } catch (error) {
 

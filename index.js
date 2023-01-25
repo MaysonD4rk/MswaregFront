@@ -43,7 +43,7 @@ app.get('/home', async (req, res)=>{
             url: "https://server.mswareg.com/user/"+sess.userId
         }).then(async (data)=>{
             
-            console.log(data);
+            
             
             var posts = await axios({
                 method: "get",
@@ -450,9 +450,14 @@ app.get('/seusFeedbacks',(req, res)=>{
 
     
 
-    if (sess.userId == undefined) {
-        res.redirect('/login')
-        return
+    let isLogged;
+
+    if (sess.userId == undefined || sess.userId == 0) {
+        isLogged = false;
+        sess.userId = 0
+        res.redirect('/home')
+    } else {
+        isLogged = true;
     }
 
     axios({
@@ -470,7 +475,8 @@ app.get('/seusFeedbacks',(req, res)=>{
             res.render('feedbacksReports', {
                 userData: data.data[0],
                 mod: false,
-                feedbackList: feedbackList.data.result
+                feedbackList: feedbackList.data.result,
+                isLogged
             })
         }else{
             const reportsList = await axios.get('https://server.mswareg.com/listReports/0', {
@@ -489,7 +495,8 @@ app.get('/seusFeedbacks',(req, res)=>{
                 feedbackList: feedbackList.data.result,
                 mod: true,
                 reportsList: reportsList.data.result,
-                withdrawalList: withdrawalList.data
+                withdrawalList: withdrawalList.data,
+                isLogged
             })
         }
     })
@@ -531,7 +538,7 @@ app.get('/search', async (req, res) => {
     }else{
         offset = req.query.offset;
     }
-    console.log(offset)
+    
     axios({
         method: "get",
         url: "https://server.mswareg.com/user/" + sess.userId
@@ -550,7 +557,6 @@ app.get('/search', async (req, res) => {
                 
                 let response = await axios.get('https://server.mswareg.com/getSearchListUser/0/'+req.query.userQuery)
                 
-                console.log(response)
 
 
                 res.render('generalSearch', {
@@ -565,7 +571,6 @@ app.get('/search', async (req, res) => {
 
             }else if (Object.keys(req.query)[0] == 'msgQuery'){
                 let response = await axios.get('https://server.mswareg.com/searchForMsg/0/' + req.query.msgQuery)
-                console.log(response)
 
                 //
                 res.render('generalSearch', {
@@ -581,7 +586,6 @@ app.get('/search', async (req, res) => {
             } else if (Object.keys(req.query)[0] == 'msgByUsernameQuery'){
                 try {
                     let response = await axios.get('https://server.mswareg.com/searchMsgList/' + (offset*15) + '/' + req.query.msgByUsernameQuery)
-                    console.log(response)
 
                     if (response.data.result.row != undefined) {
                         if (req.query.maxData != undefined) {
@@ -620,7 +624,7 @@ app.get('/search', async (req, res) => {
                 try {
                     
                     let response = await axios.get('https://server.mswareg.com/searchPost/'+(offset*8)+'/'+req.query.ideaQuery)
-                    console.log(response.data)
+                    
                     if (!!response.data.result) {
                         if (req.query.maxData != undefined) {
                             
@@ -696,5 +700,5 @@ app.get('/aboutUs', async (req,res)=>{
 
 
 app.listen(8080,(err)=>{
-    err ? console.log(err) : console.log('sv rodando');
+    err ? console.log(err) : 'ok';
 } )
