@@ -455,6 +455,15 @@ app.get('/seusFeedbacks',(req, res)=>{
         return
     }
 
+    let isLogged;
+
+    if (sess.userId == undefined || sess.userId == 0) {
+        isLogged = false;
+        sess.userId = 0
+    } else {
+        isLogged = true;
+    }
+
     axios({
         method: "get",
         url: "http://192.168.2.104:8000/user/" + sess.userId
@@ -470,7 +479,8 @@ app.get('/seusFeedbacks',(req, res)=>{
             res.render('feedbacksReports', {
                 userData: data.data[0],
                 mod: false,
-                feedbackList: feedbackList.data.result
+                feedbackList: feedbackList.data.result,
+                isLogged
             })
         }else{
             const reportsList = await axios.get('http://192.168.2.104:8000/listReports/0', {
@@ -489,7 +499,8 @@ app.get('/seusFeedbacks',(req, res)=>{
                 feedbackList: feedbackList.data.result,
                 mod: true,
                 reportsList: reportsList.data.result,
-                withdrawalList: withdrawalList.data
+                withdrawalList: withdrawalList.data,
+                isLogged
             })
         }
     })
@@ -675,13 +686,23 @@ app.get('/wallet', (req,res)=>{
         res.redirect('/login')
         return
     }
+
+    let isLogged;
+
+    if (sess.userId == undefined || sess.userId == 0) {
+        isLogged = false;
+        sess.userId = 0
+    } else {
+        isLogged = true;
+    }
     axios({
         method: "get",
         url: "http://192.168.2.104:8000/user/" + sess.userId
     }).then(async (data) => {
 
     res.render('wallet',{
-        userData: data.data[0]
+        userData: data.data[0],
+        isLogged
     })
     })
 })

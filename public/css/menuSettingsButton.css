@@ -20,7 +20,7 @@
     bottom: 140px;
     right: 3px;
     display: none;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     flex-direction: column;
     margin-bottom: -50px;
