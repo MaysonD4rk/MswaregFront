@@ -6,7 +6,7 @@ let loadReportIconShowed = false;
 
 function listFeedbackReports(tab) {
     if (tab == "feedbacks") {
-        console.log('entrou feedbacks')
+        
 
         document.getElementById('reports-tab-container').style.display = "none"
         document.getElementById('withdraw-tab-container').style.display = "none"
@@ -35,7 +35,7 @@ function listFeedbackReports(tab) {
 async function openSelection(fromW, itemId, reports = 0, categorie = "") {
 
     itemId = parseInt(itemId)
-    console.log(itemId)
+    
 
     if (screen.availWidth <= 400) {
         if (fromW == 'feedback') {
@@ -131,12 +131,12 @@ function returnToList() {
 
 
 async function renderFeedback(itemId) {
-    console.log('entrou em renderFeedback')
+    
     document.cookie.split(';').forEach(async cookie => {
         authToken = cookie.split('=');
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-            const feedback = await axios.get(`http://192.168.2.104:8000/getFeedback/${itemId}/${userId}`, {
+            const feedback = await axios.get(`https://server.mswareg.com/getFeedback/${itemId}/${userId}`, {
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }})
@@ -171,12 +171,12 @@ async function renderReports(ideaId, reports, categorie) {
         authToken = cookie.split('=');
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-            const reportsList = await axios.get('http://192.168.2.104:8000/getReports/' + ideaId,{
+            const reportsList = await axios.get('https://server.mswareg.com/getReports/' + ideaId,{
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }})
         
-            console.log(reportsList.data.reports)
+                    
         
         
             let textHtml = `
@@ -190,7 +190,7 @@ async function renderReports(ideaId, reports, categorie) {
                                     <h1>REPORTS</h1>
                                 
                                 <h4>From: ${reports} users</h4>
-                                <a onclick="openIdeaNewTab('http://192.168.2.104:8080/getIdeaById/${ideaId}')" href="#">CLIQUE PARA VER IDEIA </a>
+                                <a onclick="openIdeaNewTab('https://mswareg.com/getIdeaById/${ideaId}')" href="#">CLIQUE PARA VER IDEIA </a>
                                 <h3>Categorie: ${categorie}
                                 <p>
                                     ""
@@ -218,13 +218,12 @@ async function renderWithdraw(userId){
         authToken = cookie.split('=');
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
-            const withdrawInfo = await axios.get('http://192.168.2.104:8000/findWithdrawRequestByUserId/' + userId, {
+            const withdrawInfo = await axios.get('https://server.mswareg.com/findWithdrawRequestByUserId/' + userId, {
                 headers: {
                     'authorization': `Bearer ${authToken[1]}`
                 }
             })
         
-            console.log(withdrawInfo)
         
         
             let textHtml = `
@@ -263,8 +262,7 @@ async function limitList(tab) {
 
         document.getElementsByClassName('loadIcon')[0].remove()
 
-        let loadList = await axios.get('http://192.168.2.104:8000/listFeedbacks/' + userId + "/" + offsetFeedback)
-        console.log(loadList.data.result)
+        let loadList = await axios.get('https://server.mswareg.com/listFeedbacks/' + userId + "/" + offsetFeedback)
         if (loadList.data.result.length < 1) {
             loadFeedbackIconShowed = true
             document.getElementsByClassName('loadIcon')[0].remove()
@@ -284,15 +282,6 @@ async function limitList(tab) {
         })
 
 
-        console.log(document.getElementById('feedbacksList').scrollTop)
-        console.log(document.getElementById('feedbacksList').scrollHeight)
-
-
-
-
-        console.log(limitFeedback)
-        console.log(offsetFeedback)
-
     } else {
 
         ++limitReport
@@ -301,13 +290,12 @@ async function limitList(tab) {
 
         document.getElementsByClassName('loadIcon')[0].remove()
 
-        let loadList = await axios.get('http://192.168.2.104:8000/listReports/' + offsetReports)
+        let loadList = await axios.get('https://server.mswareg.com/listReports/' + offsetReports)
         if (loadList.data.result.length < 1) {
             loadReportIconShowed = true
             document.getElementsByClassName('loadIcon')[0].remove()
         }
 
-        console.log(loadList.data.result)
         loadList.data.result.forEach(item => {
             let div = document.createElement('div');
             let id = item.ideaId
@@ -325,11 +313,6 @@ async function limitList(tab) {
 
 
 
-
-        console.log(document.getElementById('reportsList').scrollTop)
-        console.log(document.getElementById('reportsList').scrollHeight)
-
-
     }
 }
 
@@ -339,33 +322,33 @@ async function limitList(tab) {
 
 
 async function reportDecision(decision, ideaId) {
-    console.log(decision)
+    
     document.cookie.split(';').forEach(async cookie => {
         authToken = cookie.split('=');
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
 
             if (decision == 'disable') {
-                console.log('entrou aqui 1')
+                
                 try {
-                    let result = await axios.put('http://192.168.2.104:8000/disableIdea', { ideaId }, {
+                    let result = await axios.put('https://server.mswareg.com/disableIdea', { ideaId }, {
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }
                 })
-                    console.log(result)
+                
                     location.reload()
                 } catch (error) {
                     console.log(error)
                 }
             } else {
                 try {
-                    let result = await axios.put('http://192.168.2.104:8000/releaseIdea', { ideaId },{
+                    let result = await axios.put('https://server.mswareg.com/releaseIdea', { ideaId },{
                         headers: {
                             'authorization': `Bearer ${authToken[1]}`
                         }
                     })
-                    console.log(result)
+                    
                     location.reload()
                 } catch (error) {
                     console.log(error)
@@ -383,7 +366,7 @@ async function deleteFeedback(itemId) {
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
             try {
-                let response = await axios.delete(`http://192.168.2.104:8000/deleteFeedback/${itemId}/${userId}`, {
+                let response = await axios.delete(`https://server.mswareg.com/deleteFeedback/${itemId}/${userId}`, {
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }
@@ -406,7 +389,7 @@ async function withdrawstatus(userId, status, email, divId){
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
             try {
-                await axios.put('http://192.168.2.104:8000/withdrawstatus', {
+                await axios.put('https://server.mswareg.com/withdrawstatus', {
                     userId,
                     status,
                     email
@@ -435,7 +418,7 @@ setInterval(() => {
 
             let loadIcon = document.createElement('i');
             loadIcon.classList = 'fa-solid fa-rotate-right loadIcon'
-            console.log(loadIcon)
+            
             loadIcon.onclick = () => { limitList('feedback') }
             document.getElementById('feedbacksList').appendChild(loadIcon)
             loadFeedbackIconShowed = true
@@ -447,7 +430,7 @@ setInterval(() => {
 
             let loadIcon = document.createElement('i');
             loadIcon.classList = 'fa-solid fa-rotate-right loadIcon'
-            console.log(loadIcon)
+            
             loadIcon.onclick = () => { limitList('report') }
             document.getElementById('reportsList').appendChild(loadIcon)
             loadReportIconShowed = true

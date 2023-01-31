@@ -21,6 +21,16 @@
     <script src="/js/nextPreview.js"></script>
     <%}%>
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V874Y4SK29"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-V874Y4SK29');
+    </script>
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2467408169618011"
         crossorigin="anonymous"></script>
 
@@ -142,7 +152,7 @@
                                 <%}%>
                             </div>
                         <div class="user-result-card-info">
-                            <a href="http://192.168.2.104:8080/profile/<%=item.username%>">@<%= item.username %></a>
+                            <a href="https://mswareg.com/profile/<%=item.username%>">@<%= item.username %></a>
                             <button id="follow<%=item.id%>" onclick="follow('<%=item.id%>')">Follow</button>
                         </div>
                     </div>

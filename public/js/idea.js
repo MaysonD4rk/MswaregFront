@@ -7,8 +7,8 @@
         pubId = parseInt(pubId);
 
         try {
-            let likedPub = await axios.get(`http://192.168.2.104:8000/checkLikeFavorite/${pubId}/${userId}`);
-            console.log(likedPub)
+            let likedPub = await axios.get(`https://server.mswareg.com/checkLikeFavorite/${pubId}/${userId}`);
+            
             if (!!likedPub.data.result.row[0].liked) {
                 document.getElementById(pubId).classList.add('liked');
             }
@@ -37,13 +37,13 @@ async function likePub(pubId) {
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
             try {
-                console.log(`tentando`)
-                var status = await axios.put('http://192.168.2.104:8000/likePub', { pubId, userId }, {
+                
+                var status = await axios.put('https://server.mswareg.com/likePub', { pubId, userId }, {
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }
                 })
-                console.log(status)
+                
                 if (status.data.msg == 'liked') {
                     document.getElementById(pubId).classList.add('liked');
                 } else if (status.data.msg == 'unliked') {
@@ -75,13 +75,13 @@ async function favoritePub(pubId) {
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
             try {
-                console.log(`tentando`)
-                let status = await axios.put('http://192.168.2.104:8000/favoritePub', { userId, pubId }, {
+                
+                let status = await axios.put('https://server.mswareg.com/favoritePub', { userId, pubId }, {
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }
                 })
-                console.log(status)
+                
                 if (status.data.msg == 'favorited') {
                     document.getElementById(pubId).classList.add('favorited');
                     document.getElementById(pubId).classList.add('liked');

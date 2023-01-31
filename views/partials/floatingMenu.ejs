@@ -4,57 +4,58 @@
     <i class="fa-solid fa-bars"></i>
     <div class="menu-itens">
         <% if(!!isLogged){%>
-        <div class="menu-item">
-            <a href="/login" class="icon-hover">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <p class="textIcon"><b>log out</b></p>
-            </a>
-        </div>
-        <div class="menu-item">
-            <a href="/seusFeedbacks" class="icon-hover">
-                <i class="fa-solid fa-comments"></i>
-                <p class="textIcon"><b>Seus feedbacks</b></p>
-            </a>
-        </div>
-        <div class="menu-item">
-            <a href="/profile/<%= userData.username %>" class="icon-hover">
+            <div class="menu-item">
+                <a href="/login" class="icon-hover">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <p class="textIcon"><b>log out</b></p>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/seusFeedbacks" class="icon-hover">
+                    <i class="fa-solid fa-comments"></i>
+                    <p class="textIcon"><b>Seus feedbacks</b></p>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/profile/<%= userData.username %>" class="icon-hover">
                     <i class="fa-solid fa-user"></i>
                     <p class="textIcon"><b>@<%= userData.username %></b></p>
-            </a>
-
-        </div>
-        <div class="menu-item">
-            <a href="/accountSettings" class="icon-hover">
-                <i class="fa-solid fa-gear"></i>
-                <p class="textIcon"><b>Settings</b></p>
-            </a>
-        </div>
-        <div class="menu-item">
-            <a href="/writeIdea" class="icon-hover">
-                <i class="fa-solid fa-feather"></i>
-                <p class="textIcon"><b>Write a new idea</b></p>
-            </a>
-        </div>
-        <div class="menu-item">
-            <a href="/home" class="icon-hover">
-                <i class="fa-solid fa-home"></i>
-                <p class="textIcon"><b>Home</b></p>
-            </a>
-        </div>
-        <div class="menu-item">
-            <a href="/wallet" class="icon-hover">
-                <i class="fa-solid fa-wallet"></i>
-                <p class="textIcon"><b>R$<%= userData.credits %> </b></p>
-            </a>
-        </div>
-        <%}else{%>
-            <div class="menu-item">
-                <a href="/login">
-                    <p><b>LOGAR</b></p>
                 </a>
-            </div><%}%>
-        
-        
+
+            </div>
+            <div class="menu-item">
+                <a href="/accountSettings" class="icon-hover">
+                    <i class="fa-solid fa-gear"></i>
+                    <p class="textIcon"><b>Settings</b></p>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/writeIdea" class="icon-hover">
+                    <i class="fa-solid fa-feather"></i>
+                    <p class="textIcon"><b>Write a new idea</b></p>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/home" class="icon-hover">
+                    <i class="fa-solid fa-home"></i>
+                    <p class="textIcon"><b>Home</b></p>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/wallet" class="icon-hover">
+                    <i class="fa-solid fa-wallet"></i>
+                    <p class="textIcon"><b>R$<%= userData.credits %> </b></p>
+                </a>
+            </div>
+            <%}else{%>
+                <div class="menu-item">
+                    <a href="/login">
+                        <p><b>LOGAR</b></p>
+                    </a>
+                </div>
+                <%}%>
+
+
     </div>
 </div>
 

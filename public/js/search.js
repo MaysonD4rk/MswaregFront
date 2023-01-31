@@ -22,7 +22,7 @@ function searchIdea() {
         document.getElementsByClassName('posts')[0].innerHTML = postsArrayInitialState
     }
 
-    axios.get('http://192.168.2.104:8000/searchPost/0/' + document.getElementById('search').value)
+    axios.get('https://server.mswareg.com/searchPost/0/' + document.getElementById('search').value)
         .then(posts => {
 
             const arrayPosts = posts.data.result;
@@ -31,14 +31,13 @@ function searchIdea() {
 
             document.getElementsByClassName('posts')[0].innerHTML = ''
 
-            console.log(arrayPosts)
 
             if (!arrayPosts) {
                 document.getElementsByClassName('posts')[0].innerHTML = 'HMMMM... sem ideias por enquanto.'
             }
 
             arrayPosts.forEach(element => {
-                console.log(element)
+                
                 let postCard = document.createElement('div');
                 postCard.classList.add('post-card')
                 postCard.id = element.id

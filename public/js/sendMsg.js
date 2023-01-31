@@ -13,11 +13,11 @@ document.getElementById('sendMsg').className = "active"
 
 
 document.getElementById('search').addEventListener('keydown', (event) => {
-    console.log(event.keyCode)
+    
     if (!(event.keyCode >= 9 && event.keyCode <= 45)) {
         searchMsg();
     } else {
-        console.log('n entrou na primeira condição')
+        return
     }
 
 })
@@ -44,7 +44,7 @@ textTo.addEventListener('keydown', (event) => {
         modalUserList.style.display = 'none'
     }
 
-    axios.get('http://192.168.2.104:8000/searchUser/' + document.getElementById('textTo').value)
+    axios.get('https://server.mswareg.com/searchUser/' + document.getElementById('textTo').value)
         .then((res) => {
 
             res.data.result.row.forEach(element => {
@@ -88,7 +88,7 @@ function searchMsg() {
     }
 
 
-    axios.get('http://192.168.2.104:8000/searchMsgList/0/' + document.getElementById('search').value)
+    axios.get('https://server.mswareg.com/searchMsgList/0/' + document.getElementById('search').value)
         .then(msgs => {
 
             msgs.data.result.row.forEach(element => {
@@ -123,14 +123,14 @@ function searchMsg() {
                 div2.appendChild(div2h3)
                 askItemInfo.appendChild(askText)
                 document.getElementsByClassName('asks')[0].appendChild(askItem)
-                console.log('chegou aqui')
+                
 
 
             });
 
         })
         .catch(error => {
-            console.log('nada encontrado')
+            return error
         })
 
 }
@@ -140,14 +140,14 @@ function searchMsg() {
 async function writeMsg(senter) {
     let recipient = document.getElementById('textTo').value;
     senter = parseInt(senter);
-    console.log(senter)
+    
     let msg = document.getElementById('msg').value
     document.cookie.split(';').forEach(async cookie => {
         authToken = cookie.split('=');
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
             try {
-                let tryWrite = await axios.post('http://192.168.2.104:8000/writeMsg', { userId: senter, recipientName: recipient, msg }, {
+                let tryWrite = await axios.post('https://server.mswareg.com/writeMsg', { userId: senter, recipientName: recipient, msg }, {
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }
@@ -155,7 +155,7 @@ async function writeMsg(senter) {
                 document.getElementsByClassName('statusModal')[0].style.display = 'flex';
                 document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.className = 'success';
                 document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.innerHTML = tryWrite.data.msg;
-                console.log('deu certo')
+                
         
                 setTimeout(() => {
                     document.getElementsByClassName('statusModal')[0].style.display = 'none';
@@ -167,7 +167,7 @@ async function writeMsg(senter) {
                 document.getElementsByClassName('statusModal')[0].firstChild.nextElementSibling.innerHTML = 'usuário não encontrado, tome cuidado!';
                 setTimeout(() => {
                     document.getElementsByClassName('statusModal')[0].style.display = 'none';
-                    console.log('deu erro')
+                    
                 }, 500);
             }
 

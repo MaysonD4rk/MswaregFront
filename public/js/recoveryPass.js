@@ -5,12 +5,12 @@ function confirmPassChange(token, email) {
 
     if (pass == confirmPass) {
 
-        axios.post('http://192.168.2.104:8000/changePass', {
+        axios.post('https://server.mswareg.com/changePass', {
             token: token,
             email: email,
             password: pass
         }).then(res => {
-            window.location.href = 'http://192.168.2.104:8080/login'
+            window.location.href = 'https://mswareg.com/login'
         }).catch(err => {
             console.log(err)
         })
@@ -19,16 +19,15 @@ function confirmPassChange(token, email) {
         alert('as senhas não são compatíveis')
     }
 
-    console.log(token)
+    
 }
 
 function sendEmail() {
     var email = document.getElementsByName('email')[0].value;
 
-    console.log(email)
-    axios.post('http://192.168.2.104:8000/passrecovery', {
+    axios.post('https://server.mswareg.com/passrecovery', {
         email
     }).then(res => {
-        console.log(res);
+        return
     })
 }

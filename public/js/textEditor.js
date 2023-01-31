@@ -69,7 +69,7 @@
         var content = document.getElementById('content').innerHTML;
         document.getElementById('modal').style.display = "flex";
         
-        console.log(content);
+        
         
         let result = await content.replace(/&lt;|&gt;/gi, function (x) {
             switch (x) {
@@ -83,8 +83,7 @@
             }
            return x;
         }); 
-
-        console.log(result)
+        
 
         modelTitle.innerHTML = `<h1>${inputTitle.value}</h1>`
         modelSub.innerHTML = `${inputSummary.value}`
@@ -112,7 +111,7 @@
             }, 1000);
             
         }else{
-            console.log(input.files)
+            
             var newImg = document.createElement('img');
                 newImg.id = "img"+i
                 newImg.height = height;
@@ -131,30 +130,29 @@
 
 
     function titleInsert(){
-        console.log(titleInsertStatus)
+        
         
         if (titleInsertStatus) {
             titleInsertStatus = false;
             
             var h1 = "&lt;/h1&gt;"
             var content = document.getElementById('content').innerHTML;
-            console.log(content)
+            
             var newContent = content + h1;
-            console.log(newContent)
-
+            
             document.getElementById('content').innerHTML = `${newContent}`;
-            console.log(titleInsertStatus)
+            
             
         }else{
             titleInsertStatus = true;
             var h1 = "&lt;h1&gt;"
             var content = document.getElementById('content').innerHTML;
-            console.log(content)
+            
             var newContent = content + h1;
-            console.log(newContent)
+            
 
             document.getElementById('content').innerHTML = `${newContent}`;
-            console.log(titleInsertStatus)
+            
         }
 
 
@@ -167,30 +165,25 @@
 
                 let b = "&lt;/b&gt;"
                 let content = document.getElementById('content').innerHTML;
-                console.log(content)
+                
                 let newContent = content + b;
-                console.log(newContent)
+                
 
                 document.getElementById('content').innerHTML = `${newContent}`;
-                console.log(boldInsertStatus)
+                
 
             }else {
                 boldInsertStatus = true;
                 let b = "&lt;b&gt;"
                 let content = document.getElementById('content').innerHTML;
-                console.log(content)
                 let newContent = content + b;
-                console.log(newContent)
 
                 document.getElementById('content').innerHTML = `${newContent}`;
-                console.log(boldInsertStatus)
             }
 
 
         }
 
-
-    console.log()
 
     
     document.getElementsByClassName('inputFile-label')[0].addEventListener('click', ()=>{
@@ -367,14 +360,13 @@
     async function send(){
 
         document.getElementById('areusure').style.display='none';
-        console.log(mainImages)
 
         if(ideaInfo.content.length >= 500){
             document.cookie.split(';').forEach(async cookie => {
                 authToken = cookie.split('=');
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
                     try {
-                        var pub = await axios.post('http://192.168.2.104:8000/pub',{
+                        var pub = await axios.post('https://server.mswareg.com/pub',{
                             title: inputTitle.value, 
                             ideaSummary: inputSummary.value,
                             mainIdea: ideaInfo.content, 
@@ -388,7 +380,7 @@
                         'authorization': `Bearer ${authToken[1]}`
                     }
                 })
-                        window.location.href = `http://192.168.2.104:8080/addPubImg/${pub.data[0]}`;
+                        window.location.href = `https://mswareg.com/addPubImg/${pub.data[0]}`;
                     } catch (error) {
                         document.write(error.response.status)
                         console.log(error)
@@ -410,7 +402,7 @@ async function confirmEditIdea() {
             authToken = cookie.split('=');
             if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
                 try {
-                    var pub = await axios.put('http://192.168.2.104:8000/pub', {
+                    var pub = await axios.put('https://server.mswareg.com/pub', {
                         pubId,
                         title: inputTitle.value,
                         ideaSummary: inputSummary.value,
@@ -425,11 +417,11 @@ async function confirmEditIdea() {
                             'authorization': `Bearer ${authToken[1]}`
                         }
                     })
-                    window.location.href = `http://192.168.2.104:8080/addPubImg/${pubId}`;
+                    window.location.href = `https://mswareg.com/addPubImg/${pubId}`;
                 } catch (error) {
                     console.log(error)
                 }
-                console.log(document.getElementById('allowFeedback').checked)
+                
 
             }
         })
@@ -450,7 +442,6 @@ document.getElementById('addImageButton').addEventListener('click',()=>{
 
 imageFile.addEventListener('change', ()=>{
     
-    console.log('mudou')
     
     fReader.readAsDataURL(imageFile.files[0])
     fReader.onloadend = (event)=>{
@@ -466,8 +457,7 @@ imageFile.addEventListener('change', ()=>{
 
         }else{
             addImageButton.style.display = 'none'
-            console.log('já  atingiu o máximo')
-            console.log(mainImages)
+            
         }
             //})
             

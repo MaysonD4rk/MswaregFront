@@ -1,8 +1,8 @@
 (async function verifyNotifications(){
     try {
-        const notifications = await axios.get("http://192.168.2.104:8000/verifyActiveNotifications/"+document.getElementById('userId').value);
+        const notifications = await axios.get("https://server.mswareg.com/verifyActiveNotifications/"+document.getElementById('userId').value);
         
-        console.log(notifications.data.notificationsList[0])
+        
         if (!!notifications.data.notificationsList[0].IN1_notification) {
             document.getElementById('notification1').checked = true
 
@@ -58,15 +58,15 @@ async function changePass(email, token) {
                 authToken = cookie.split('=');
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
                     try {
-                        var verifyOldPass = await axios.post('http://192.168.2.104:8000/login', {
+                        var verifyOldPass = await axios.post('https://server.mswareg.com/login', {
                             email: email,
                             password: oldPass
                         })
             
                         if (verifyOldPass.status == 200) {
-                            console.log(verifyOldPass)
+                            
                             try {
-                                var updatePass = await axios.put('http://192.168.2.104:8000/updatePass', {
+                                var updatePass = await axios.put('https://server.mswareg.com/updatePass', {
                                     userId: userId,
                                     email: email,
                                     password: newPass
@@ -84,11 +84,11 @@ async function changePass(email, token) {
                                 console.log(error);
                             }
                         } else {
-                            console.log('senha incorreta Amigão filha da puta')
+                            console.log('senha incorreta')
                         }
             
                     } catch (error) {
-                        console.log('senha incorreta Amigão filha da puta')
+                        console.log('senha incorreta')
                     }
 
                 }
@@ -110,12 +110,12 @@ async function getTokenUpdateInfo(){
     let LastName = document.getElementById('lastNameInput').value
     const userId = document.getElementById('userId').value
     const pixKey = document.getElementById('pixKey').value
-    console.log(userId)
+    
     document.cookie.split(';').forEach(async cookie => {
                 authToken = cookie.split('=');
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
     try {
-        let updateInfoCode = await axios.post('http://192.168.2.104:8000/updateInfoToken', {
+        let updateInfoCode = await axios.post('https://server.mswareg.com/updateInfoToken', {
             email,
             userId
         }, {
@@ -123,7 +123,7 @@ async function getTokenUpdateInfo(){
                 'authorization': `Bearer ${authToken[1]}`
             }
         })
-        console.log(updateInfo)
+        
     } catch (error) {
         console.log(error)
     }
@@ -137,12 +137,12 @@ async function updateInfo() {
     const userId = document.getElementById('userId').value
     const pixKey = document.getElementById('pixKey').value
     const token = document.getElementById('tokenCode').value
-    console.log(userId)
+    
     document.cookie.split(';').forEach(async cookie => {
                 authToken = cookie.split('=');
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
     try {
-        let updateInfo = await axios.put('http://192.168.2.104:8000/updateInfo', {
+        let updateInfo = await axios.put('https://server.mswareg.com/updateInfo', {
             FirstName,
             LastName,
             pixKey,
@@ -153,7 +153,7 @@ async function updateInfo() {
                 'authorization': `Bearer ${authToken[1]}`
             }
         })
-        console.log(updateInfo)
+        
         if (updateInfo.status == 200) {
             alert(updateInfo.data.msg)
             document.getElementById('codeModal').style.display = 'none';
@@ -178,10 +178,10 @@ async function updateNotification() {
 
     document.cookie.split(';').forEach(async cookie => {
                 authToken = cookie.split('=');
-                console.log(authToken)
+                
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
             try {
-                const updateNotification = await axios.put('http://192.168.2.104:8000/updateNotifications', {
+                const updateNotification = await axios.put('https://server.mswareg.com/updateNotifications', {
                     notification1,
                     notification2,
                     notification3,
@@ -195,7 +195,7 @@ async function updateNotification() {
                     }
                 })
 
-                console.log(updateNotification)
+                
             } catch (error) {
                 console.log(error)
             }
@@ -211,7 +211,7 @@ document.getElementById('changeUsername').onclick = async ()=>{
                 authToken = cookie.split('=');
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
     try {
-        const changeUsername = await axios.put('http://192.168.2.104:8000/changeUsername',{
+        const changeUsername = await axios.put('https://server.mswareg.com/changeUsername',{
             userId:userId.value,
             username
         }, {
@@ -231,7 +231,7 @@ document.getElementById('changeUsername').onclick = async ()=>{
 
 
 document.getElementById('pixKey').addEventListener('keypress', (event)=>{
-    console.log(event)
+    
     if(event.code == 'Space'){
         event.preventDefault()
         return
@@ -244,7 +244,7 @@ async function updateCurrentCode(){
         authToken = cookie.split('=');
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
             try {
-                const updateCode = await axios.put('http://192.168.2.104:8000/updatePersonalCode', {
+                const updateCode = await axios.put('https://server.mswareg.com/updatePersonalCode', {
                     userId: document.getElementById('userId').value,
                     code: document.getElementById('currentCode').value
                 }, {
@@ -252,7 +252,7 @@ async function updateCurrentCode(){
                         "authorization": `Bearer ${authToken[1]}`
                     }
                 })
-                console.log(updateCode);
+                
             } catch (error) {
                 console.log(error);
             }
