@@ -460,14 +460,6 @@ app.get('/seusFeedbacks',(req, res)=>{
         isLogged = true;
     }
 
-    let isLogged;
-
-    if (sess.userId == undefined || sess.userId == 0) {
-        isLogged = false;
-        sess.userId = 0
-    } else {
-        isLogged = true;
-    }
 
     axios({
         method: "get",
