@@ -706,11 +706,11 @@ app.get('/aboutUs', async (req,res)=>{
 })
 
 app.get('/MusclePointsBETA', (req, res) => {
-    res.render('/musclePoints/musclepointsindex.ejs');
+    res.render('musclePoints/musclepointsindex.ejs');
 })
 
 app.get('/MusclePointsBETA/training', (req, res) => {
-    res.render('/musclePoints/training.ejs');
+    res.render('musclePoints/training.ejs');
 })
 
 
