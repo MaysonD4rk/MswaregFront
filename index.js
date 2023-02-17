@@ -675,9 +675,13 @@ app.get('/search', async (req, res) => {
 
 app.get('/wallet', (req,res)=>{
     sess = req.session;
-    if (sess.userId == undefined) {
-        res.redirect('/login')
-        return
+    let isLogged;
+
+    if (sess.userId == undefined || sess.userId == 0) {
+        isLogged = false;
+        sess.userId = 0
+    } else {
+        isLogged = true;
     }
     axios({
         method: "get",
@@ -685,7 +689,8 @@ app.get('/wallet', (req,res)=>{
     }).then(async (data) => {
 
     res.render('wallet',{
-        userData: data.data[0]
+        userData: data.data[0],
+        isLogged
     })
     })
 })
@@ -696,6 +701,14 @@ app.get('/aboutUs', async (req,res)=>{
         qrCode: donate.data.imagem,
         qrCodeTxt: donate.data.qrCodeTxt
     })
+})
+
+app.get('/MusclePointsBETA', (req, res) => {
+    res.render('/musclePoints/musclepointsindex.ejs');
+})
+
+app.get('/MusclePointsBETA/training', (req, res) => {
+    res.render('/musclePoints/training.ejs');
 })
 
 
