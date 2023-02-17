@@ -274,9 +274,10 @@ function trainLog(index, time="last7days", loadedNew=false) {
 
     document.getElementById('chartArea').style.display = 'initial'
 
-    if (!calculateBtnSpawned) {
+    if (!document.getElementById('calcBtn')) {
         let calcBtn = document.createElement('button');
         calcBtn.innerHTML = 'Finalizar treino'
+        calcBtn.id = "calcBtn"
         calcBtn.classList.add('calcBtn')
         calcBtn.onclick = () => {
             calcPoints(index)
