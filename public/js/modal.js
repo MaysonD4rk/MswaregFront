@@ -31,7 +31,7 @@ async function openIdeaModal(id){
 
     //var texto = reader.readAsArrayBuffer(result.data.pubData.mainIdea.data)
     
-    console.log(result)
+    
     document.getElementsByClassName('model-title')[0].innerHTML = `<h1>${result.data.pubData.title}</h1>`;
     document.getElementsByClassName('model-sub')[0].innerHTML = `<i>${result.data.pubData.ideaSummary}</i>`;
     document.getElementsByClassName('card-modal-idea')[0].innerHTML = `${result.data.pubData.mainIdea}`;
@@ -61,7 +61,7 @@ async function openIdeaModal(id){
         }else{
             
             var data = await axios.get(`https://server.mswareg.com/listDonates/${id}`);
-            console.log(data);
+            
 
             const totalInvestment = !!result.data.pubData.totalInvestment ? result.data.pubData.totalInvestment:0
             
@@ -98,7 +98,7 @@ async function openIdeaModal(id){
                     </tr>
                     `
                 })
-            console.log(data.data.result.result[0]);
+                
 
             var finalResult = lista+finishList;
 
@@ -133,7 +133,7 @@ function donate(){
 async function confirmPurchase(userId){
     document.getElementsByClassName('sure-container')[0].style.display = 'none'
     var userId = parseInt(userId)
-    console.log('entrou aqui')
+    
 
     var credits = parseFloat(document.getElementById('amountToPay-input').value)
     document.cookie.split(';').forEach(async cookie => {
@@ -153,7 +153,7 @@ async function confirmPurchase(userId){
                     }
                 })
         
-                console.log(result)
+                
         
                 if(result.status == 200){
                     statusModal('success', result.data.msg)
@@ -205,7 +205,7 @@ async function openModal(elementId, itemId, allowFeedback=true){
     
     document.getElementById(elementId).style.display= "flex";
     itemId = parseInt(itemId)
-    console.log(itemId)
+    
 
     let result = await axios.get(`https://server.mswareg.com/findPub/${itemId}`);
     let title = result.data.pubData.title;
@@ -267,7 +267,7 @@ async function openModal(elementId, itemId, allowFeedback=true){
 async function openInfoModal(userId){
     try {
         const userInfo = await axios.get('https://server.mswareg.com/userHelpInfo/'+userId)
-        console.log(userInfo)
+        
         document.getElementById('user-info-container').innerHTML = 
         `
         <h2>informações do usuário: <i onclick="closeModal('user-info-modal', null)" class="fa-solid fa-xmark"></i></h2> <br>
@@ -289,7 +289,7 @@ async function openInfoModal(userId){
 async function getInvestment(investmentId){
     try {
         const investmentData = await axios.get('https://server.mswareg.com/getOneDonate/'+investmentId);
-        console.log(investmentData)
+        
         const investmentMsgContainerHTML = `
         <h3>valor: <span style="color: blue;">${investmentData.data.result.result.investment}</span></h3>
         <p id="currentInvestmentMsg">${investmentData.data.result.result.investmentMsg}</p>

@@ -11,14 +11,10 @@ let usernameInput;
 let refOfPubId;
 if (document.getElementById('pubIdeaId')) {
     refOfPubId = document.getElementById('pubIdeaId').value
-} else {
-    return;
 }
 
 if (document.getElementById('usname')) {
     usernameInput = document.getElementById('usname').value
-} else {
-    return;
 }
 
 

@@ -12,6 +12,221 @@
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2467408169618011"
         crossorigin="anonymous"></script>
+<style>
+    * {
+        border: none;
+        outline: none;
+        list-style: none;
+        text-decoration: none;
+    }
+
+    body {
+        background-color: #101728 !important;
+        font-family: "YAEahSPMowE-0", "Helvetica" !important;
+        font-weight: bolder;
+
+    }
+
+    .logo {
+        float: left;
+        border: 1px solid #333;
+
+        padding: 5px;
+        box-shadow: 5px 5px 5px 1px rgb(0, 0, 0);
+        margin-right: 10px;
+        height: 60px;
+    }
+
+    .logo img {
+        height: 50px;
+    }
+
+    .company-name {
+        color: #fff;
+        font-size: 36px;
+        margin-top: 10px;
+    }
+
+
+
+
+
+    .clearfix {
+        clear: both;
+    }
+
+    .degradeSvg {
+
+        width: 700px;
+    }
+
+    .logo-container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        margin-left: 100px;
+    }
+
+    .layer2Layout {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin: 100px 0 0 0;
+        flex-wrap: wrap;
+    }
+
+    .left-side {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .degadeImg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 700px;
+        height: 700px;
+        background-image: url('/img/degrade.svg');
+        background-size: 700px;
+        background-position: center;
+    }
+
+    .degadeImg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .degadeImg>img {
+        width: 360px;
+    }
+
+    .degradeBtn {
+        border-radius: 30px;
+        font-size: 30px;
+        padding: 20px 80px 20px 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-image: linear-gradient(to right, #dd082f, #ef0a93);
+        font-weight: bolder;
+        border: none;
+        margin-top: 40px;
+    }
+
+
+    @media (max-width: 600px) {
+        .degradeImg {
+            background-image: url('/img/degrade.svg');
+            width: 370px;
+            height: 700px;
+            background-size: 700px 700px;
+        }
+
+    }
+
+    .text {
+        color: #fff;
+        text-align: center;
+    }
+
+    .textBigFont {
+        font-size: 60px;
+        line-height: 60px;
+    }
+
+    .textMidSmaller {
+        font-size: 30px;
+        line-height: 30px;
+    }
+
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+    }
+
+    .neomorphismBlock {
+        border-radius: 26px;
+        background: #101728;
+        box-shadow: 12px 12px 24px #060910,
+            -12px -12px 24px #1a2540;
+        height: 100px;
+        width: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn-loginField {
+        text-align: center;
+        color: #FFF;
+        background-color: transparent;
+        border-bottom: 1px solid #FFF;
+        text-decoration: none;
+        width: 15%;
+    }
+
+    .btn-loginField:hover {
+        -webkit-transition: width 1s ease-in-out;
+        -moz-transition: width 1s ease-in-out;
+        -o-transition: width 1s ease-in-out;
+        transition: width 1s ease-in-out;
+        width: 100%;
+    }
+
+    .btns-field {
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #LoginPage {
+        height: 740px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 50px;
+        background: #1c2a4d;
+        box-shadow: 20px 20px 60px #182441,
+            -20px -20px 60px #203059;
+        width: 300px;
+        height: 200px;
+    }
+
+    #login-container>input {
+        margin-bottom: 10px;
+        padding: 5px;
+        border-radius: 10px;
+    }
+
+    #login-container>button {
+        border-radius: 10px;
+        font-size: 20px;
+        padding: 5px 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-image: linear-gradient(to right, #dd082f, #ef0a93);
+        font-weight: bolder;
+        border: none;
+    }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
 
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-V874Y4SK29"></script>
@@ -24,33 +239,93 @@
         </script>
 
 </head>
+
 <body>
 
-    <% if(typeof loginError != 'undefined'){ %>
+    <% if(typeof loginError !='undefined' ){ %>
         <div class="errorMsg">
-           <b> <%= loginErrorMsg %></b>
+            <b>
+                <%= loginErrorMsg %>
+            </b>
         </div>
-    <%}%>
+        <%}%>
 
-    
 
-    <div id="content">
-        <h1>Mswareg</h1>
-            <form action="/login" method="post">
-                <input type="text" name="email" placeholder="Email">
-                <input type="password" name="password" placeholder="Senha">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="/img/logo.jpg" alt="Logo">
+                </div>
+                <div class="company-name">Mswareg</div>
+            </div>
+            <div class="layer2Layout">
+                <div class="left-side">
+
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+
+                            <div class="carousel-item active">
+                                <div class="text">
+                                    <span class="textBigFont">Compartilhe<br>suas ideias</span><br> <span
+                                        class="textMidSmaller">e ganhe com isso</span>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="text">
+                                    <div class="flex-row">
+                                        <div>
+                                            <span class="textBigFont">Invista</span><br><span class="textMidSmaller">nas
+                                                melhores</span> <br> <span class="textBigFont">IDEIAS</span>
+                                        </div>
+                                        <div>
+                                            <div class="neomorphismBlock">
+                                                <img height="100px" src="/img/lampadadegrade.png" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="text">
+                                    <span class="textBigFont">Ajude</span><br> ongs diversas e centros de<br> <span
+                                        class="textBigFont">caridade</span> <br>ao redor do <br> <img height="100px"
+                                        src="/img/brasil.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btns-field">
+                        <button class="degradeBtn" onclick="location.href='/home'">EXPLORAR</button>
+                        <button class="btn-loginField" onclick="loginScroll()">Logar</button>
+                    </div>
+                </div>
+                <div class="degadeImg">
+                    <!-- img class="degradeSvg" src="degrade.svg" alt="" -->
+                    <img src="/img/lampadadegrade.png" alt="">
+                </div>
+            </div>
+
+            <div id="LoginPage">
+                <form id="login-container" action="/login" method="post">
+                    <input type="text" name="email" placeholder="Email">
+                    <input type="password" name="password" placeholder="Senha">
+                    <button>Login</button>
+                    <a href="/register">criar conta</a>
+                </form>
                 <a href="/forgotPass">Esqueci a senha</a>
-                <button>Login</button>
-            </form>
-        <a href="/register">criar conta</a>
-    </div>
+            </div>
 
-    
-    <%- include('./partials/footer.ejs') %>
+
+
 
 </body>
+<script>
 
+    function loginScroll() {
+        scrollTo(0, 10000)
+    }
+</script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </html>
