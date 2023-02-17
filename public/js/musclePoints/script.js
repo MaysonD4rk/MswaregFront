@@ -159,7 +159,7 @@ function trainLog(index, time="last7days", loadedNew=false) {
     //<button onclick="addExercise()">Adicionar exercício</button>
     let addExerciseBtn = document.createElement('span');
         addExerciseBtn.id = 'addExerciseBtn'
-    addExerciseBtn.onclick = () => { addExercise() }
+    addExerciseBtn.onclick = () => { addExercise(index) }
     addExerciseBtn.innerHTML = '<button>+</button>add exercicio';
 
     document.getElementById('main-container').appendChild(inputs)
@@ -781,7 +781,7 @@ function createTrain(){
 
 }
 
-function addExercise(){
+function addExercise(index){
     
     
     if (!calculateBtnSpawned) {
@@ -803,7 +803,7 @@ function addExercise(){
     const inputHTML = `
                 
                 <input class="input-exercise-name" id="input-exercise-nameId" type="text" placeholder="Digite o nome do exercício">
-                <button id="exerciseNameBtn" onclick="insertExerciseName()">Ok</button>
+                <button id="exerciseNameBtn" onclick="insertExerciseName(${index})">Ok</button>
                 <div>
                     <div class="rep">
                         <input class="reps" type="text" placeholder="rep">
@@ -827,11 +827,13 @@ function addExercise(){
 
 }
 
-function insertExerciseName(){
+function insertExerciseName(index){
     const ExerciseName = document.createElement("h3");
     ExerciseName.textContent = document.getElementById('input-exercise-nameId').value;
 
-    const parent = document.getElementsByClassName("exercise")[currentExerciseNum-1];
+    const parent = document.getElementsByClassName("exercise")[fakeDb[index].exercisesAllData[fakeDb[index].exercisesAllData.length -1].exercises.length];
+    
+    console.log(fakeDb)
     console.log(currentExerciseNum)
     console.log(currentExerciseNum)
     parent.prepend(ExerciseName);
