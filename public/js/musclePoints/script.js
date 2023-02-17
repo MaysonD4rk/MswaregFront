@@ -736,8 +736,8 @@ function addSerie(exercise){
         newKg.placeholder = 'Kg'
         newKg.classList.add('kgs');
 
-    let insertBeforeElementRep = document.getElementsByClassName('rep')[exercise-1].children[document.getElementsByClassName('rep')[exercise-1].children.length - 1]
-    let insertBeforeElementKg = document.getElementsByClassName('kg')[exercise-1].children[document.getElementsByClassName('kg')[exercise-1].children.length - 1]
+    let insertBeforeElementRep = document.getElementsByClassName('rep')[exercise-1].children[document.getElementsByClassName('rep')[exercise-1].children.length - 3]
+    let insertBeforeElementKg = document.getElementsByClassName('kg')[exercise-1].children[document.getElementsByClassName('kg')[exercise-1].children.length - 3]
 
     document.getElementsByClassName('rep')[exercise-1].insertBefore(newRep, insertBeforeElementRep)
     document.getElementsByClassName('kg')[exercise-1].insertBefore(newKg, insertBeforeElementKg)
@@ -749,8 +749,8 @@ function addSerie(exercise){
 
 function removeSerie(exercise) {
     
-    document.getElementsByClassName('rep')[exercise-1].removeChild(document.getElementsByClassName('rep')[exercise-1].children[document.getElementsByClassName('rep')[exercise-1].children.length - 3])
-    document.getElementsByClassName('kg')[exercise-1].removeChild(document.getElementsByClassName('kg')[exercise-1].children[document.getElementsByClassName('kg')[exercise-1].children.length - 3])
+    document.getElementsByClassName('rep')[exercise-1].removeChild(document.getElementsByClassName('rep')[exercise-1].children[document.getElementsByClassName('rep')[exercise-1].children.length - 4])
+    document.getElementsByClassName('kg')[exercise-1].removeChild(document.getElementsByClassName('kg')[exercise-1].children[document.getElementsByClassName('kg')[exercise-1].children.length - 4])
 }
 
 function createTrain(){
