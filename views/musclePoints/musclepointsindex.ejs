@@ -121,17 +121,17 @@
             }
 
             .info-cards{
-                width: 500px;
+                width: 360px;
                 height: 400px;
             }
         #infoCard1{
-            background-image: url('/img/MusclePoints/linechart.png');
+            background-image: url('/img/linechart.png');
             background-size: 500px;
             background-repeat: no-repeat;
             background-position-y: bottom;  
         }
         .info-cards p{
-            font-size: 22px;
+            font-size: 18px;
             font-weight: bold;
         }
         .instrutorCard>p{
@@ -140,8 +140,11 @@
             margin-top: 40px;
         }
         .instrutorImg{
-            height: 250px;
+            height: 200px;
             margin-top: 40px;
+        }
+        .dontShowAtMobile{
+            display: none;
         }
         }
         @media (min-width: 900px){
@@ -233,8 +236,10 @@
                             <h2>Maximize seus resultados!</h2>
                             <div class="d-flex instrutorCard">
                                 <img class="instrutorImg" src="/img/MusclePoints/instrutor.svg" alt="">
-                                <p>Alcance seus objetivos de forma mais fácil e eficiente com a ajuda do seu personal trainer/instrutor e do
-                                    <span style="color: orange;"></span>MusclePoints</span></p>
+                                <p>Alcance seus objetivos <span class="dontShowAtMobile">de forma mais fácil e eficiente</span> com a ajuda do seu
+                                    personal trainer/instrutor e do
+                                    <span style="color: orange;">MusclePoints</span>
+                                </p>
                             </div>
                         </div>
                     </div>
