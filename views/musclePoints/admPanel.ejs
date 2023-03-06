@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel administrativo</title>
+    <link rel="stylesheet" href="/css/musclePoints/musclePointsStyle.css">
+    <link rel="stylesheet" href="/css/musclePoints/adminPanel.css">
+    <style>
+        #areUSureModal{
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 100%;
+            background-color: rgba(220, 220, 220, 0.3);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .areusureClass{
+            background-color: #FFFF;
+            height: 150px;
+            width: 300px;
+            border-radius: 10px;
+            border: 1px solid black;
+            text-align: center;
+        }
+         .areusureClass>button{
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .trashIcon{display: none;color:red;}
+        
+    </style>
+</head>
+<body>
+
+    <input id="userId" type="hidden" value="<%=userId%>">
+
+    <div id="areUSureModal">
+
+        <div id="new-token-modal" class="areusureClass">
+            <h1>Novo token: </h1>
+            <p>Será cobrado R$12,67 na fatura total na criação deste token. Deseja continuar? </p><br>
+            <button onclick="addToken()" style="background-color: #00ff00;">Sim</button><button onclick="closeModal('areUSureModal')" style="background-color: #f30909;">Não</button>
+        </div>
+        <div id="delete-token-modal" class="areusureClass">
+            <h1>Deletando token.</h1>
+            <p>Você não terá mais que pagar por este token a partir do mês que vem. Certeza que deseja deletar Token?</p><br>
+            <button id="confirmDeleteToken" style="background-color: #00ff00;">Sim</button><button
+                onclick="closeModal('areUSureModal')" style="background-color: #f30909;">Não</button>
+        </div>
+    </div>
+
+    
+    <% if(typeof adminMswareg != 'undefined'){%>
+    <div class="main-container-flex">
+        <h1>Atividade</h1>
+        <div class="white-container">
+            <div class="three-flex-itens"><span onclick="showTrash()"><i class="fa-solid fa-trash"></i></span><h2>Clientes</h2><span onclick="openNewTokenModal()" style="font-size: 25px;"><i class="fa-solid fa-plus"></i></span></div>
+            <table class="infoUsers">
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+        
+                <% suppliers.forEach(supplier=>{
+                    if(!supplier.usingUserId){
+                    supplier.username = supplier.token;
+                    }
+                    %>
+                    <tr>
+                        <td>
+                            <%=supplier.usingUserId%>
+                        </td>
+                        <td <%if(!!supplier.usingUserId){%>onclick="window.location.href = '/MusclePointsBETA/adminPanel/<%=supplier.username%>'"<%}%>><%=supplier.username%>
+                                        <span class="trashIcon" onclick="openDeleteTokenModal(<%=supplier.tokenId%>)">- <i
+                                                class="fa-solid fa-trash"></i></span></td>
+                        <td style="color: green; font-weight: bold;">
+                            <%if(supplier.payState==1){%>Pago<%}else{%>Não pago<%}%>
+                        </td>
+                        <td>
+                            <% if(!!supplier.frozenToken){%><button onclick="freezyToken(<%=supplier.usingUserId%>,<%=supplier.tokenId%>, false)"><i
+                                        class="fa-solid fa-lock"></i></button>
+                                <%}else{%><button onclick="freezyToken(<%=supplier.usingUserId%>,<%=supplier.tokenId%>,true)"><i
+                                            class="fa-solid fa-unlock"></i></button>
+                                    <%}%><button onclick="extendToken(<%=supplier.tokenId%>)">+30D</button>
+                        </td>
+                    </tr>
+                    <%})%>
+                        <!--tr>
+                            <td>2</td>
+                            <td>Niccolas</td>
+                            <td style="color: red; font-weight: bold;">Não pago</td>
+                            <td><button><i class="fa-solid fa-ban" style="color: red;"></i></button><button>+30D</button></td>
+                        </tr-->
+            </table>
+        </div>
+    </div>
+<%} 
+
+
+if(typeof customers != 'undefined'){%>
+    <div class="main-container-flex">
+        
+        <div class="white-container">
+            <div class="three-flex-itens">
+                <span onclick="showTrash()"><i class="fa-solid fa-trash"></i></span>
+                <h2>
+                    <% if(typeof supplierName !='undefined' ){%>
+                        <%=supplierName%>
+                            <%}%>Clientes
+                </h2>
+                <span onclick="openNewTokenModal()" style="font-size: 25px;"><i class="fa-solid fa-plus"></i></span>
+            </div>
+            
+            <table class="infoUsers">
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+
+                <% customers.forEach(c=>{
+                    if(!c.usingUserId){
+                        c.username = c.token;
+                    }
+                    %>
+                    <tr>
+                        <td><%=c.usingUserId%> </td>
+                        <td <%if(!!c.usingUserId){%>onclick="window.location.href = '/MusclePointsBETA/training/<%=c.username%>'"<%}%>><%=c.username%> <span class="trashIcon" onclick="openDeleteTokenModal(<%=c.tokenId%>)">- <i class="fa-solid fa-trash"></i></span></td>
+                        <td style="color: green; font-weight: bold;"><%if(c.payState == 1){%>Pago<%}else{%>Não pago<%}%></td>
+                        <td><% if(!!c.frozenToken){%><button onclick="freezyToken(<%=c.usingUserId%>,<%=c.tokenId%>, false)"><i class="fa-solid fa-lock"></i></button><%}else{%><button onclick="freezyToken(<%=c.usingUserId%>,<%=c.tokenId%>,true)"><i class="fa-solid fa-unlock"></i></button><%}%><button onclick="extendToken(<%=c.tokenId%>)">+30D</button></td>
+                    </tr>
+                <%})%>
+                <!--tr>
+                    <td>2</td>
+                    <td>Niccolas</td>
+                    <td style="color: red; font-weight: bold;">Não pago</td>
+                    <td><button><i class="fa-solid fa-ban" style="color: red;"></i></button><button>+30D</button></td>
+                </tr-->
+            </table>
+        </div>
+    </div>
+
+    <% if(typeof adminMswareg == 'undefined'){%>
+    <div class="main-container-flex">
+        <h1>Faturamento</h1>
+        <table class="billing-table">
+            <tr>
+                <td>
+                    <h3>tokens ativos:</h3>
+                    <span><p><%=count%></p></span>
+                </td>
+                <td>
+                    <h3>valor da fatura:</h3>
+                    <span style="color:red;"><p>$<%= tokenInfo.billingPrice%></p></span>
+                    <%if(!payState){%><button onclick="payBilling()">Pagar</button><%}%>
+                </td>
+            </tr>
+            <tr>
+                <td id="changeTokenId">
+                    <h3>valor do ticket:</h3>
+                    <span onclick="changeTokenValueInputActive()">R$<%=tokenInfo.yourTokenPrice%> <i class="fa-solid fa-pen-to-square"></i></span>
+                    
+                </td>
+                <td>
+                    <h3>valor do serviço:</h3>
+                    <span><p>R$<%=tokenInfo.servicePrice%></p></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h3>valor para cliente:</h3>
+                    <span><p>R$<%=(parseFloat(tokenInfo.servicePrice)+parseFloat(tokenInfo.yourTokenPrice)).toFixed(2)%></p> </span>
+                </td>
+                <td>
+                    <h3>Seu lucro total para esse mês:</h3>
+                    <span><p>R$<%=tokenInfo.yourTokenPrice*count%></p></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h3>Seu saldo:</h3>
+                    <span>
+                        <p>R$1000
+                        </p>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <%}%>
+<%}%>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/musclePoints/muscleAdmPanel.js"></script>
+<script src="https://kit.fontawesome.com/4fd5a3a7ad.js" crossorigin="anonymous"></script>
+</html>

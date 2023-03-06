@@ -27,7 +27,7 @@ async function openIdeaModal(id){
     id = parseInt(id);
     currentProject = id;
 
-    let result = await axios.get(`https://server.mswareg.com/findPub/${id}`);
+    let result = await axios.get(`http://localhost:8000/findPub/${id}`);
 
     //var texto = reader.readAsArrayBuffer(result.data.pubData.mainIdea.data)
     
@@ -60,7 +60,7 @@ async function openIdeaModal(id){
             donateTable = false;
         }else{
             
-            var data = await axios.get(`https://server.mswareg.com/listDonates/${id}`);
+            var data = await axios.get(`http://localhost:8000/listDonates/${id}`);
             
 
             const totalInvestment = !!result.data.pubData.totalInvestment ? result.data.pubData.totalInvestment:0
@@ -141,7 +141,7 @@ async function confirmPurchase(userId){
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
             try {
-                var result = await axios.post('https://server.mswareg.com/donateCredits', {
+                var result = await axios.post('http://localhost:8000/donateCredits', {
                     userId,
                     credits,
                     projectId: currentProject,
@@ -207,7 +207,7 @@ async function openModal(elementId, itemId, allowFeedback=true){
     itemId = parseInt(itemId)
     
 
-    let result = await axios.get(`https://server.mswareg.com/findPub/${itemId}`);
+    let result = await axios.get(`http://localhost:8000/findPub/${itemId}`);
     let title = result.data.pubData.title;
     document.getElementsByClassName('insertIdeaName')[0].innerHTML = `"${title}"`;
     document.getElementsByClassName('insertIdeaName')[1].innerHTML = `"${title}"`;
@@ -216,7 +216,7 @@ async function openModal(elementId, itemId, allowFeedback=true){
             authToken = cookie.split('=');
             if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
                 try {
-                    let sendFeedbackResult = await axios.post('https://server.mswareg.com/sendFeedback', {
+                    let sendFeedbackResult = await axios.post('http://localhost:8000/sendFeedback', {
                         userId,
                         ideaId: itemId,
                         feedbackMsg: document.getElementById('feedback-textArea').value,
@@ -240,7 +240,7 @@ async function openModal(elementId, itemId, allowFeedback=true){
             if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
                 try {
-                    let sendReportResult = await axios.post('https://server.mswareg.com/sendReport', {
+                    let sendReportResult = await axios.post('http://localhost:8000/sendReport', {
                         userId,
                         reportMsg: document.getElementById('report-textArea').value,
                         ideaReport: itemId,
@@ -266,7 +266,7 @@ async function openModal(elementId, itemId, allowFeedback=true){
 
 async function openInfoModal(userId){
     try {
-        const userInfo = await axios.get('https://server.mswareg.com/userHelpInfo/'+userId)
+        const userInfo = await axios.get('http://localhost:8000/userHelpInfo/'+userId)
         
         document.getElementById('user-info-container').innerHTML = 
         `
@@ -288,7 +288,7 @@ async function openInfoModal(userId){
 
 async function getInvestment(investmentId){
     try {
-        const investmentData = await axios.get('https://server.mswareg.com/getOneDonate/'+investmentId);
+        const investmentData = await axios.get('http://localhost:8000/getOneDonate/'+investmentId);
         
         const investmentMsgContainerHTML = `
         <h3>valor: <span style="color: blue;">${investmentData.data.result.result.investment}</span></h3>

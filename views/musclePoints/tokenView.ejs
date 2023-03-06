@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Code</title>
+    <link rel="stylesheet" href="/css/musclePoints/musclePointsStyle.css">
+    <link rel="stylesheet" href="/css/musclePoints/tokenView.css">
+    <style>
+        .redTopMsg{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background-color: red;
+            font-weight: bolder;
+            font-size: 23px;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="hidden" value="<%=userId%>" id="userId">
+
+    <% if(typeof frozenToken != 'undefined'){%>
+        <div class="redTopMsg">Seu token está congelado! entre em contato com o fornecedor.</div>
+    <%}%>
+    
+    <% if(typeof masterTokenView == 'undefined'){%>
+    <div class="main-container-flex">
+        <h1>Insira seu token-code</h1>
+        <input class="tokenInput" type="text" id="tokenInputValue" placeholder="XXXX-XXXX-XXXX"><br>
+        <button class="token-validate-btn" onclick="validadeToken()">Validar Token</button>
+        <a href="/MusclePointsBETA/tokenCode?masterToken=true" style="text-decoration: underline !important; font-size: 20px;">Eu irei fornecer tokens-code</a>
+    </div>
+    <%}else{%>
+
+    <div class="main-container-flex">
+        <h1>Insira seu master-token-code</h1>
+        <input class="tokenInput" type="text" id="tokenInputValue" placeholder="XXXX-XXXX-XXXX-XXXX"><br>
+        <button class="token-validate-btn" onclick="validadeToken()">Validar Token</button>
+        <a href="/MusclePointsBETA/tokenCode" style="text-decoration: underline !important; font-size: 20px;">Quero usar um token-code</a>
+    </div>
+    <%}%>
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    const userId = document.getElementById('userId').value;
+
+async function validadeToken(){
+    try {
+        const validateTokenResult = await axios.post('http://localhost:8000/validateToken',{
+            userId,
+            token: document.getElementById('tokenInputValue').value
+        })
+
+        console.log(validateTokenResult.status)
+
+        if (validateTokenResult.status == 200) {
+            res.redirect('/MusclePointsBETA/training')
+        }
+        
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+</script>
+</html>

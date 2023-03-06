@@ -1,0 +1,84 @@
+.white-container>table{
+    width: 100%;
+}
+.white-container{
+    overflow-y: auto;
+}
+
+table td{
+    text-align: center;
+}
+.infoUsers tr>td:nth-child(2):hover{
+    cursor: pointer;
+    border-bottom: 1px solid black;
+}
+
+.infoUsers td button{
+    padding: 5px;
+    margin-left: 5px;
+    background-color: transparent;
+    width: 30px;
+    font-size: 20px;
+}
+.infoUsers td>button:nth-child(2) {
+    font-size: 15px !important;
+    background-color:  #eec51d;
+    width: 43px;
+    font-weight: bolder;
+}
+.billing-table{
+    display: flex;
+    flex-direction: co;
+}
+.billing-table tr{
+    display: flex;
+    flex-direction: row;
+}
+
+.billing-table td{
+    height: 100px;
+    width: 150px;
+    border: 5px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.billing-table td span{
+    padding: 5px;
+    font-weight: bolder;
+    font-size: 22px;
+    color: green;
+}
+
+.billing-table td span p {
+    background-color: white;
+    padding: 5px;
+    width: 100px;
+}
+.billing-table td input {
+    font-weight: bolder;
+    font-size: 22px;
+    color: green;
+}
+
+.billing-table td input {
+    background-color: white;
+    width: 100px;
+}
+
+.billing-table td button {
+    color: green;
+    font-weight: bolder;
+    font-size: 18px;
+    background-color: transparent;
+}
+
+
+.three-flex-itens{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 70%;
+}

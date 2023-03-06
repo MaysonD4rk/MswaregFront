@@ -1,0 +1,17 @@
+.tokenInput{
+    font-size: 25px;
+    text-align: center;
+    border-radius: 30px;
+    padding: 10px;
+    width: 340px;
+}
+
+.token-validate-btn{
+    font-size: 25px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    background-color: #ff5757;
+}

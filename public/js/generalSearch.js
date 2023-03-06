@@ -50,7 +50,7 @@ function renderCards(results) {
             let card = document.createElement('div');
             card.classList = 'card';
             card.onclick = () => {
-                location.href = 'https://mswareg.com/search?ideaQuery=' + currentSearchValue;
+                location.href = 'http://localhost:8080/search?ideaQuery=' + currentSearchValue;
             }
             card.id = "ideaCard"
             let cardItens = document.createElement('div');
@@ -87,7 +87,7 @@ function renderCards(results) {
             let card = document.createElement('div');
             card.classList = 'card';
             card.onclick = () => {
-                location.href = 'https://mswareg.com/search?msgQuery=' + currentSearchValue;
+                location.href = 'http://localhost:8080/search?msgQuery=' + currentSearchValue;
             }
             card.id = "msgsCard"
             let cardItens = document.createElement('div');
@@ -123,7 +123,7 @@ function renderCards(results) {
             let card = document.createElement('div');
             card.classList = 'card';
             card.onclick = () => {
-                location.href = 'https://mswareg.com/search?userQuery=' + currentSearchValue;
+                location.href = 'http://localhost:8080/search?userQuery=' + currentSearchValue;
             }
             card.id = "usersCard"
             let cardItens = document.createElement('div');
@@ -203,7 +203,7 @@ async function loadMoreItens() {
                                 let userResultCardInfo = document.createElement('div');
                                     userResultCardInfo.classList = 'user-result-card-info'
                                     userResultCardInfo.innerHTML = `
-                                        <a href="https://mswareg.com/profile/${user.username}">@${user.username}</a>
+                                        <a href="http://localhost:8080/profile/${user.username}">@${user.username}</a>
                                             <button>Follow</button>
                                     `
 

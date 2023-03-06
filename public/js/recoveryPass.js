@@ -5,12 +5,12 @@ function confirmPassChange(token, email) {
 
     if (pass == confirmPass) {
 
-        axios.post('https://server.mswareg.com/changePass', {
+        axios.post('http://localhost:8000/changePass', {
             token: token,
             email: email,
             password: pass
         }).then(res => {
-            window.location.href = 'https://mswareg.com/login'
+            window.location.href = 'http://localhost:8080/login'
         }).catch(err => {
             console.log(err)
         })
@@ -25,7 +25,7 @@ function confirmPassChange(token, email) {
 function sendEmail() {
     var email = document.getElementsByName('email')[0].value;
 
-    axios.post('https://server.mswareg.com/passrecovery', {
+    axios.post('http://localhost:8000/passrecovery', {
         email
     }).then(res => {
         return

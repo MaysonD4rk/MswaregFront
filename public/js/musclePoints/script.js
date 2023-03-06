@@ -1,8 +1,8 @@
 let currentExerciseNum = 0;
 let calculateBtnSpawned = false;
-let canvasNum = 0
-let currentIndex = ''
-
+let canvasNum = 0;
+let currentIndex;
+const userId = document.getElementById('userId').value;
 
 
 //maxRepWMK = max rep with max kg
@@ -83,9 +83,6 @@ let currentIndex = ''
 */
 
 
-let fakeDb = [];
-
-
 
 (async function getTrainLog(){
     fakeDb.forEach((element, index)=>{
@@ -131,6 +128,15 @@ async function getTrainLogAfter() {
 
 function trainLog(index, time="last7days", loadedNew=false) {
     currentIndex = index
+
+    id = "labelKgBtn"
+    document.getElementById("labelKgBtn").onclick = ()=>{
+        calcPoints(currentIndex, 'kg')
+    }
+    document.getElementById("labelRepBtn").onclick = () => {
+        calcPoints(currentIndex, 'rep')
+
+    }
 
     if (loadedNew) {
         document.querySelectorAll('input[name="view"]')[0].checked = false;
@@ -202,9 +208,9 @@ function trainLog(index, time="last7days", loadedNew=false) {
             let repInput = document.createElement('input');
             repInput.className = 'reps';
             repInput.type = 'text';
-            repInput.placeholder = 'rep';
-            repInput.value = element
-            
+            repInput.placeholder = element;
+            repInput.value = element;
+
             repsContainer.appendChild(repInput);
         })
 
@@ -215,15 +221,18 @@ function trainLog(index, time="last7days", loadedNew=false) {
         btnPlus.innerHTML = '+'
         
 
-
+        repsContainer.appendChild(document.createElement('br'))
         repsContainer.appendChild(btnPlus)
+        repsContainer.appendChild(document.createElement('br'))
+
+        let actualElement;
 
         i.kgs.forEach(element => {
             let kgInput = document.createElement('input');
             kgInput.className = 'kgs';
             kgInput.type = 'text';
-            kgInput.placeholder = 'kg';
-            kgInput.value = element
+            kgInput.placeholder = element;
+            kgInput.value = element;
             
             kgsContainer.appendChild(kgInput);
         })
@@ -231,7 +240,10 @@ function trainLog(index, time="last7days", loadedNew=false) {
         let btnSub = document.createElement('button');
         btnSub.onclick = () => { removeSerie(ceN) }
         btnSub.innerHTML = '-'
+
+        kgsContainer.appendChild(document.createElement('br'))
         kgsContainer.appendChild(btnSub)
+        kgsContainer.appendChild(document.createElement('br'))
 
 
 
@@ -289,7 +301,7 @@ function trainLog(index, time="last7days", loadedNew=false) {
 }
 
 
-function getExercisesData(categorieReturn,index, time) {
+function getExercisesData(categorieReturn,index, time, kgOrRep='rep') {
     
     
     let datas = []
@@ -437,18 +449,21 @@ function getExercisesData(categorieReturn,index, time) {
                     daysMergedRep.push(categorie.reps.reduce((total, num) => total + num, 0));
                 })
                 
+                if (kgOrRep == 'rep') {
+                    datas.push({
+                        label: item.exerciseName+'# Rep',
+                        data: [...daysMergedRep],
+                        borderWidth: 2
+                    })
+                } else if (kgOrRep == 'kg'){
+                    datas.push({
+                        label: item.exerciseName + '# Kg',
+                        data: [...daysMergedKg],
+                        borderWidth: 2
+                    })
+                    
+                }
 
-                datas.push({
-                    label: item.exerciseName+'# Rep',
-                    data: [...daysMergedRep],
-                    borderWidth: 2
-                })
-
-                datas.push({
-                    label: item.exerciseName + '# Kg',
-                    data: [...daysMergedKg],
-                    borderWidth: 2
-                })
 
                 /*label: '# Rep',
                         data: [12, (reps/14)],
@@ -616,8 +631,9 @@ function getExercisesData(categorieReturn,index, time) {
 
 
 
-function calcPoints(index){
-
+async function calcPoints(index, kgOrRep="rep"){
+    
+    
 
     if (!!document.getElementById('myChart' + canvasNum)) {
         document.getElementById('myChart' + canvasNum).remove()
@@ -663,9 +679,10 @@ function calcPoints(index){
             
         }
 
+        console.log(inputsKg)
         for (let forI = 0; forI < (inputsKg.children.length - 3); forI++) {
             const element = inputsKg.children[forI];
-
+            
             exerciseData.kgs.push(parseInt(element.value));
 
         }
@@ -695,11 +712,30 @@ function calcPoints(index){
     console.log(fakeDb[index].exercisesAllData[fakeDb[index].exercisesAllData.length - 1])
     console.log(fakeDb[index].exercisesAllData)
 
+    try {
+document.cookie.split(';').forEach(async cookie => {
+                authToken = cookie.split('=');
+                if (authToken[0] == 'authToken') {
+        await axios.put('http://localhost:8000/trainLog',{
+            userId,
+            trainLog: JSON.stringify(fakeDb)
+        }, {
+            headers: {
+                'authorization': `Bearer ${authToken[1]}`
+                }
+            })
+}
+    })
+        console.log(JSON.stringify(fakeDb))
+    } catch (error) {
+        console.log(error)
+    }
+
     new Chart(ctx, {
         type: 'line',
         data: {
             labels: [...getExercisesData('day', index, 'last7days')],
-            datasets: [...getExercisesData('exerciseName', index, 'last7days')]
+            datasets: [...getExercisesData('exerciseName', index, 'last7days', kgOrRep)]
         },
         options: {
             scales: {
@@ -737,8 +773,8 @@ function addSerie(exercise){
         newKg.placeholder = 'Kg'
         newKg.classList.add('kgs');
 
-    let insertBeforeElementRep = document.getElementsByClassName('rep')[exercise-1].children[document.getElementsByClassName('rep')[exercise-1].children.length - 3]
-    let insertBeforeElementKg = document.getElementsByClassName('kg')[exercise-1].children[document.getElementsByClassName('kg')[exercise-1].children.length - 3]
+    let insertBeforeElementRep = document.getElementsByClassName('rep')[exercise - 1].children[document.getElementsByClassName('rep')[exercise - 1].children.length - 3]
+    let insertBeforeElementKg = document.getElementsByClassName('kg')[exercise - 1].children[document.getElementsByClassName('kg')[exercise - 1].children.length - 3]
 
     document.getElementsByClassName('rep')[exercise-1].insertBefore(newRep, insertBeforeElementRep)
     document.getElementsByClassName('kg')[exercise-1].insertBefore(newKg, insertBeforeElementKg)
@@ -930,3 +966,8 @@ input.addEventListener('change', () => {
     };
     reader.readAsText(file);
 });
+
+
+
+
+

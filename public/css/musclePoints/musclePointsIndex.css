@@ -1,0 +1,213 @@
+body {
+    background-image: linear-gradient(to right, #ffb14d, #fd07c9) !important;
+}
+
+#navbar-container {
+
+    height: 100px;
+    margin: 10px 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    box-shadow: 2px 2px 10px rgb(0, 0, 0);
+    margin-right: 8px;
+}
+
+
+
+#main-container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.text-glow {
+    width: 360px;
+    display: flex;
+    margin-top: 100px;
+    margin-left: 10px;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-glow>button {
+    width: 240px;
+    height: 70px;
+    font-size: 20px;
+    border-radius: 30px;
+    background-image: -webkit-linear-gradient(to right, #fba405, #fd07c9);
+    background-image: linear-gradient(to left, #fba405, #fd07c9);
+    font-weight: bolder;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+.glow {
+    font-size: 40px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ffffff, 0 0 40px #ffffff, 0 0 50px #ffffff, 0 0 60px #ffffff, 0 0 70px #ffffff;
+    font-weight: 400;
+}
+
+#carrousel-info {
+    height: 500px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+#carrousel-itens {
+    height: 500px;
+    width: 100%;
+
+}
+
+.info-cards {
+    background-color: white;
+    width: 340px;
+    border-radius: 5px;
+    height: 300px;
+
+    text-align: center;
+    padding: 5px;
+}
+
+#infoCard1 {
+    background-image: url('/img/musclePoints/linechart.png');
+    background-size: 360px;
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+}
+
+.info-cards p {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.instrutorCard>p {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+
+@media (max-width: 500px) {
+    .text-glow {
+        width: 400px;
+
+    }
+
+    .glow {
+        font-size: 50px;
+    }
+
+    .muscleLogoWB {
+        width: 360px;
+    }
+
+    .info-cards {
+        width: 360px;
+        height: 400px;
+    }
+
+    #infoCard1 {
+        background-image: url('/img/musclePoints/linechart.png');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: bottom;
+    }
+
+    .info-cards p {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .instrutorCard>p {
+        font-size: 23px;
+        font-weight: bold;
+        margin-top: 40px;
+    }
+
+    .instrutorImg {
+        height: 200px;
+        margin-top: 40px;
+    }
+
+    .dontShowAtMobile {
+        display: none;
+    }
+}
+
+@media (min-width: 900px) {
+
+    .text-glow {
+        width: 700px;
+
+    }
+
+    .glow {
+        font-size: 70px;
+    }
+
+    .muscleLogoWB {
+        width: 700px;
+    }
+
+    .text-glow {
+        width: 400px;
+
+    }
+
+    .glow {
+        font-size: 50px;
+    }
+
+    .info-cards {
+        width: 800px;
+        height: 400px;
+    }
+
+    .instrutorImg {
+        height: 300px;
+        margin-top: 40px;
+    }
+
+    #infoCard1 {
+        background-image: url('/img/musclePoints/linechart.png');
+        background-size: 700px;
+        background-repeat: no-repeat;
+        background-position-y: bottom;
+        font-size: 35px;
+    }
+
+    .info-cards p {
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .info-cards h2 {
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .info-cards h1 {
+        font-size: 50px;
+        font-weight: bold;
+    }
+
+    .instrutorCard>p {
+        font-size: 30px;
+        font-weight: bold;
+    }
+}
