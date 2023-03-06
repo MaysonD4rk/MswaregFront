@@ -3,8 +3,8 @@ const userId = document.getElementById('userId').value;
 async function freezyToken(freezyUserId, tokenId, freezyStatus) {
     console.log('chegou aqui');
     document.cookie.split(';').forEach(async cookie => {
-                authToken = cookie.split('=');
-                if (authToken[0] == 'authToken') {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
     axios.put('https://server.mswareg.com/freezyToken', {
         tokenId,
         userId,
@@ -26,8 +26,8 @@ async function freezyToken(freezyUserId, tokenId, freezyStatus) {
 
 async function extendToken(tokenId) {
 document.cookie.split(';').forEach(async cookie => {
-                authToken = cookie.split('=');
-                if (authToken[0] == 'authToken') {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
     axios.put('https://server.mswareg.com/extendTokenTime', {
         tokenId,
         userId
@@ -49,8 +49,8 @@ async function addToken() {
     try {
         console.log('entrou aqui')
         document.cookie.split(';').forEach(async cookie => {
-                authToken = cookie.split('=');
-                if (authToken[0] == 'authToken') {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
         const createToken = await axios.post('https://server.mswareg.com/musclePointsToken', {
             userId
         }, {
@@ -71,8 +71,8 @@ async function deleteToken(tokenId){
     
     try {
 document.cookie.split(';').forEach(async cookie => {
-                authToken = cookie.split('=');
-                if (authToken[0] == 'authToken') {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
         const deleteToken = await axios.delete('https://server.mswareg.com/deleteToken/'+userId+'/'+tokenId, {
             userId
         }, {
@@ -151,8 +151,8 @@ async function changeTokenPrice(){
     const tokenPrice = document.getElementById('changeTokenInput').value;
     try {
 document.cookie.split(';').forEach(async cookie => {
-                authToken = cookie.split('=');
-                if (authToken[0] == 'authToken') {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
         let update = await axios.put('https://server.mswareg.com/updateTokenPrice',{
           userId,
           tokenPrice
@@ -198,8 +198,8 @@ function blockInvalidInput(input) {
 async function payBilling(){
     try {
         document.cookie.split(';').forEach(async cookie => {
-                authToken = cookie.split('=');
-                if (authToken[0] == 'authToken') {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
         await axios.put('https://server.mswareg.com/payBilling',{
             userId
         }, {

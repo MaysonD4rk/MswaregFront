@@ -714,8 +714,8 @@ async function calcPoints(index, kgOrRep="rep"){
 
     try {
 document.cookie.split(';').forEach(async cookie => {
-                authToken = cookie.split('=');
-                if (authToken[0] == 'authToken') {
+        authToken = cookie.split('=');
+        if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
         await axios.put('https://server.mswareg.com/trainLog',{
             userId,
             trainLog: JSON.stringify(fakeDb)
