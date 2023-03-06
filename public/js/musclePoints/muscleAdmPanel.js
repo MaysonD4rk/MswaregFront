@@ -58,10 +58,10 @@ async function addToken() {
                 'authorization': `Bearer ${authToken[1]}`
                 }
                 })
+                location.reload()
                 }
             })
 
-        location.reload()
     } catch (error) {
         console.log(error)
     }
