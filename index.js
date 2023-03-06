@@ -31,14 +31,12 @@ app.get('/home', async (req, res)=>{
     let isLogged;
 
 
-    if (sess.userId == undefined || sess.userId == 0 ) {
-        isLogged = false;
-        sess.userId = 0
-    } else if (req.cookies.authToken != undefined){
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
         isLogged = true;
         sess.userId = req.cookies.userId
-    }else{
-        isLogged = true;
+    } else {
+        isLogged = false;
+        sess.userId = 0
     }
 
     axios({
@@ -199,15 +197,15 @@ app.get('/writeIdea', async (req, res) => {
     sess = req.session
     
 
-    if (sess.userId == undefined || sess.userId == 0) {
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
+        isLogged = true;
+        sess.userId = req.cookies.userId
+    } else {
         isLogged = false;
         sess.userId = 0
         res.redirect('/login')
-    } else if (req.cookies.authToken != undefined) {
-        isLogged = true;
-        sess.userId = req.cookies.userId;
-    } else {
-        isLogged = true;
+        return
+
     }
 
     axios({
@@ -309,11 +307,12 @@ app.get('/profile/:username', async (req,res)=>{
     }
     let isLogged;
 
-    if (sess.userId == undefined || sess.userId == 0) {
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
+        isLogged = true;
+        sess.userId = req.cookies.userId
+    } else {
         isLogged = false;
         sess.userId = 0
-    } else {
-        isLogged = true;
     }
     let followingData;
     let followerData;
