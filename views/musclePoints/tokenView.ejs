@@ -64,10 +64,10 @@ async function validadeToken(){
                 'authorization': `Bearer ${authToken[1]}`
                 }
                 })
-                }
                 console.log(validateTokenResult.status)
                 if (validateTokenResult.status == 200) {
                     res.redirect('/MusclePointsBETA/training')
+                }
                 }
             })
 
