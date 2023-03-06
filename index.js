@@ -806,7 +806,7 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
 
         } else {
             
-            if (result.data.verifyTokenRole.result.length > 0 || result.data.userRole == 'master-supplier') {
+            if (result.data.userRole == 'master-supplier' || result.data.verifyTokenRole.result.length > 0) {
                 if (!result.data.verifyTokenRole.result[0].frozenToken) {
                     const getTrainLog = await axios.get('https://server.mswareg.com/getTrainLog/' + sess.userId)
                     console.log('entrou no 1')
