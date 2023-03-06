@@ -73,16 +73,15 @@ async function deleteToken(tokenId){
 document.cookie.split(';').forEach(async cookie => {
         authToken = cookie.split('=');
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
-        const deleteToken = await axios.delete('https://server.mswareg.com/deleteToken/'+userId+'/'+tokenId, {
+        const deleteTokenStatus = await axios.delete('https://server.mswareg.com/deleteToken/'+userId+'/'+tokenId, {
                 headers: {
                     'authorization': `Bearer ${authToken[1]}`
                     }
-            })
-        }
+                })
+                location.reload()
+            }
     })
 
-        console.log(deleteToken)
-        location.reload()
     } catch (error) {
         console.log(error)
     }
