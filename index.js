@@ -736,6 +736,7 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
     axios.get('https://server.mswareg.com/validateTokenLogin/' + sess.userId).then(async result => {
     console.log('userId é: ')
     console.log(sess.userId)
+    console.log(result.data)
 
         if (!!username) {
             try {
