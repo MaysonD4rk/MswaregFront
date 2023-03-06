@@ -72,6 +72,7 @@ async function deleteToken(tokenId){
     try {
 document.cookie.split(';').forEach(async cookie => {
         authToken = cookie.split('=');
+        console.log(authToken)
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
         const deleteToken = await axios.delete('https://server.mswareg.com/deleteToken/'+userId+'/'+tokenId, {
             userId
