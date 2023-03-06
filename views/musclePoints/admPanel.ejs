@@ -77,11 +77,11 @@
                     %>
                     <tr>
                         <td>
-                            <%=supplier.usingUserId%>
+                            <%=supplier.usingUserId%><span class="trashIcon" onclick="openDeleteTokenModal(<%=supplier.tokenId%>)">- <i class="fa-solid fa-trash"></i></span>
+                            </td>
                         </td>
                         <td <%if(!!supplier.usingUserId){%>onclick="window.location.href = '/MusclePointsBETA/adminPanel/<%=supplier.username%>'"<%}%>><%=supplier.username%>
-                                        <span class="trashIcon" onclick="openDeleteTokenModal(<%=supplier.tokenId%>)">- <i
-                                                class="fa-solid fa-trash"></i></span></td>
+                                        
                         <td style="color: green; font-weight: bold;">
                             <%if(supplier.payState==1){%>Pago<%}else{%>Não pago<%}%>
                         </td>
@@ -134,8 +134,8 @@ if(typeof customers != 'undefined'){%>
                     }
                     %>
                     <tr>
-                        <td><%=c.usingUserId%> </td>
-                        <td <%if(!!c.usingUserId){%>onclick="window.location.href = '/MusclePointsBETA/training/<%=c.username%>'"<%}%>><%=c.username%> <span class="trashIcon" onclick="openDeleteTokenModal(<%=c.tokenId%>)">- <i class="fa-solid fa-trash"></i></span></td>
+                        <td><%=c.usingUserId%> <span class="trashIcon" onclick="openDeleteTokenModal(<%=c.tokenId%>)">- <i class="fa-solid fa-trash"></i></span></td>
+                        <td <%if(!!c.usingUserId){%>onclick="window.location.href = '/MusclePointsBETA/training/<%=c.username%>'"<%}%>><%=c.username%> </td>
                         <td style="color: green; font-weight: bold;"><%if(c.payState == 1){%>Pago<%}else{%>Não pago<%}%></td>
                         <td><% if(!!c.frozenToken){%><button onclick="freezyToken(<%=c.usingUserId%>,<%=c.tokenId%>, false)"><i class="fa-solid fa-lock"></i></button><%}else{%><button onclick="freezyToken(<%=c.usingUserId%>,<%=c.tokenId%>,true)"><i class="fa-solid fa-unlock"></i></button><%}%><button onclick="extendToken(<%=c.tokenId%>)">+30D</button></td>
                     </tr>
