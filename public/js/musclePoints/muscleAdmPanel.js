@@ -75,8 +75,6 @@ document.cookie.split(';').forEach(async cookie => {
         console.log(authToken)
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
         const deleteToken = await axios.delete('https://server.mswareg.com/deleteToken/'+userId+'/'+tokenId, {
-            userId
-        }, {
                 headers: {
                     'authorization': `Bearer ${authToken[1]}`
                     }
