@@ -53,10 +53,19 @@
 
 async function validadeToken(){
     try {
+        document.cookie.split(';').forEach(async cookie => {
+                authToken = cookie.split('=');
+                if (authToken[0] == 'authToken') {
         const validateTokenResult = await axios.post('https://server.mswareg.com/validateToken',{
             userId,
             token: document.getElementById('tokenInputValue').value
-        })
+        }, {
+                headers: {
+                'authorization': `Bearer ${authToken[1]}`
+                }
+                })
+                }
+            })
 
         console.log(validateTokenResult.status)
 
