@@ -205,7 +205,7 @@
             box-shadow: 20px 20px 60px #182441,
                 -20px -20px 60px #203059;
             width: 300px;
-            height: 350px;
+            height: 300px;
         }
 
         #login-container>input {
@@ -243,12 +243,12 @@
 
 <body>
 
-    <% if(typeof loginError !='undefined' ){ %>
-        <div class="errorMsg">
-            <b>
-                <%= loginErrorMsg %>
-            </b>
-        </div>
+        <% if(typeof loginError !='undefined' ){ %>
+            <div class="errorMsg">
+                <b>
+                    <%= loginErrorMsg %>
+                </b>
+            </div>
         <%}%>
 
 
@@ -297,7 +297,7 @@
 
                     <div class="btns-field">
                         <button class="degradeBtn" onclick="location.href='/home'">EXPLORAR</button>
-                        <button class="btn-loginField" onclick="loginScroll()">Logar</button>
+                        <button class="btn-loginField" onclick="loginScroll()">Registrar-se</button>
                     </div>
                 </div>
                 <div class="degadeImg">
@@ -312,9 +312,8 @@
                     <input type="text" name="username" placeholder="Username">
                     <input type="password" name="password" placeholder="Senha">
                     <button id="registerBtn">Registrar</button>
-                    <a href="/login">criar conta</a>
+                    <a href="/login">Já tenho uma conta</a>
                 </form>
-                <a href="/forgotPass">Esqueci a senha</a>
             </div>
 
 
