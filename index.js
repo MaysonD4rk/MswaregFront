@@ -174,14 +174,12 @@ app.get('/trend', async (req,res)=>{
     const sess = req.session;
     let isLogged;
 
-    if (sess.userId == undefined || sess.userId == 0) {
-        isLogged = false;
-        sess.userId = 0
-    } else if (req.cookies.authToken != undefined) {
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
         isLogged = true;
         sess.userId = req.cookies.userId
     } else {
-        isLogged = true;
+        isLogged = false;
+        sess.userId = 0
     }
     axios({
         method: "get",
@@ -267,14 +265,12 @@ app.get('/sendMsg', async (req, res) => {
 
     let isLogged;
 
-    if (sess.userId == undefined || sess.userId == 0) {
-        isLogged = false;
-        sess.userId = 0
-    } else if (req.cookies.authToken != undefined) {
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
         isLogged = true;
         sess.userId = req.cookies.userId
     } else {
-        isLogged = true;
+        isLogged = false;
+        sess.userId = 0
     }
     let msgs = await axios.get(`https://server.mswareg.com/listMsgs/${offset*15}`);
 
@@ -382,15 +378,15 @@ app.get('/profile/:username', async (req,res)=>{
 app.get('/accountSettings', (req, res) => {
     sess = req.session
     
-    if (sess.userId == undefined || sess.userId == 0) {
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
+        isLogged = true;
+        sess.userId = req.cookies.userId
+    }else{
         isLogged = false;
         sess.userId = 0
         res.redirect('/login')
-    } else if (req.cookies.authToken != undefined) {
-        isLogged = true;
-        sess.userId = req.cookies.userId
-    } else {
-        isLogged = true;
+        return
+
     }
 
     axios({
@@ -551,16 +547,17 @@ app.get('/search', async (req, res) => {
     sess = req.session
     let isLogged;
 
-    if (sess.userId == undefined || sess.userId == 0) {
-        isLogged = false;
-        sess.userId = 0
-    } else if (req.cookies.authToken != undefined) {
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
         isLogged = true;
         sess.userId = req.cookies.userId
     } else {
-        isLogged = true;
+        isLogged = false;
+        sess.userId = 0
     }
     
+    
+
+
 
     let offset = req.query.offset;
     if (offset == undefined || offset == NaN || offset == "NaN" || offset == null || offset < 0) {
@@ -707,15 +704,15 @@ app.get('/wallet', (req,res)=>{
     sess = req.session;
     let isLogged;
 
-    if (sess.userId == undefined || sess.userId == 0) {
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
+        isLogged = true;
+        sess.userId = req.cookies.userId
+    }else{
         isLogged = false;
         sess.userId = 0
         res.redirect('/login')
-    } else if (req.cookies.authToken != undefined) {
-        isLogged = true;
-        sess.userId = req.cookies.userId
-    } else {
-        isLogged = true;
+        return
+
     }
 
     axios({
@@ -742,16 +739,17 @@ app.get('/MusclePointsBETA', (req, res) => {
     sess = req.session;
     let isLogged;
 
-    if (sess.userId == undefined || sess.userId == 0) {
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
+        isLogged = true;
+        sess.userId = req.cookies.userId
+    }else{
         isLogged = false;
         sess.userId = 0
         res.redirect('/login')
-    } else if (req.cookies.authToken != undefined) {
-        isLogged = true;
-        sess.userId = req.cookies.userId
-    } else {
-        isLogged = true;
+        return
+
     }
+
     res.render('musclePoints/musclepointsindex',{
         userId: sess.userId
     });
@@ -761,15 +759,15 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
     sess = req.session;
     let isLogged;
 
-    if (sess.userId == undefined || sess.userId == 0) {
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
+        isLogged = true;
+        sess.userId = req.cookies.userId
+    }else{
         isLogged = false;
         sess.userId = 0
         res.redirect('/login')
-    } else if (req.cookies.authToken != undefined) {
-        isLogged = true;
-        sess.userId = req.cookies.userId
-    } else {
-        isLogged = true;
+        return
+
     }
     const username = req.params.username || false;
 
@@ -959,15 +957,15 @@ app.get('/MusclePointsBETA/tokenCode', (req, res) => {
     sess = req.session;
     let isLogged;
 
-    if (sess.userId == undefined || sess.userId == 0) {
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
+        isLogged = true;
+        sess.userId = req.cookies.userId
+    }else{
         isLogged = false;
         sess.userId = 0
         res.redirect('/login')
-    } else if (req.cookies.authToken != undefined) {
-        isLogged = true;
-        sess.userId = req.cookies.userId
-    } else {
-        isLogged = true;
+        return
+
     }
 
     if (!!req.query.frozenToken) {
@@ -1001,15 +999,15 @@ app.get('/MusclePointsBETA/adminPanel/:supplier?', (req, res) => {
     sess = req.session;
     let isLogged;
 
-    if (sess.userId == undefined || sess.userId == 0) {
+    if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
+        isLogged = true;
+        sess.userId = req.cookies.userId
+    }else{
         isLogged = false;
         sess.userId = 0
         res.redirect('/login')
-    } else if (req.cookies.authToken != undefined) {
-        isLogged = true;
-        sess.userId = req.cookies.userId
-    } else {
-        isLogged = true;
+        return
+
     } //TODO: Pegar os dados pelo id e verificar a role, se for role 1, o acesso adm é em outra página
 
 
