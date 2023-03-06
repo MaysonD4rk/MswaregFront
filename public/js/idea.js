@@ -7,7 +7,7 @@
         pubId = parseInt(pubId);
 
         try {
-            let likedPub = await axios.get(`http://localhost:8000/checkLikeFavorite/${pubId}/${userId}`);
+            let likedPub = await axios.get(`https://server.mswareg.com/checkLikeFavorite/${pubId}/${userId}`);
             
             if (!!likedPub.data.result.row[0].liked) {
                 document.getElementById(pubId).classList.add('liked');
@@ -38,7 +38,7 @@ async function likePub(pubId) {
 
             try {
                 
-                var status = await axios.put('http://localhost:8000/likePub', { pubId, userId }, {
+                var status = await axios.put('https://server.mswareg.com/likePub', { pubId, userId }, {
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }
@@ -76,7 +76,7 @@ async function favoritePub(pubId) {
 
             try {
                 
-                let status = await axios.put('http://localhost:8000/favoritePub', { userId, pubId }, {
+                let status = await axios.put('https://server.mswareg.com/favoritePub', { userId, pubId }, {
                     headers: {
                         'authorization': `Bearer ${authToken[1]}`
                     }

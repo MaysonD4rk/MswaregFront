@@ -5,7 +5,7 @@ async function freezyToken(freezyUserId, tokenId, freezyStatus) {
     document.cookie.split(';').forEach(async cookie => {
                 authToken = cookie.split('=');
                 if (authToken[0] == 'authToken') {
-    axios.put('http://localhost:8000/freezyToken', {
+    axios.put('https://server.mswareg.com/freezyToken', {
         tokenId,
         userId,
         freezyUserId,
@@ -28,7 +28,7 @@ async function extendToken(tokenId) {
 document.cookie.split(';').forEach(async cookie => {
                 authToken = cookie.split('=');
                 if (authToken[0] == 'authToken') {
-    axios.put('http://localhost:8000/extendTokenTime', {
+    axios.put('https://server.mswareg.com/extendTokenTime', {
         tokenId,
         userId
     }, {
@@ -51,7 +51,7 @@ async function addToken() {
         document.cookie.split(';').forEach(async cookie => {
                 authToken = cookie.split('=');
                 if (authToken[0] == 'authToken') {
-        const createToken = await axios.post('http://localhost:8000/musclePointsToken', {
+        const createToken = await axios.post('https://server.mswareg.com/musclePointsToken', {
             userId
         }, {
                 headers: {
@@ -73,7 +73,7 @@ async function deleteToken(tokenId){
 document.cookie.split(';').forEach(async cookie => {
                 authToken = cookie.split('=');
                 if (authToken[0] == 'authToken') {
-        const deleteToken = await axios.delete('http://localhost:8000/deleteToken/'+userId+'/'+tokenId, {
+        const deleteToken = await axios.delete('https://server.mswareg.com/deleteToken/'+userId+'/'+tokenId, {
             userId
         }, {
                 headers: {
@@ -153,7 +153,7 @@ async function changeTokenPrice(){
 document.cookie.split(';').forEach(async cookie => {
                 authToken = cookie.split('=');
                 if (authToken[0] == 'authToken') {
-        let update = await axios.put('http://localhost:8000/updateTokenPrice',{
+        let update = await axios.put('https://server.mswareg.com/updateTokenPrice',{
           userId,
           tokenPrice
         }, {
@@ -200,7 +200,7 @@ async function payBilling(){
         document.cookie.split(';').forEach(async cookie => {
                 authToken = cookie.split('=');
                 if (authToken[0] == 'authToken') {
-        await axios.put('http://localhost:8000/payBilling',{
+        await axios.put('https://server.mswareg.com/payBilling',{
             userId
         }, {
             headers: {
