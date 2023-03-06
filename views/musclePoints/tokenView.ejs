@@ -65,13 +65,13 @@ async function validadeToken(){
                 }
                 })
                 }
+                console.log(validateTokenResult.status)
+                if (validateTokenResult.status == 200) {
+                    res.redirect('/MusclePointsBETA/training')
+                }
             })
 
-        console.log(validateTokenResult.status)
 
-        if (validateTokenResult.status == 200) {
-            res.redirect('/MusclePointsBETA/training')
-        }
         
     } catch (error) {
         console.log(error)
