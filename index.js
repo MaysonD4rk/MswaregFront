@@ -156,6 +156,7 @@ app.post('/register', async (req, res)=>{
             sess.email = email;
             sess.userId = result.data.result.id
             res.cookie('authToken', result.data.token)
+            res.cookie('userId', sess.userId)
             res.redirect('/home');
         }else{
             res.redirect('/register?error=true');
