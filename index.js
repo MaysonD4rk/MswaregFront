@@ -82,7 +82,7 @@ app.get('/home', async (req, res)=>{
 app.get('/login', (req, res) => {
     
     res.clearCookie('authToken');
-    res.clearCookie('userid');
+    res.clearCookie('userId');
     req.session.destroy();
     
 
