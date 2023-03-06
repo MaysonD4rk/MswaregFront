@@ -84,7 +84,6 @@ document.cookie.split(';').forEach(async cookie => {
     })
 
         console.log(deleteToken)
-        location.reload()
     } catch (error) {
         console.log(error)
     }
