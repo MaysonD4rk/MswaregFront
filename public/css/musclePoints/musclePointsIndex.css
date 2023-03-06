@@ -84,7 +84,7 @@ body {
 }
 
 #infoCard1 {
-    background-image: url('/img/musclePoints/linechart.png');
+    background-image: url('/img/MusclePoints/linechart.png');
     background-size: 360px;
     background-repeat: no-repeat;
     background-position-y: bottom;
@@ -122,7 +122,7 @@ body {
     }
 
     #infoCard1 {
-        background-image: url('/img/musclePoints/linechart.png');
+        background-image: url('/img/MusclePoints/linechart.png');
         background-size: 500px;
         background-repeat: no-repeat;
         background-position-y: bottom;
@@ -184,7 +184,7 @@ body {
     }
 
     #infoCard1 {
-        background-image: url('/img/musclePoints/linechart.png');
+        background-image: url('/img/MusclePoints/linechart.png');
         background-size: 700px;
         background-repeat: no-repeat;
         background-position-y: bottom;

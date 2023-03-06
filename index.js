@@ -736,6 +736,7 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
     axios.get('https://server.mswareg.com/validateTokenLogin/' + sess.userId).then(async result => {
     console.log('userId é: ')
     console.log(sess.userId)
+    console.log(result.data)
 
         if (!!username) {
             try {
@@ -805,8 +806,8 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
 
         } else {
             
-            if (result.data.verifyTokenRole.result.length > 0) {
-                if (result.data.userRole == 'master-supplier' || !result.data.verifyTokenRole.result[0].frozenToken) {
+            if (result.data.verifyTokenRole.result.length > 0 || result.data.userRole == 'master-supplier') {
+                if (!result.data.verifyTokenRole.result[0].frozenToken) {
                     const getTrainLog = await axios.get('https://server.mswareg.com/getTrainLog/' + sess.userId)
                     console.log('entrou no 1')
                     if (getTrainLog.data.result.length > 0) {
