@@ -808,6 +808,7 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
                             res.render('musclePoints/training.ejs', {
                                 userId: sess.userId,
                                 trainLog,
+                                username: userData.data.result.usernameRow.usersTable[0].username,
                                 payBilling: true,
                                 billingPrice: usernameTokenData.data.verifyTokenRole.result[0].billingPrice,
                                 qrcodeData: { qrcodeImg: qrcode.data.imagem, qrcodeCode: qrcode.data.qrCodeTxt }
@@ -819,6 +820,7 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
                         res.render('musclePoints/training.ejs', {
                             userId: sess.userId,
                             tokenSupplierView: true,
+                            username: userData.data.result.usernameRow.usersTable[0].username,
                             daysLeft,
                             frozenToken: usernameTokenData.data.verifyTokenRole.result[0].frozenToken
                         });
@@ -857,7 +859,9 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
                             res.render('musclePoints/training.ejs', {
                                 userId: sess.userId,
                                 trainLog,
+                                tokenSupplierView: true,
                                 payBilling: true,
+                                username: userData.data.result.usernameRow.usersTable[0].username,
                                 billingPrice: usernameTokenData.data.verifyTokenRole.result[0].billingPrice,
                                 qrcodeData: { qrcodeImg: qrcode.data.imagem, qrcodeCode: qrcode.data.qrCodeTxt }
                             });
