@@ -1015,6 +1015,13 @@ app.get('/MusclePointsBETA/adminPanel/:supplier?', (req, res) => {
 
     const supplier = !!req.params.supplier ? req.params.supplier : false
 
+    axios({
+        method: "get",
+        url: "https://server.mswareg.com/user/" + sess.userId
+    }).then(async (data) => {
+
+        console.log('data')
+        console.log(data.data)
 
     axios.get('https://server.mswareg.com/validateTokenLogin/' + sess.userId)
         .then(async result => {
@@ -1046,7 +1053,8 @@ app.get('/MusclePointsBETA/adminPanel/:supplier?', (req, res) => {
                                     customers: tokenRelation.data.relation.result,
                                     count: getSupplierToken.data.count,
                                     tokenInfo,
-                                    payState
+                                    payState,
+                                    userData: data.data[0]
                                 })
                                 
                             } catch (error) {
@@ -1069,7 +1077,8 @@ app.get('/MusclePointsBETA/adminPanel/:supplier?', (req, res) => {
                                 customers: tokenRelation.data.relation.result,
                                 count: result.data.count,
                                 tokenInfo,
-                                payState
+                                payState,
+                                userData: data.data[0]
                             })
                         } else {
                             res.redirect('/MusclePointsBETA/tokenCode?frozenToken=true')
@@ -1079,7 +1088,8 @@ app.get('/MusclePointsBETA/adminPanel/:supplier?', (req, res) => {
                             adminMswareg: true,
                             userId: sess.userId,
                             suppliers: tokenRelation.data.relation.result,
-                            count: result.data.count
+                            count: result.data.count,
+                            userData: data.data[0]
                         })
                     }
                 }
@@ -1090,7 +1100,7 @@ app.get('/MusclePointsBETA/adminPanel/:supplier?', (req, res) => {
         }).catch(err=>{
             console.log(err)
         });
-
+})
 })
 
 
