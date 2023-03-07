@@ -800,12 +800,29 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
                         // Converte a diferença em dias
                         const daysLeft = Math.ceil(difference / (1000 * 3600 * 24));
     
+                         if (daysLeft < 5) {
+
+                        try {
+                            const qrcode = await axios.get('https://pix.mswareg.com/payBilling/' + usernameTokenData.data.verifyTokenRole.result[0].tokenOwnerId + "/" + usernameId + "?value=" + result.data.verifyTokenRole.result[0].billingPrice);
+
+                            res.render('musclePoints/training.ejs', {
+                                userId: sess.userId,
+                                trainLog,
+                                payBilling: true,
+                                billingPrice: result.data.verifyTokenRole.result[0].billingPrice,
+                                qrcodeData: { qrcodeImg: qrcode.data.imagem, qrcodeCode: qrcode.data.qrCodeTxt }
+                            });
+                        } catch (error) {
+                            console.log(error)
+                        }
+                    } else {
                         res.render('musclePoints/training.ejs', {
                             userId: sess.userId,
                             tokenSupplierView: true,
                             daysLeft,
-                            trainLog
+                            frozenToken: usernameTokenData.data.verifyTokenRole.result[0].frozenToken
                         });
+                    }
                         return
                     } else {
     
@@ -831,12 +848,30 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
     
                     // Converte a diferença em dias
                     const daysLeft = Math.ceil(difference / (1000 * 3600 * 24));
-                    res.render('musclePoints/training.ejs', {
-                        userId: sess.userId,
-                        tokenSupplierView: true,
-                        daysLeft,
-                        frozenToken: usernameTokenData.data.verifyTokenRole.result[0].frozenToken
-                    });
+
+                    if (daysLeft < 5) {
+
+                        try {
+                            const qrcode = await axios.get('https://pix.mswareg.com/payBilling/' + usernameTokenData.data.verifyTokenRole.result[0].tokenOwnerId + "/" + usernameId + "?value=" + result.data.verifyTokenRole.result[0].billingPrice);
+
+                            res.render('musclePoints/training.ejs', {
+                                userId: sess.userId,
+                                trainLog,
+                                payBilling: true,
+                                billingPrice: result.data.verifyTokenRole.result[0].billingPrice,
+                                qrcodeData: { qrcodeImg: qrcode.data.imagem, qrcodeCode: qrcode.data.qrCodeTxt }
+                            });
+                        } catch (error) {
+                            console.log(error)
+                        }
+                    } else {
+                        res.render('musclePoints/training.ejs', {
+                            userId: sess.userId,
+                            tokenSupplierView: true,
+                            daysLeft,
+                            frozenToken: usernameTokenData.data.verifyTokenRole.result[0].frozenToken
+                        });
+                    }
                 }
             } catch (error) {
                 console.log(error)
