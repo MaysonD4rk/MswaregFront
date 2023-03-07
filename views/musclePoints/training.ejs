@@ -19,7 +19,7 @@
 
     <%if(typeof tokenSupplierView != 'undefined' || typeof payBilling != 'undefined'){%>
     <div class="main-container-flex">
-        <h1 style="font-weight: 200;">fatura do: <b>Cliente1</b></h1>
+        <h1 style="font-weight: 200;">fatura do: <%=username%><b></b></h1>
         <% if(daysLeft < 5){%>
             <img src="<%=qrcodeData.qrcodeImg%>" alt="">
             <input type="text" id="qrcodeTxt" value="<%=qrcodeData.qrcodeTxt%>">
