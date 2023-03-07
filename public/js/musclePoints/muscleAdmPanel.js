@@ -157,11 +157,11 @@ document.cookie.split(';').forEach(async cookie => {
             headers: {
                 'authorization': `Bearer ${authToken[1]}`
             }
-            })
-
+        })
+            
+        location.reload()
         }
             })
-        location.reload()
 
     } catch (error) {
         console.log(error)
