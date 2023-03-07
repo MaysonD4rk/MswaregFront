@@ -33,7 +33,7 @@
                 </div>
                 <%}%>
         <br>
-        <h2 class="billingValue">Valor: <span style="color: rgb(0, 255, 0);">R$ <%if(typeof billingPrice != 'undefined'){%><%=billingPrice%><%}%></span></h2>
+        <%if(typeof billingPrice !='undefined' ){%><h2 class="billingValue">Valor: <span style="color: rgb(0, 255, 0);">R$ <%=billingPrice%></span></h2><%}%>
         Dias restantes até a próxima cobrança: <span style="color: rgb(238, 0, 0); font-weight: bolder;"><%=daysLeft%> dias</span>
     </div>
     <%}%>
