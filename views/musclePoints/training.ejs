@@ -17,7 +17,7 @@
 
     <input type="hidden" id="userId" value="<%=userId%>">
 
-    <%if(typeof tokenSupplierView != 'undefined' || typeof payBilling != 'undefined'){%>
+    <%if(typeof payBilling != 'undefined'){%>
     <div class="main-container-flex">
         <h1 style="font-weight: 200;">fatura do: <b>Cliente1</b></h1>
         <% if(daysLeft < 5){%>
@@ -34,7 +34,9 @@
                 <%}%>
         <br>
         <h2 class="billingValue">Valor: <span style="color: rgb(0, 255, 0);">R$ <%if(typeof billingPrice != 'undefined'){%><%=billingPrice%><%}%></span></h2>
+        <%if(typeof tokenSupplierView !='undefined' || typeof payBilling !='undefined' ){%>
         Dias restantes até a próxima cobrança: <span style="color: rgb(238, 0, 0); font-weight: bolder;"><%=daysLeft%> dias</span>
+        <%}%>
     </div>
     <%}%>
     
