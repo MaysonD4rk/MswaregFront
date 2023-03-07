@@ -809,7 +809,7 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
                                 userId: sess.userId,
                                 trainLog,
                                 payBilling: true,
-                                billingPrice: result.data.verifyTokenRole.result[0].billingPrice,
+                                billingPrice: usernameTokenData.data.verifyTokenRole.result[0].billingPrice,
                                 qrcodeData: { qrcodeImg: qrcode.data.imagem, qrcodeCode: qrcode.data.qrCodeTxt }
                             });
                         } catch (error) {
@@ -858,7 +858,7 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
                                 userId: sess.userId,
                                 trainLog,
                                 payBilling: true,
-                                billingPrice: result.data.verifyTokenRole.result[0].billingPrice,
+                                billingPrice: usernameTokenData.data.verifyTokenRole.result[0].billingPrice,
                                 qrcodeData: { qrcodeImg: qrcode.data.imagem, qrcodeCode: qrcode.data.qrCodeTxt }
                             });
                         } catch (error) {
