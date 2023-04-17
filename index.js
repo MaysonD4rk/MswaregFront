@@ -736,6 +736,10 @@ app.get('/aboutUs', async (req,res)=>{
     })
 })
 
+//MusclePointsBeta
+
+
+
 app.get('/MusclePointsBETA', (req, res) => {
     sess = req.session;
     let isLogged;
@@ -743,17 +747,15 @@ app.get('/MusclePointsBETA', (req, res) => {
     if (req.cookies.authToken != undefined && req.cookies.userId != undefined) {
         isLogged = true;
         sess.userId = req.cookies.userId
+        res.render('musclePoints/musclepointsindex',{
+            userId: sess.userId
+        });
     }else{
-        isLogged = false;
-        sess.userId = 0
-        res.redirect('/login')
+        res.render('musclePoints/musclePointsIntro');
         return
 
     }
 
-    res.render('musclePoints/musclepointsindex',{
-        userId: sess.userId
-    });
 })
 
 app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
