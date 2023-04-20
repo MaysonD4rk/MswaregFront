@@ -470,7 +470,7 @@ async function confirmCropFunction(action) {
                 authToken = cookie.split('=');
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
             try {
-                var resposta = await axios.put('https://server.mswareg.com/updatePhotoProfile', {
+                var resposta = await axios.put('http://localhost:8000/updatePhotoProfile', {
                     userId,
                     profileUrl: canvas.toDataURL()
                 }, {
@@ -493,7 +493,7 @@ async function confirmCropFunction(action) {
                 authToken = cookie.split('=');
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
                 try {
-                    var resposta = await axios.put('https://server.mswareg.com/updateIdeaPhoto', {
+                    var resposta = await axios.put('http://localhost:8000/updateIdeaPhoto', {
                         userId,
                         pubIdeaId,
                         imgUrl: canvas.toDataURL()

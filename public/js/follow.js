@@ -14,7 +14,7 @@ async function verifyFollow(users = document.getElementsByClassName('userResults
         const id = parseInt(elementId.split('user')[1])
         
         try {
-            let follow = await axios.get('https://server.mswareg.com/verifyFollow/' + userId + '/' + id);
+            let follow = await axios.get('http://localhost:8000/verifyFollow/' + userId + '/' + id);
             
             if (follow.data.follow) {
                 if (!fromList) {
@@ -46,7 +46,7 @@ async function follow(followingId, fromList=false){
                 if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
 
                     try {
-                        let follow = await axios.post('https://server.mswareg.com/followUser', {
+                        let follow = await axios.post('http://localhost:8000/followUser', {
                             userId,
                             followingId: followingId
                         }, {

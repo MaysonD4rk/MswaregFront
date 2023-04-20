@@ -2,7 +2,10 @@ let currentExerciseNum = 0;
 let calculateBtnSpawned = false;
 let canvasNum = 0;
 let currentIndex;
+let currentLabel = 'rep';
+let currentView = 'last7days'
 const userId = document.getElementById('userId').value;
+
 
 
 //maxRepWMK = max rep with max kg
@@ -90,7 +93,7 @@ const userId = document.getElementById('userId').value;
             btnGroupName.innerHTML = element.groupName;
             btnGroupName.style.color = "rgb(108, 108, 108)"
             //<i onclick="deleteTrainingGroup()" style="font-size: 18px; color: red; display: none;" class="fa-solid fa-trash"></i>
-            btnGroupName.onclick = () => { trainLog(index, 'last7days', true)}
+            btnGroupName.onclick = () => { trainLog(index, currentView, true)}
             document.getElementById('training-list').appendChild(btnGroupName)
         let trash = document.createElement('i');
         trash.className = "fa-solid fa-trash"
@@ -110,7 +113,7 @@ async function getTrainLogAfter() {
         let btnGroupName = document.createElement('li')
         btnGroupName.innerHTML = element.groupName;
         btnGroupName.style.color = "rgb(108, 108, 108)"
-        btnGroupName.onclick = () => { trainLog(index, 'last7days', true) }
+        btnGroupName.onclick = () => { trainLog(index, currentView, true) }
         document.getElementById('training-list').appendChild(btnGroupName)
         let trash = document.createElement('i');
         trash.className = "fa-solid fa-trash"
@@ -126,22 +129,35 @@ async function getTrainLogAfter() {
 }
 
 
-function trainLog(index, time="last7days", loadedNew=false) {
+function trainLog(index, loadedNew=false) {
     currentIndex = index
+    currentExerciseNum = 0;
 
-    id = "labelKgBtn"
+    
     document.getElementById("labelKgBtn").onclick = ()=>{
+        currentLabel = 'kg'
         calcPoints(currentIndex, 'kg')
     }
     document.getElementById("labelRepBtn").onclick = () => {
+        currentLabel = 'rep'
         calcPoints(currentIndex, 'rep')
 
     }
 
     if (loadedNew) {
-        document.querySelectorAll('input[name="view"]')[0].checked = false;
-        document.querySelectorAll('input[name="view"]')[1].checked = false;
-        document.querySelectorAll('input[name="view"]')[2].checked = true;
+        if (currentView == 'month') {
+            document.querySelectorAll('input[name="view"]')[0].checked = true;
+            document.querySelectorAll('input[name="view"]')[1].checked = false;
+            document.querySelectorAll('input[name="view"]')[2].checked = false;
+        } else if (currentView == 'week'){
+            document.querySelectorAll('input[name="view"]')[0].checked = false;
+            document.querySelectorAll('input[name="view"]')[1].checked = true;
+            document.querySelectorAll('input[name="view"]')[2].checked = false;
+        }else{
+            document.querySelectorAll('input[name="view"]')[0].checked = false;
+            document.querySelectorAll('input[name="view"]')[1].checked = false;
+            document.querySelectorAll('input[name="view"]')[2].checked = true;
+        }
     }
 
     
@@ -260,8 +276,8 @@ function trainLog(index, time="last7days", loadedNew=false) {
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: [...getExercisesData('day', index, time)],
-            datasets: [...getExercisesData('exerciseName', index, time)]
+            labels: [...getExercisesData('day', index, currentView, currentLabel)],
+            datasets: [...getExercisesData('exerciseName', index, currentView, currentLabel)]
         },
         options: {
             
@@ -301,7 +317,7 @@ function trainLog(index, time="last7days", loadedNew=false) {
 }
 
 
-function getExercisesData(categorieReturn,index, time, kgOrRep='rep') {
+function getExercisesData(categorieReturn,index) {
     
     
     let datas = []
@@ -309,7 +325,7 @@ function getExercisesData(categorieReturn,index, time, kgOrRep='rep') {
     let newDatas = []
 
 
-    if (categorieReturn != 'day' && time == 'month') {
+    if (categorieReturn != 'day' && currentView == 'month') {
         newDatas.push({
             month: 'janeiro',
             datas: []
@@ -369,11 +385,11 @@ function getExercisesData(categorieReturn,index, time, kgOrRep='rep') {
 
             })
             
-            if (time == 'last7days') {
-                return datas.slice(0, 7)
-            } else if (time == 'week') {
+            if (currentView == 'last7days') {
+                return datas.slice((datas.length - 7), ((datas.length - 7)+7))
+            } else if (currentView == 'week') {
                 return datas.slice(0, 30)
-            } else if (time == "month") {
+            } else if (currentView == "month") {
                 
                 datas.forEach(i => {
                     
@@ -441,7 +457,7 @@ function getExercisesData(categorieReturn,index, time, kgOrRep='rep') {
                 let daysMergedRep = []
                 
                 
-                if (time != 'month') {
+                if (currentView != 'month') {
                     
                 
                 item.days.forEach(categorie=>{
@@ -449,13 +465,13 @@ function getExercisesData(categorieReturn,index, time, kgOrRep='rep') {
                     daysMergedRep.push(categorie.reps.reduce((total, num) => total + num, 0));
                 })
                 
-                if (kgOrRep == 'rep') {
+                if (currentLabel == 'rep') {
                     datas.push({
                         label: item.exerciseName+'# Rep',
                         data: [...daysMergedRep],
                         borderWidth: 2
                     })
-                } else if (kgOrRep == 'kg'){
+                } else if (currentLabel == 'kg'){
                     datas.push({
                         label: item.exerciseName + '# Kg',
                         data: [...daysMergedKg],
@@ -612,11 +628,13 @@ function getExercisesData(categorieReturn,index, time, kgOrRep='rep') {
         }
 
 
-    if (time == 'last7days') {
-        return datas.slice(0, 7)
-    } else if (time == 'week'){
+    if (currentView == 'last7days') {
+        console.log('datas')
+        //console.log(datas.slice((datas.length - 7), 7))
+        return datas.slice(0,7)
+    } else if (currentView == 'week'){
         return datas.slice(0, 30)
-    } else if (time == "month"){
+    } else if (currentView == "month"){
         console.log('datas')
         console.log(datas)
         return datas
@@ -631,7 +649,7 @@ function getExercisesData(categorieReturn,index, time, kgOrRep='rep') {
 
 
 
-async function calcPoints(index, kgOrRep="rep"){
+async function calcPoints(index){
     
     
 
@@ -716,7 +734,7 @@ async function calcPoints(index, kgOrRep="rep"){
 document.cookie.split(';').forEach(async cookie => {
         authToken = cookie.split('=');
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
-        await axios.put('https://server.mswareg.com/trainLog',{
+        await axios.put('http://localhost:8000/trainLog',{
             userId,
             trainLog: JSON.stringify(fakeDb)
         }, {
@@ -734,8 +752,8 @@ document.cookie.split(';').forEach(async cookie => {
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: [...getExercisesData('day', index, 'last7days')],
-            datasets: [...getExercisesData('exerciseName', index, 'last7days', kgOrRep)]
+            labels: [...getExercisesData('day', index, currentView)],
+            datasets: [...getExercisesData('exerciseName', index, currentView, currentLabel)]
         },
         options: {
             scales: {
@@ -785,7 +803,8 @@ function addSerie(exercise){
 }
 
 function removeSerie(exercise) {
-    
+    console.log(exercise)
+    console.log(document.getElementsByClassName('kg'))
     document.getElementsByClassName('rep')[exercise-1].removeChild(document.getElementsByClassName('rep')[exercise-1].children[document.getElementsByClassName('rep')[exercise-1].children.length - 4])
     document.getElementsByClassName('kg')[exercise-1].removeChild(document.getElementsByClassName('kg')[exercise-1].children[document.getElementsByClassName('kg')[exercise-1].children.length - 4])
 }
@@ -932,8 +951,9 @@ viewOptions.forEach(option => {
     option.addEventListener('change', (event) => {
         viewOptions.forEach(otherOption => {
             if (otherOption !== event.target) {
-                
-                trainLog(currentIndex, event.target.value)
+                console.log(event.target.value)
+                currentView = event.target.value
+                trainLog(currentIndex)
                 otherOption.checked = false;
             }
         });
