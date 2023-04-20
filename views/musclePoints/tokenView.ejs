@@ -56,7 +56,7 @@ async function validadeToken(){
         document.cookie.split(';').forEach(async cookie => {
         authToken = cookie.split('=');
         if (authToken[0] == ' authToken' || authToken[0] == 'authToken') {
-        const validateTokenResult = await axios.post('http://localhost:8000/validateToken',{
+        const validateTokenResult = await axios.post('https://server.mswareg.com/validateToken',{
             userId,
             token: document.getElementById('tokenInputValue').value
         }, {

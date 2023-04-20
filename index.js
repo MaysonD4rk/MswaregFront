@@ -41,14 +41,14 @@ app.get('/home', async (req, res)=>{
 
     axios({
             method: "get",
-            url: "http://localhost:8000/user/"+sess.userId
+            url: "https://server.mswareg.com/user/"+sess.userId
         }).then(async (data)=>{
             
             
             
             var posts = await axios({
                 method: "get",
-                url: `http://localhost:8000/home/${sess.userId}/${offset*8}/${filter}`
+                url: `https://server.mswareg.com/home/${sess.userId}/${offset*8}/${filter}`
             })
 
             
@@ -103,7 +103,7 @@ app.post('/login', (req, res)=>{
 
     axios({
         method: "post",
-        url: "http://localhost:8000/login",
+        url: "https://server.mswareg.com/login",
         data: {
             email,
             password,
@@ -146,7 +146,7 @@ app.post('/register', async (req, res)=>{
     var {username, email, password} = req.body;
 
     try {
-        const result = await axios.post("http://localhost:8000/user",{
+        const result = await axios.post("https://server.mswareg.com/user",{
             username,
             email,
             password
@@ -169,7 +169,7 @@ app.post('/register', async (req, res)=>{
 })
 
 app.get('/trend', async (req,res)=>{
-    const pubList = await axios.get('http://localhost:8000/listTrendPub');
+    const pubList = await axios.get('https://server.mswareg.com/listTrendPub');
     
     const sess = req.session;
     let isLogged;
@@ -183,7 +183,7 @@ app.get('/trend', async (req,res)=>{
     }
     axios({
         method: "get",
-        url: "http://localhost:8000/user/" + sess.userId
+        url: "https://server.mswareg.com/user/" + sess.userId
     }).then(async (data) => {
 
         res.render('trend', {
@@ -212,12 +212,12 @@ app.get('/writeIdea', async (req, res) => {
 
     axios({
         method: "get",
-        url: "http://localhost:8000/user/" + sess.userId
+        url: "https://server.mswareg.com/user/" + sess.userId
     }).then(async (data) => {
 
         if (!!req.query.editIdeaId) {
             try {
-                const post = await axios.get('http://localhost:8000/findPub/' + req.query.editIdeaId);
+                const post = await axios.get('https://server.mswareg.com/findPub/' + req.query.editIdeaId);
                 
                 if (post.data.pubData.userId == sess.userId) {
                     try {
@@ -239,7 +239,7 @@ app.get('/writeIdea', async (req, res) => {
             }
         } else {
             try {
-                let count = await axios.get('http://localhost:8000/countPosts/' + sess.userId);
+                let count = await axios.get('https://server.mswareg.com/countPosts/' + sess.userId);
                 if (count.data.result >= 4 && data.data[0].role == 0) {
                     res.redirect('/home?maxIdeasWriten')
                 } else {
@@ -272,12 +272,12 @@ app.get('/sendMsg', async (req, res) => {
         isLogged = false;
         sess.userId = 0
     }
-    let msgs = await axios.get(`http://localhost:8000/listMsgs/${offset*15}`);
+    let msgs = await axios.get(`https://server.mswareg.com/listMsgs/${offset*15}`);
 
     
     axios({
         method: "get",
-        url: "http://localhost:8000/user/" + sess.userId
+        url: "https://server.mswareg.com/user/" + sess.userId
     }).then(async (data) => {
 
         
@@ -323,27 +323,27 @@ app.get('/profile/:username', async (req,res)=>{
     
     
     try {
-        let userProfileData = await axios.get('http://localhost:8000/getByUsername/'+userProfile);
+        let userProfileData = await axios.get('https://server.mswareg.com/getByUsername/'+userProfile);
         
         if (userProfileData.data.result.status) {
             try {
-                followingData = await axios.get('http://localhost:8000/getUsersRelations/0/' + userProfileData.data.result.usernameRow.usersTable[0].id + '/following');
-                followerData = await axios.get('http://localhost:8000/getUsersRelations/0/' + userProfileData.data.result.usernameRow.usersTable[0].id + '/follower');
+                followingData = await axios.get('https://server.mswareg.com/getUsersRelations/0/' + userProfileData.data.result.usernameRow.usersTable[0].id + '/following');
+                followerData = await axios.get('https://server.mswareg.com/getUsersRelations/0/' + userProfileData.data.result.usernameRow.usersTable[0].id + '/follower');
             } catch (error) {
                 console.log(error)
             }
             
             axios({
                 method: "get",
-                url: "http://localhost:8000/user/" + sess.userId
+                url: "https://server.mswareg.com/user/" + sess.userId
             }).then(async (data) => {
                 axios({
                     method: 'get',
-                    url: "http://localhost:8000/getFollows/" + userProfileData.data.result.usernameRow.usersTable[0].id
+                    url: "https://server.mswareg.com/getFollows/" + userProfileData.data.result.usernameRow.usersTable[0].id
                 }).then(async(followData)=>{
                     
                     
-                    const contentList = await axios.get(`http://localhost:8000/profilePageContentList/${userProfileData.data.result.usernameRow.usersTable[0].id}/`+offset)
+                    const contentList = await axios.get(`https://server.mswareg.com/profilePageContentList/${userProfileData.data.result.usernameRow.usersTable[0].id}/`+offset)
                     
                     res.render('profilePage.ejs', {
                         id: sess.userId,
@@ -392,7 +392,7 @@ app.get('/accountSettings', (req, res) => {
 
     axios({
         method: "get",
-        url: "http://localhost:8000/user/" + sess.userId
+        url: "https://server.mswareg.com/user/" + sess.userId
     }).then(async (data) => {
         
 
@@ -428,7 +428,7 @@ app.get('/changePhoto', (req, res)=>{
 
     axios({
         method: "get",
-        url: "http://localhost:8000/user/" + sess.userId
+        url: "https://server.mswareg.com/user/" + sess.userId
     }).then(async (data) => {
         
 
@@ -452,7 +452,7 @@ app.get('/addPubImg/:pubIdea', (req, res) => {
 
     axios({
         method: "get",
-        url: "http://localhost:8000/user/" + sess.userId
+        url: "https://server.mswareg.com/user/" + sess.userId
     }).then(async (data) => {
         
 
@@ -486,12 +486,12 @@ app.get('/seusFeedbacks',(req, res)=>{
 
     axios({
         method: "get",
-        url: "http://localhost:8000/user/" + sess.userId
+        url: "https://server.mswareg.com/user/" + sess.userId
     }).then(async (data) => {
 
         
 
-        const feedbackList = await axios.get('http://localhost:8000/listFeedbacks/'+sess.userId+'/0')
+        const feedbackList = await axios.get('https://server.mswareg.com/listFeedbacks/'+sess.userId+'/0')
         
         
 
@@ -503,12 +503,12 @@ app.get('/seusFeedbacks',(req, res)=>{
                 isLogged
             })
         }else{
-            const reportsList = await axios.get('http://localhost:8000/listReports/0', {
+            const reportsList = await axios.get('https://server.mswareg.com/listReports/0', {
                 headers: {
                     'authorization': `Bearer ${req.cookies.authToken}`
                 }
             });
-            const withdrawalList = await axios.get('http://localhost:8000/listWithdrawalRequests/0',{
+            const withdrawalList = await axios.get('https://server.mswareg.com/listWithdrawalRequests/0',{
                 headers: {
                     'authorization': `Bearer ${req.cookies.authToken}`
                 }
@@ -531,7 +531,7 @@ app.get('/seusFeedbacks',(req, res)=>{
 app.get('/getIdeaById/:ideaId', async (req,res)=>{
     const ideaId = req.params.ideaId
     try {
-        let idea = await axios.get(`http://localhost:8000/findPub/${ideaId}`);
+        let idea = await axios.get(`https://server.mswareg.com/findPub/${ideaId}`);
         
     
         res.render('idea', {
@@ -569,7 +569,7 @@ app.get('/search', async (req, res) => {
     
     axios({
         method: "get",
-        url: "http://localhost:8000/user/" + sess.userId
+        url: "https://server.mswareg.com/user/" + sess.userId
     }).then(async (data) => {
         
         if(Object.keys(req.query).length < 1){
@@ -583,7 +583,7 @@ app.get('/search', async (req, res) => {
     
             if(Object.keys(req.query)[0] == 'userQuery'){
                 
-                let response = await axios.get('http://localhost:8000/getSearchListUser/0/'+req.query.userQuery)
+                let response = await axios.get('https://server.mswareg.com/getSearchListUser/0/'+req.query.userQuery)
                 
 
 
@@ -598,7 +598,7 @@ app.get('/search', async (req, res) => {
                 })
 
             }else if (Object.keys(req.query)[0] == 'msgQuery'){
-                let response = await axios.get('http://localhost:8000/searchForMsg/0/' + req.query.msgQuery)
+                let response = await axios.get('https://server.mswareg.com/searchForMsg/0/' + req.query.msgQuery)
 
                 //
                 res.render('generalSearch', {
@@ -613,7 +613,7 @@ app.get('/search', async (req, res) => {
     
             } else if (Object.keys(req.query)[0] == 'msgByUsernameQuery'){
                 try {
-                    let response = await axios.get('http://localhost:8000/searchMsgList/' + (offset*15) + '/' + req.query.msgByUsernameQuery)
+                    let response = await axios.get('https://server.mswareg.com/searchMsgList/' + (offset*15) + '/' + req.query.msgByUsernameQuery)
 
                     if (response.data.result.row != undefined) {
                         if (req.query.maxData != undefined) {
@@ -651,7 +651,7 @@ app.get('/search', async (req, res) => {
                 
                 try {
                     
-                    let response = await axios.get('http://localhost:8000/searchPost/'+(offset*8)+'/'+req.query.ideaQuery)
+                    let response = await axios.get('https://server.mswareg.com/searchPost/'+(offset*8)+'/'+req.query.ideaQuery)
                     
                     if (!!response.data.result) {
                         if (req.query.maxData != undefined) {
@@ -718,7 +718,7 @@ app.get('/wallet', (req,res)=>{
 
     axios({
         method: "get",
-        url: "http://localhost:8000/user/" + sess.userId
+        url: "https://server.mswareg.com/user/" + sess.userId
     }).then(async (data) => {
 
     res.render('wallet',{
@@ -775,17 +775,17 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
     const username = req.params.username || false;
 
 
-    axios.get('http://localhost:8000/validateTokenLogin/' + sess.userId).then(async result => {
+    axios.get('https://server.mswareg.com/validateTokenLogin/' + sess.userId).then(async result => {
     console.log('userId é: ')
     console.log(sess.userId)
     console.log(result.data)
 
         if (!!username) {
             try {
-                const userData = await axios.get('http://localhost:8000/getByUsername/' + username);
+                const userData = await axios.get('https://server.mswareg.com/getByUsername/' + username);
                 const usernameId = userData.data.result.usernameRow.usersTable[0].id
-                const usernameTokenData = await axios.get('http://localhost:8000/validateTokenLogin/' + usernameId)
-                const getTrainLog = await axios.get('http://localhost:8000/getTrainLog/' + usernameId)
+                const usernameTokenData = await axios.get('https://server.mswareg.com/validateTokenLogin/' + usernameId)
+                const getTrainLog = await axios.get('https://server.mswareg.com/getTrainLog/' + usernameId)
                 if (getTrainLog.data.result.length > 0) {
                     const trainLog = getTrainLog.data.result[0].log;
     
@@ -890,7 +890,7 @@ app.get('/MusclePointsBETA/training/:username?', async (req, res) => {
             
             if (result.data.verifyTokenRole.result.length > 0 || result.data.userRole == 'master-supplier') {
                 if (!result.data.verifyTokenRole.result[0].frozenToken) {
-                    const getTrainLog = await axios.get('http://localhost:8000/getTrainLog/' + sess.userId)
+                    const getTrainLog = await axios.get('https://server.mswareg.com/getTrainLog/' + sess.userId)
                     console.log('entrou no 1')
                     if (getTrainLog.data.result.length > 0) {
                         const trainLog = getTrainLog.data.result[0].log;
@@ -1061,13 +1061,13 @@ app.get('/MusclePointsBETA/adminPanel/:supplier?', (req, res) => {
 
     axios({
         method: "get",
-        url: "http://localhost:8000/user/" + sess.userId
+        url: "https://server.mswareg.com/user/" + sess.userId
     }).then(async (data) => {
 
         console.log('data')
         console.log(data.data)
 
-    axios.get('http://localhost:8000/validateTokenLogin/' + sess.userId)
+    axios.get('https://server.mswareg.com/validateTokenLogin/' + sess.userId)
         .then(async result => {
             if (result.data.userRole != 'customer') {
 
@@ -1077,14 +1077,14 @@ app.get('/MusclePointsBETA/adminPanel/:supplier?', (req, res) => {
                         res.redirect('/MusclePointsBETA/adminPanel')
                     } else {
                         try {
-                            const supplierData = await axios.get('http://localhost:8000/getByUsername/' + supplier);
+                            const supplierData = await axios.get('https://server.mswareg.com/getByUsername/' + supplier);
                             const supplierId = supplierData.data.result.usernameRow.usersTable[0].id
     
-                            const tokenRelation = await axios.get('http://localhost:8000/getTokenRelation/' + supplierId)
+                            const tokenRelation = await axios.get('https://server.mswareg.com/getTokenRelation/' + supplierId)
                                 console.log(tokenRelation)
                             try {
                                 console.log(supplierId, sess.userId)
-                                const getSupplierToken = await axios.get('http://localhost:8000/validateTokenLogin/' + sess.userId + "/" + supplierId)
+                                const getSupplierToken = await axios.get('https://server.mswareg.com/validateTokenLogin/' + sess.userId + "/" + supplierId)
                                 
                                 console.log(getSupplierToken.data.verifyTokenRole.result[0].tokenPrice)
 
@@ -1110,7 +1110,7 @@ app.get('/MusclePointsBETA/adminPanel/:supplier?', (req, res) => {
                         }
                     }
                 } else {
-                    const tokenRelation = await axios.get('http://localhost:8000/getTokenRelation/' + sess.userId)
+                    const tokenRelation = await axios.get('https://server.mswareg.com/getTokenRelation/' + sess.userId)
 
                     if (result.data.user[0].role != 1) {
                         const tokenInfo = { servicePrice: result.data.verifyTokenRole.result[0].tokenPrice, yourTokenPrice: tokenRelation.data.relation.result.length > 0? tokenRelation.data.relation.result[0].tokenPrice: 0, billingPrice: result.data.verifyTokenRole.result[0].billingPrice }
